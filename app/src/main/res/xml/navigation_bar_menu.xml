@@ -6,6 +6,7 @@
             id="@+id/tab_home"
             icon="@drawable/ic_home"
             title="Home" />
+
             <!--activeColor="@values/colors/colorAccent"-->
         <tab
             id="@+id/tab_equipment"

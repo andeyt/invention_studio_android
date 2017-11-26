@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        />
+    <!--activeColor="@values/colors/colorAccent"-->
+    <item
+        android:id="@+id/equipment"
+        android:icon="@drawable/ic_build"
+        android:title="Equipment"/>
+    <!--activeColor="@color/colorAccent" />-->
+    <item
+        android:id="@+id/queue"
+        android:icon="@drawable/ic_people"
+        android:title="Queue"/>
+
+    <!--<item-->
+        <!--android:id="@+id/feedback"-->
+        <!--android:icon="@drawable/ic_feedback"-->
+        <!--android:title="Feedback"/>-->
+    <!--<item-->
+        <!--android:id="@+id/more"-->
+        <!--android:icon="@drawable/ic_more_horiz"-->
+        <!--android:title="More"/>-->
+</menu>

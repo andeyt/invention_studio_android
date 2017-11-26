@@ -2,6 +2,10 @@ package inventionstudio.inventionstudioandroid;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import inventionstudio.inventionstudioandroid.Fragments.EquipmentFragment;
@@ -22,11 +27,69 @@ import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private BottomBar bottomBar;
+    private BottomNavigationView bottom;
 //    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        bottom = (BottomNavigationView) findViewById(R.id.navigation);
+//        bottom.setOnNavigationItemSelectedListener(
+//                new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                    @Override
+//                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                        FragmentTransaction ft;
+//                        switch (item.getItemId()) {
+//
+//                            case R.id.home:
+//                                ft = getSupportFragmentManager().beginTransaction();
+//                                // Replace the contents of the container with the new fragment
+//                                ft.replace(R.id.fragment_container, new HomeFragment());
+//                                // or ft.add(R.id.your_placeholder, new FooFragment());
+//                                // Complete the changes added above
+//                                ft.commit();
+//
+//
+//                            case R.id.equipment:
+//                                ft = getSupportFragmentManager().beginTransaction();
+//                                // Replace the contents of the container with the new fragment
+//                                ft.replace(R.id.fragment_container, new EquipmentFragment());
+//                                // or ft.add(R.id.your_placeholder, new FooFragment());
+//                                // Complete the changes added above
+//                                ft.commit();
+//
+//
+//                            case R.id.queue:
+//                                ft = getSupportFragmentManager().beginTransaction();
+//                                // Replace the contents of the container with the new fragment
+//                                ft.replace(R.id.fragment_container, new QueueFragment());
+//                                // or ft.add(R.id.your_placeholder, new FooFragment());
+//                                // Complete the changes added above
+//                                ft.commit();
+//
+//
+//                            case R.id.feedback:
+//                                ft = getSupportFragmentManager().beginTransaction();
+//                                // Replace the contents of the container with the new fragment
+//                                ft.replace(R.id.fragment_container, new FeedbackFragment());
+//                                // or ft.add(R.id.your_placeholder, new FooFragment());
+//                                // Complete the changes added above
+//                                ft.commit();
+//
+//                            case R.id.more:
+//                                ft = getSupportFragmentManager().beginTransaction();
+//                                // Replace the contents of the container with the new fragment
+//                                ft.replace(R.id.fragment_container, new MoreFragment());
+//                                // or ft.add(R.id.your_placeholder, new FooFragment());
+//                                // Complete the changes added above
+//                                ft.commit();
+//
+//
+//                        }
+//                        return true;
+//                    }
+//                });
 
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
