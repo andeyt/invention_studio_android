@@ -44,10 +44,14 @@ public class LoginActivity extends Activity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView webView, String url) {
-                if (getIntent().getStringExtra("MainActivity") == "logout") {
-                    webView.clearCache(true);
-                    webView.loadUrl("https://login.gatech.edu/cas/login");
+
+                if (getIntent().getStringExtra("Action").equals("logout")) {
+                    Log.d("STATUS", getIntent().getStringExtra("Action"));
+                    Log.d("STATUS", CookieManager.getInstance().getCookie(url));
+                    CookieManager.getInstance().removeAllCookies(null);
+                    finish();
                     return;
+
                 }
                 String cookies = CookieManager.getInstance().getCookie(url);
                 if (cookies.contains("CASTGT")) {

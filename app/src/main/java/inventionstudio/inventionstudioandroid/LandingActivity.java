@@ -31,8 +31,11 @@ public class LandingActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_login:
-                Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(loginIntent);
+                final String KEY_ACTIVITY_NAME = "Action";
+
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.putExtra(KEY_ACTIVITY_NAME, "login");
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -95,12 +95,11 @@ public class MainActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_logout:
-                final String KEY_ACTIVITY_NAME = "MainActivity";
+                final String KEY_ACTIVITY_NAME = "Action";
 
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.putExtra(KEY_ACTIVITY_NAME, "logout");
-                startActivity(intent);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             default:
