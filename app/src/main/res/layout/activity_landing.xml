@@ -7,18 +7,6 @@
     android:orientation="vertical"
     tools:context="inventionstudio.inventionstudioandroid.LandingActivity">
 
-    <RelativeLayout
-        android:layout_width="397dp"
-        android:layout_height="62dp">
-
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="118dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Login" />
-    </RelativeLayout>
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
