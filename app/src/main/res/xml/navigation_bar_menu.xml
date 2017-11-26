@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!-- Settings, should always be in the overflow -->
+    <tabs>
+        <tab
+            id="@+id/tab_home"
+            icon="@drawable/ic_home"
+            title="Home" />
+            <!--activeColor="@values/colors/colorAccent"-->
+        <tab
+            id="@+id/tab_equipment"
+            icon="@drawable/ic_build"
+            title="Equipment"/>
+            <!--activeColor="@color/colorAccent" />-->
+        <tab
+            id="@+id/tab_queue"
+            icon="@drawable/ic_people"
+            title="Queue"/>
+            <!--activeColor="@color/colorAccent"/>-->
+        <tab
+            id="@+id/tab_feedback"
+            icon="@drawable/ic_feedback"
+            title="Feedback"/>
+        <tab
+            id="@+id/tab_more"
+            icon="@drawable/ic_more_horiz"
+            title="More"/>
+    </tabs>
