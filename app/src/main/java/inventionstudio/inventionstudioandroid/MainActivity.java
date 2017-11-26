@@ -1,11 +1,13 @@
 package inventionstudio.inventionstudioandroid;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
@@ -87,6 +89,23 @@ public class MainActivity extends AppCompatActivity {
 
         inflater.inflate(R.menu.main_activity_bar, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                final String KEY_ACTIVITY_NAME = "MainActivity";
+
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.putExtra(KEY_ACTIVITY_NAME, "logout");
+                startActivity(intent);
+
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

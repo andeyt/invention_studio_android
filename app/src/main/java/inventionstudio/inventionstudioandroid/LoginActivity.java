@@ -30,8 +30,6 @@ import android.widget.EditText;
 //import edu.gatech.t_squaremobile.R;
 
 public class LoginActivity extends Activity {
-    String sessionName;
-    String sessionId;
     WebView webView;
 
     @Override
@@ -46,15 +44,17 @@ public class LoginActivity extends Activity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView webView, String url) {
-                String cookies = CookieManager.getInstance().getCookie(url);
-                Log.d("cookies", cookies);
-                if (url.contains("logout")) {
+                if (getIntent().getStringExtra("MainActivity") == "logout") {
                     webView.clearCache(true);
                     webView.loadUrl("https://login.gatech.edu/cas/login");
+                    return;
                 }
+                String cookies = CookieManager.getInstance().getCookie(url);
                 if (cookies.contains("CASTGT")) {
+
                     //webView.loadUrl(url);
                     // run "mockup"-specific code
+                    /*
                     cookies = CookieManager.getInstance().getCookie(url);
 //                    String[] splitParams = url.split("\\?")[1].split("&");
                     String[] splitParams = cookies.split("=");
@@ -64,6 +64,7 @@ public class LoginActivity extends Activity {
                     sessionId = splitParams[1];
 
                     Log.d("cookies", sessionName + "\n" + sessionId);
+                    */
 
                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(homeIntent);
@@ -117,20 +118,6 @@ public class LoginActivity extends Activity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Uri data = intent.getData();
-        if(data != null) {
-            if(data.getQueryParameter("sessionName") != null && data.getQueryParameter("sessionId") != null) {
-                sessionName = data.getQueryParameter("sessionName");
-                sessionId = data.getQueryParameter("sessionId");
-            }
-        }
-        Intent homeIntent = new Intent(this, MainActivity.class);
-        startActivity(homeIntent);
     }
 
 }
