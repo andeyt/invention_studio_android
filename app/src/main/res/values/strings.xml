@@ -16,8 +16,8 @@
         completions."
     </string>
     <string name="agreement_list">
-        <li>- Not sure where? Kiosks are available in MRDC rooms 1001, 1002, 1003</li>\n\n
-        <li>- For more info ask any Prototyping Instructor (PI), who are in the studio wearing GREEN arm bands</li>
+        <li>- <b>Not sure where?</b> Kiosks are available in MRDC rooms 1001, 1002, 1003</li>\n\n
+        <li>- <b>For more info</b> ask any Prototyping Instructor (PI), who are in the studio wearing GREEN arm bands</li>
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
