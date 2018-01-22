@@ -1,7 +1,5 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -47,7 +45,7 @@ public class EquipmentListFragment extends Fragment {
                 if (str.equals("RICK")) {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     // Replace the contents of the container with the new fragment
-                    ft.replace(R.id.fragment_container, new EquipmentFragment());
+                    ft.replace(R.id.fragment_container, new MainEquipmentFragment());
                     ft.addToBackStack(null);
                     // or ft.add(R.id.your_placeholder, new FooFragment());
                     // Complete the changes added above

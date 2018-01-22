@@ -29,10 +29,6 @@ public class FeedbackFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
 
-        // EditText Instantiation
-        TextView comments = (TextView) rootView.findViewById(R.id.comments);
-        comments.setBackgroundResource(R.drawable.edittext_border);
-
         return rootView;
     }
 

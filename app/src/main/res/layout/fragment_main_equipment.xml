@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentFragment">
+    tools:context="inventionstudio.inventionstudioandroid.Fragments.MainEquipmentFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -23,7 +23,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             segmentedgroup:sc_checked_text_color="@color/colorPrimary"
-            segmentedgroup:sc_tint_color="@color/colorPrimary">
+            segmentedgroup:sc_tint_color="@color/colorAccent">
 
             <RadioButton
                 android:id="@+id/info"
@@ -38,7 +38,7 @@
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Maintainance Log/Report Problem"
+                android:text="Report A Problem"
                 android:onClick="onRadioButtonClicked"
                 />
         </info.hoang8f.android.segmented.SegmentedGroup>
