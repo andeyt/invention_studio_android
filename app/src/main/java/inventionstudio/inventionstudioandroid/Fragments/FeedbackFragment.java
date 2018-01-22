@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import inventionstudio.inventionstudioandroid.R;
 
@@ -25,7 +27,13 @@ public class FeedbackFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feedback, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
+
+        // EditText Instantiation
+        TextView comments = (TextView) rootView.findViewById(R.id.comments);
+        comments.setBackgroundResource(R.drawable.edittext_border);
+
+        return rootView;
     }
 
 }
