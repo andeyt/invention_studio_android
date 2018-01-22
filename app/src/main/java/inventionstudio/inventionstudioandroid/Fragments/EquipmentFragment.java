@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import inventionstudio.inventionstudioandroid.R;
 
@@ -27,21 +29,43 @@ public class EquipmentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_equipment, container, false);
-        // Inflate the layout for this fragment
-        View.OnClickListener info_radio_listener = new View.OnClickListener(){
-            public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                // Replace the contents of the container with the new fragment
-                ft.replace(R.id.equipment_fragment_container, new EquipmentInfoFragment());
-                // or ft.add(R.id.your_placeholder, new FooFragment());
-                // Complete the changes added above
-                ft.commit();
-            }
-        };
+        final RadioButton rb1 = (RadioButton) rootView.findViewById(R.id.info);
+        final RadioButton rb2 = (RadioButton) rootView.findViewById(R.id.problem);
+        rb1.setChecked(true);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        // Replace the contents of the container with the new fragment
+        ft.replace(R.id.equipment_fragment_container, new EquipmentInfoFragment());
+        // or ft.add(R.id.your_placeholder, new FooFragment());
+        // Complete the changes added above
+        ft.commit();
 
-        RadioButton rb1 = (RadioButton) rootView.findViewById(R.id.info);
-        RadioButton rb2 = (RadioButton) rootView.findViewById(R.id.problem);
-        rb1.setOnClickListener(info_radio_listener);
+        rb1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(rb1.isChecked()){
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    // Replace the contents of the container with the new fragment
+                    ft.replace(R.id.equipment_fragment_container, new EquipmentInfoFragment());
+                    // or ft.add(R.id.your_placeholder, new FooFragment());
+                    // Complete the changes added above
+                    ft.commit();
+                }
+            }
+        });
+        rb2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(rb2.isChecked()){
+                    Toast.makeText(getContext(), "Problem", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
 
 
