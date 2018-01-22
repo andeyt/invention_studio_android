@@ -24,6 +24,8 @@ public class EquipmentInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Equipment Name");
+
         return inflater.inflate(R.layout.fragment_equipment_info, container, false);
     }
 

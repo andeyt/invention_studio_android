@@ -3,6 +3,7 @@ package inventionstudio.inventionstudioandroid;
 import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -91,9 +92,11 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 if (tabId == R.id.tab_home) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     // Replace the contents of the container with the new fragment
                     ft.replace(R.id.fragment_container, new HomeFragment());
                     // or ft.add(R.id.your_placeholder, new FooFragment());
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (tabId == R.id.tab_equipment) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     // Replace the contents of the container with the new fragment
                     ft.replace(R.id.fragment_container, new MachineGroupFragment());
                     // or ft.add(R.id.your_placeholder, new FooFragment());
@@ -112,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (tabId == R.id.tab_queue) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     // Replace the contents of the container with the new fragment
                     ft.replace(R.id.fragment_container, new QueueFragment());
                     // or ft.add(R.id.your_placeholder, new FooFragment());
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (tabId == R.id.tab_feedback) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     // Replace the contents of the container with the new fragment
                     ft.replace(R.id.fragment_container, new FeedbackFragment());
                     // or ft.add(R.id.your_placeholder, new FooFragment());
@@ -129,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (tabId == R.id.tab_more) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     // Replace the contents of the container with the new fragment
                     ft.replace(R.id.fragment_container, new MoreFragment());
                     // or ft.add(R.id.your_placeholder, new FooFragment());
@@ -166,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
 
 
 }

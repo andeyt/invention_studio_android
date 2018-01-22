@@ -33,6 +33,8 @@ public class MachineGroupFragment extends Fragment {
         // Inflate the layout for this fragment
 
         //TODO: Programmatically populate the machine groups
+        getActivity().setTitle("Machine Groups");
+
         View rootView = inflater.inflate(R.layout.fragment_machine_group, container, false);
 
 

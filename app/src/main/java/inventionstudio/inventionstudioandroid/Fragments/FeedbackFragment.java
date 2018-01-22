@@ -27,6 +27,8 @@ public class FeedbackFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Feedback");
+
         View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
 
         return rootView;
