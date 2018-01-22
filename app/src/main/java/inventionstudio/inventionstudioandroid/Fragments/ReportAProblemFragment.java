@@ -68,13 +68,12 @@ public class ReportAProblemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_report_aproblem, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_report_a_problem, container, false);
 
         EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
         textInput.setBackgroundResource(R.drawable.edittext_border);
 
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
-        spinner.setBackgroundResource(R.drawable.spinner_border);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.machine_feedback_array,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

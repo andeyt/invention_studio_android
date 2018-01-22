@@ -34,7 +34,6 @@ public class FeedbackFragment extends Fragment {
         textInput.setBackgroundResource(R.drawable.edittext_border);
 
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
-        spinner.setBackgroundResource(R.drawable.spinner_border);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
