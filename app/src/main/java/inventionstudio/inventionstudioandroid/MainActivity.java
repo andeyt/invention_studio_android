@@ -2,9 +2,6 @@ package inventionstudio.inventionstudioandroid;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +12,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import inventionstudio.inventionstudioandroid.Fragments.EquipmentFragment;
+import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.FeedbackFragment;
 import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //                            case R.id.equipment:
 //                                ft = getSupportFragmentManager().beginTransaction();
 //                                // Replace the contents of the container with the new fragment
-//                                ft.replace(R.id.fragment_container, new EquipmentFragment());
+//                                ft.replace(R.id.fragment_container, new MachineGroupFragment());
 //                                // or ft.add(R.id.your_placeholder, new FooFragment());
 //                                // Complete the changes added above
 //                                ft.commit();
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (tabId == R.id.tab_equipment) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     // Replace the contents of the container with the new fragment
-                    ft.replace(R.id.fragment_container, new EquipmentFragment());
+                    ft.replace(R.id.fragment_container, new MachineGroupFragment());
                     // or ft.add(R.id.your_placeholder, new FooFragment());
                     // Complete the changes added above
                     ft.commit();

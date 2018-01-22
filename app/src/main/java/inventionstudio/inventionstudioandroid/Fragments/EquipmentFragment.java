@@ -2,16 +2,14 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import inventionstudio.inventionstudioandroid.R;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,29 +25,27 @@ public class EquipmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_equipment, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equipment, container, false);
+        View.OnClickListener info_radio_listener = new View.OnClickListener(){
+            public void onClick(View v) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                // Replace the contents of the container with the new fragment
+                ft.replace(R.id.equipment_fragment_container, new EquipmentInfoFragment());
+                // or ft.add(R.id.your_placeholder, new FooFragment());
+                // Complete the changes added above
+                ft.commit();
+            }
+        };
+
+        RadioButton rb1 = (RadioButton) rootView.findViewById(R.id.info);
+        RadioButton rb2 = (RadioButton) rootView.findViewById(R.id.problem);
+        rb1.setOnClickListener(info_radio_listener);
+
+
+
+        return rootView;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // Inflate the layout for this fragment
-
-        LinearLayout ll = (LinearLayout) view.findViewById(R.id.buttonlayout);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        String[] equipmentList = {"3D printers", "Lasers", "Waterjet", "Wood Room"};
-        for (String s : equipmentList) {
-            Button myButton = new Button(getActivity());
-            myButton.setText(s);
-            ll.addView(myButton, lp);
-            myButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //set to next screen
-                }
-            });
-        }
-
-    }
 }

@@ -1,23 +1,52 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentFragment">
 
+    <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
-        android:id="@+id/buttonlayout"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"><![CDATA[>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:text="Equipment Fragment"
-            android:textSize="30sp" />
+        ]]>
 
+        <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/segmented2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            segmentedgroup:sc_checked_text_color="@color/colorPrimary"
+            segmentedgroup:sc_tint_color="@color/colorPrimary">
+
+            <RadioButton
+                android:id="@+id/info"
+
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Info" />
+
+            <RadioButton
+                android:id="@+id/problem"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maintainance Log/Report Problem" />
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
+        <FrameLayout
+            android:id="@+id/equipment_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp" />
     </LinearLayout>
 
-</ScrollView>
+
+</FrameLayout>
