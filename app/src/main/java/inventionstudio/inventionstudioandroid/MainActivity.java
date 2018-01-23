@@ -27,6 +27,7 @@ import inventionstudio.inventionstudioandroid.Fragments.FeedbackFragment;
 import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
+import inventionstudio.inventionstudioandroid.Fragments.ReportAProblemFragment;
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;

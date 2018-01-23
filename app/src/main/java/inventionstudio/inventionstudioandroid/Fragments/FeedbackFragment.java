@@ -31,7 +31,7 @@ public class FeedbackFragment extends Fragment {
 
         // EditText Instantiation
         EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
-        textInput.setBackgroundResource(R.drawable.edittext_border);
+//        textInput.setBackgroundResource(R.drawable.edittext_border);
 
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array,

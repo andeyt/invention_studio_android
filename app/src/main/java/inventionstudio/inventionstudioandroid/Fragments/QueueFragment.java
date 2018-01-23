@@ -37,8 +37,11 @@ public class QueueFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getActivity().setTitle("Queue");
+        View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
 
-        return inflater.inflate(R.layout.fragment_queue, container, false);
+
+
+        return rootView;
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -47,8 +50,7 @@ public class QueueFragment extends Fragment {
         TextView text = view.findViewById(R.id.textView);
         text.setText("To join a queue, head to the kiosk closest to the machine" +
                 " you're interested in. Find a PI (with a green armband) for more info.");
-
-        expandableListView = (ExpandableListView) view.findViewById(R.id.expandable_list);
+        expandableListView = view.findViewById(R.id.expandable_list);
         prepareListData();
         adapter = new ExpandableListAdapter(getActivity(), queues, queueData);
         expandableListView.setAdapter(adapter);
