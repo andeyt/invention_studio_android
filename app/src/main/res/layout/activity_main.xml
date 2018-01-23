@@ -6,21 +6,24 @@
     android:layout_height="match_parent"
     tools:context="inventionstudio.inventionstudioandroid.MainActivity">
 
-   <!-- <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav_tabs" />-->
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@drawable/tab_text_tint"
+        app:itemTextColor="@drawable/tab_text_tint"
+        app:menu="@menu/bottom_nav_tabs"/>
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        app:bb_behavior="underNavbar"
-        app:bb_tabXmlResource="@xml/navigation_bar_menu" />
+    <!--<com.roughike.bottombar.BottomBar-->
+        <!--android:id="@+id/bottomBar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--app:bb_behavior="underNavbar"-->
+        <!--app:bb_tabXmlResource="@xml/navigation_bar_menu" />-->
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container"

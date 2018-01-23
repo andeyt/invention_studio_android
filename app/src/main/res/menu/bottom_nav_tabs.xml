@@ -16,12 +16,14 @@
         android:icon="@drawable/ic_people"
         android:title="Queue"/>
 
-    <!--<item-->
-        <!--android:id="@+id/feedback"-->
-        <!--android:icon="@drawable/ic_feedback"-->
-        <!--android:title="Feedback"/>-->
-    <!--<item-->
-        <!--android:id="@+id/more"-->
-        <!--android:icon="@drawable/ic_more_horiz"-->
-        <!--android:title="More"/>-->
+    <item
+        android:id="@+id/feedback"
+        android:icon="@drawable/ic_feedback"
+        android:title="Feedback"/>
+
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_more_horiz"
+        android:title="More"/>
+
 </menu>
