@@ -44,7 +44,7 @@ public class QueueFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Inflate the layout for this fragment
-        TextView text = view.findViewById(R.id.textView);
+        TextView text = view.findViewById(R.id.text);
         text.setText("To join a queue, head to the kiosk closest to the machine" +
                 " you're interested in. Find a PI (with a green armband) for more info.");
 
