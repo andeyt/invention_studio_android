@@ -20,9 +20,11 @@ import android.provider.Browser;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
@@ -37,15 +39,20 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         webView = (WebView)findViewById(R.id.webView);
         webView.clearCache(true);
         webView.clearHistory();
+        CookieManager.getInstance().removeAllCookies(null);
         webView.loadUrl("https://login.gatech.edu/cas/login");
         webView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView webView, String url) {
+                Log.d("URL", url);
 
                 if (getIntent().getStringExtra("Action").equals("logout")) {
+
                     Log.d("STATUS", getIntent().getStringExtra("Action"));
                     Log.d("STATUS", CookieManager.getInstance().getCookie(url));
                     CookieManager.getInstance().removeAllCookies(null);
@@ -55,22 +62,7 @@ public class LoginActivity extends Activity {
                 }
                 String cookies = CookieManager.getInstance().getCookie(url);
                 if (cookies.contains("CASTGT")) {
-
-                    //webView.loadUrl(url);
-                    // run "mockup"-specific code
-                    /*
-                    cookies = CookieManager.getInstance().getCookie(url);
-//                    String[] splitParams = url.split("\\?")[1].split("&");
-                    String[] splitParams = cookies.split("=");
-//                    String sessionName = splitParams[0].split("=")[1];
-//                    String sessionId = splitParams[1].split("=")[1];
-                    sessionName = splitParams[0];
-                    sessionId = splitParams[1];
-
-                    Log.d("cookies", sessionName + "\n" + sessionId);
-                    */
-
-                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent homeIntent = new Intent(getApplicationContext(), AgreementActivity.class);
                     startActivity(homeIntent);
 
                 }
@@ -107,8 +99,8 @@ public class LoginActivity extends Activity {
                 alertDialog.show();
 
             }
-        });
 
+        });
 
         webView.getSettings().setJavaScriptEnabled(true);
 
