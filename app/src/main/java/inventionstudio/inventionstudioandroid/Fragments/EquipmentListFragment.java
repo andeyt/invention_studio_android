@@ -10,6 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+import inventionstudio.inventionstudioandroid.Adapters.EquipmentAdapter;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 
 /**
@@ -31,10 +36,19 @@ public class EquipmentListFragment extends Fragment {
         getActivity().setTitle("Specific Machine Group");
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
-        String[] testArray = {"RICK", "MORTY", "GOGO"};
+        ArrayList<Equipment> equipment = new ArrayList<>();
+        equipment.add(new Equipment(2, "Machine A"));
+        equipment.add(new Equipment(1, "Machine B"));
+        equipment.add(new Equipment(1, "Machine C"));
+        equipment.add(new Equipment(0, "Machine D"));
+        equipment.add(new Equipment(2, "Machine E"));
+        equipment.add(new Equipment(1, "Machine F"));
+        equipment.add(new Equipment(2, "Machine G"));
+        equipment.add(new Equipment(0, "Machine H"));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, testArray);
+        Collections.sort(equipment);
+
+        EquipmentAdapter adapter = new EquipmentAdapter(getActivity(), R.layout.equipment_list_row, equipment);
 
         final ListView listView = (ListView) rootView.findViewById(R.id.listview);
         listView.setAdapter(adapter);
@@ -43,18 +57,21 @@ public class EquipmentListFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object o = listView.getItemAtPosition(position);
-                String str = o.toString();
 
-                if (str.equals("RICK")) {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    // Replace the contents of the container with the new fragment
-                    ft.replace(R.id.fragment_container, new MainEquipmentFragment());
-                    ft.addToBackStack(null);
-                    // or ft.add(R.id.your_placeholder, new FooFragment());
-                    // Complete the changes added above
-                    ft.commit();
-                }
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fragment2 = new MainEquipmentFragment();
+                Bundle bundle = new Bundle();
+                Equipment obj = ((Equipment) o);
+                bundle.putSerializable("Equipment", obj);
+                fragment2.setArguments(bundle);
+                // Replace the contents of the container with the new fragment
+                ft.replace(R.id.fragment_container, fragment2);
+                ft.addToBackStack(null);
+                // or ft.add(R.id.your_placeholder, new FooFragment());
+                // Complete the changes added above
+                ft.commit();
             }
+
         });
         return rootView;
     }

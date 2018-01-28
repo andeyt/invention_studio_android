@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import inventionstudio.inventionstudioandroid.ExpandableListAdapter;
+import inventionstudio.inventionstudioandroid.Adapters.ExpandableListAdapter;
 import inventionstudio.inventionstudioandroid.R;
 
 

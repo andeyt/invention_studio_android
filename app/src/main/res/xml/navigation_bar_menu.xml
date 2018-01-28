@@ -11,7 +11,7 @@
         <tab
             id="@+id/tab_equipment"
             icon="@drawable/ic_build"
-            title="Equipment"/>
+            title="inventionstudio.inventionstudioandroid.Model.Equipment"/>
             <!--activeColor="@color/colorAccent" />-->
         <tab
             id="@+id/tab_queue"

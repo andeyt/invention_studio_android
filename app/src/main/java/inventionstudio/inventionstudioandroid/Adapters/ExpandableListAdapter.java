@@ -1,4 +1,4 @@
-package inventionstudio.inventionstudioandroid;
+package inventionstudio.inventionstudioandroid.Adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+
+import inventionstudio.inventionstudioandroid.R;
 
 /**
  * Created by Maxwell Broom on 1/23/2018.
