@@ -44,6 +44,7 @@ public class LoginActivity extends Activity {
         webView.clearCache(true);
         webView.clearHistory();
         CookieManager.getInstance().removeAllCookies(null);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
         webView.loadUrl("https://login.gatech.edu/cas/login");
         webView.setWebViewClient(new WebViewClient() {
 
@@ -51,15 +52,6 @@ public class LoginActivity extends Activity {
             public void onPageFinished(WebView webView, String url) {
                 Log.d("URL", url);
 
-                if (getIntent().getStringExtra("Action").equals("logout")) {
-
-                    Log.d("STATUS", getIntent().getStringExtra("Action"));
-                    Log.d("STATUS", CookieManager.getInstance().getCookie(url));
-                    CookieManager.getInstance().removeAllCookies(null);
-                    finish();
-                    return;
-
-                }
                 String cookies = CookieManager.getInstance().getCookie(url);
                 if (cookies.contains("CASTGT")) {
                     Intent homeIntent = new Intent(getApplicationContext(), AgreementActivity.class);
@@ -103,6 +95,8 @@ public class LoginActivity extends Activity {
         });
 
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+
 
         
     }
