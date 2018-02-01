@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 
 
@@ -53,15 +54,18 @@ public class MachineGroupFragment extends Fragment {
                 Object o = listView.getItemAtPosition(position);
                 String str = o.toString();
 
-                if (str.equals("3D Printers")) {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    // Replace the contents of the container with the new fragment
-                    ft.replace(R.id.fragment_container, new EquipmentListFragment());
-                    ft.addToBackStack(null);
-                    // or ft.add(R.id.your_placeholder, new FooFragment());
-                    // Complete the changes added above
-                    ft.commit();
-                }
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fragment2 = new EquipmentListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("MachineGroup", str);
+                fragment2.setArguments(bundle);
+                // Replace the contents of the container with the new fragment
+                ft.replace(R.id.fragment_container, fragment2);
+                ft.addToBackStack(null);
+                // or ft.add(R.id.your_placeholder, new FooFragment());
+                // Complete the changes added above
+                ft.commit();
+
             }
         });
 

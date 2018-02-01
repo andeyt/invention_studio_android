@@ -32,8 +32,11 @@ public class EquipmentListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //TODO:Programatically Set Title
-        getActivity().setTitle("Specific Machine Group");
+        Bundle bundle = getArguments();
+        String str= (String) bundle.getSerializable("MachineGroup");
+
+        getActivity().setTitle(str);
+
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         ArrayList<Equipment> equipment = new ArrayList<>();
