@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -48,13 +49,25 @@ public class EquipmentListFragment extends Fragment {
         equipment.add(new Equipment(1, "Machine F"));
         equipment.add(new Equipment(2, "Machine G"));
         equipment.add(new Equipment(0, "Machine H"));
+        equipment.add(new Equipment(2, "Machine J"));
+        equipment.add(new Equipment(1, "Machine K"));
+        equipment.add(new Equipment(0, "Machine L"));
+        equipment.add(new Equipment(0, "Machine M"));
+        equipment.add(new Equipment(2, "Machine N"));
+        equipment.add(new Equipment(1, "Machine O"));
+        equipment.add(new Equipment(0, "Machine P"));
+        equipment.add(new Equipment(2, "Machine Q"));
+
 
         Collections.sort(equipment);
 
         EquipmentAdapter adapter = new EquipmentAdapter(getActivity(), R.layout.equipment_list_row, equipment);
+        View header = (View)getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
 
-        final ListView listView = (ListView) rootView.findViewById(R.id.listview);
+        final ListView listView = (ListView) rootView.findViewById(R.id.equipment_list);
         listView.setAdapter(adapter);
+        listView.addHeaderView(header, null, false);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

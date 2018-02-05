@@ -54,9 +54,11 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
         }
 
         Equipment equipment = data.get(position);
-        holder.name.setText(equipment.getName());
-        holder.icon.setImageResource(equipment.getIcon());
-        holder.statusText.setText(equipment.getStatus());
+        if (equipment != null) {
+            holder.name.setText(equipment.getName());
+            holder.icon.setImageResource(equipment.getIcon());
+            holder.statusText.setText(equipment.getStatus());
+        }
 
         return row;
     }
