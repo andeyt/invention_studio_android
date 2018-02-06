@@ -20,7 +20,7 @@ import inventionstudio.inventionstudioandroid.R;
 
 /**
 */
-public class EquipmentListFragment extends Fragment {
+public class EquipmentListFragment extends MachineGroupFragment {
 
 
 

@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import inventionstudio.inventionstudioandroid.R;
 
 
-public class ReportAProblemFragment extends Fragment {
+public class ReportAProblemFragment extends MachineGroupFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

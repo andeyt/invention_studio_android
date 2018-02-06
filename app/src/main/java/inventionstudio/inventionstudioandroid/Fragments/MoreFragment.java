@@ -37,8 +37,7 @@ public class MoreFragment extends PreferenceFragmentCompat {
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getActivity(), LandingActivity.class);
-                startActivity(intent);
+                getActivity().finish();
                 return true;
             }
         });

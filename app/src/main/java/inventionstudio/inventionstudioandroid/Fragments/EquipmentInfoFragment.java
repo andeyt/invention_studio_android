@@ -15,7 +15,7 @@ import inventionstudio.inventionstudioandroid.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EquipmentInfoFragment extends Fragment {
+public class EquipmentInfoFragment extends MachineGroupFragment {
 
 
     public EquipmentInfoFragment() {

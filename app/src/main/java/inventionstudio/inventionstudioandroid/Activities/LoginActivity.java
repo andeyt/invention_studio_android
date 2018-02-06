@@ -42,6 +42,7 @@ public class LoginActivity extends Activity {
                 if (cookies.contains("CASTGT")) {
                     Intent homeIntent = new Intent(getApplicationContext(), AgreementActivity.class);
                     startActivity(homeIntent);
+                    finish();
 
                 }
             }
@@ -93,6 +94,7 @@ public class LoginActivity extends Activity {
             webView.goBack();
         } else {
             super.onBackPressed();
+
         }
     }
 
