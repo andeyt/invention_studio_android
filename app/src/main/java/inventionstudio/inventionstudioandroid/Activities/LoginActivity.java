@@ -1,33 +1,19 @@
-package inventionstudio.inventionstudioandroid;
+package inventionstudio.inventionstudioandroid.Activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.Browser;
-import android.view.View;
-import android.view.Window;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
+
+import inventionstudio.inventionstudioandroid.R;
 
 //import edu.gatech.t_squaremobile.R;
 

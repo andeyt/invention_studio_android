@@ -1,4 +1,4 @@
-package inventionstudio.inventionstudioandroid;
+package inventionstudio.inventionstudioandroid.Activities;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
@@ -28,10 +28,9 @@ import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
 import inventionstudio.inventionstudioandroid.Fragments.ReportAProblemFragment;
+import inventionstudio.inventionstudioandroid.R;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textView;
-    private BottomBar bottomBar;
     private BottomNavigationView bottom;
 //    private FragmentTransaction transaction;
     @Override
@@ -95,89 +94,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container, new HomeFragment());
         transaction.commit();
 
-//        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-//        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-//            @Override
-//            public void onTabSelected(@IdRes int tabId) {
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                if (tabId == R.id.tab_home) {
-//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//
-//                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                    // Replace the contents of the container with the new fragment
-//                    ft.replace(R.id.fragment_container, new HomeFragment());
-//                    // or ft.add(R.id.your_placeholder, new FooFragment());
-//                    // Complete the changes added above
-//                    ft.commit();
-//
-//
-//                } else if (tabId == R.id.tab_equipment) {
-//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                    // Replace the contents of the container with the new fragment
-//                    ft.replace(R.id.fragment_container, new MachineGroupFragment());
-//                    // or ft.add(R.id.your_placeholder, new FooFragment());
-//                    // Complete the changes added above
-//                    ft.commit();
-//
-//
-//                } else if (tabId == R.id.tab_queue) {
-//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                    // Replace the contents of the container with the new fragment
-//                    ft.replace(R.id.fragment_container, new QueueFragment());
-//                    // or ft.add(R.id.your_placeholder, new FooFragment());
-//                    // Complete the changes added above
-//                    ft.commit();
-//
-//
-//                } else if (tabId == R.id.tab_feedback) {
-//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                    // Replace the contents of the container with the new fragment
-//                    ft.replace(R.id.fragment_container, new FeedbackFragment());
-//                    // or ft.add(R.id.your_placeholder, new FooFragment());
-//                    // Complete the changes added above
-//                    ft.commit();
-//
-//                } else if (tabId == R.id.tab_more) {
-//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                    // Replace the contents of the container with the new fragment
-//                    ft.replace(R.id.fragment_container, new MoreFragment());
-//                    // or ft.add(R.id.your_placeholder, new FooFragment());
-//                    // Complete the changes added above
-//                    ft.commit();
-//
-//                }
-//            }
-//
-//        });
-
-
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        inflater.inflate(R.menu.main_activity_bar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                final String KEY_ACTIVITY_NAME = "Action";
-
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.putExtra(KEY_ACTIVITY_NAME, "logout");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     public void setActionBarTitle(String title) {
@@ -201,6 +117,19 @@ public class MainActivity extends AppCompatActivity {
             Log.e("BNVHelper", "Unable to get shift mode field", e);
         } catch (IllegalAccessException e) {
             Log.e("BNVHelper", "Unable to change value of shift mode", e);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 0){
+            super.onBackPressed();
+        } else {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, new HomeFragment());
+            transaction.commit();
         }
     }
 

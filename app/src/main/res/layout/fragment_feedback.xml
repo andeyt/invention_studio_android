@@ -180,6 +180,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="Type any comments here"
+                    android:textColorHint="@color/colorAccent"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
