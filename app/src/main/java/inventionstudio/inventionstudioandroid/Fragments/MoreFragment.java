@@ -1,34 +1,47 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
+import inventionstudio.inventionstudioandroid.Activities.LandingActivity;
 import inventionstudio.inventionstudioandroid.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoreFragment extends Fragment {
+public class MoreFragment extends PreferenceFragmentCompat {
 
 
     public MoreFragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
         getActivity().setTitle("More");
 
-        return inflater.inflate(R.layout.fragment_more, container, false);
+        Preference button = findPreference("logout_button");
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getActivity(), LandingActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
 }

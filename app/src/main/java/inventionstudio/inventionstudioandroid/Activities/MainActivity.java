@@ -1,5 +1,6 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
 
+    @SuppressLint("RestrictedApi")
     private void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -124,12 +126,10 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        if (backStackEntryCount == 0){
+        if (backStackEntryCount != 0){
             super.onBackPressed();
         } else {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new HomeFragment());
-            transaction.commit();
+            bottom.setSelectedItemId(R.id.home);
         }
     }
 
