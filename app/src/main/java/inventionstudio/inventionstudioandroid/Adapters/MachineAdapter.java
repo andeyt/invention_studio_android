@@ -11,20 +11,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import inventionstudio.inventionstudioandroid.Model.Equipment;
+import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
 
 /**
  * Created by Rishab K on 1/27/2018.
  */
 
-public class EquipmentAdapter extends ArrayAdapter<Equipment> {
+public class MachineAdapter extends ArrayAdapter<Machine> {
 
     Context context;
     int layoutResourceId;
-    ArrayList<Equipment> data = null;
+    ArrayList<Machine> data = null;
 
-    public EquipmentAdapter(Context context, int layoutResourceId, ArrayList<Equipment> data) {
+    public MachineAdapter(Context context, int layoutResourceId, ArrayList<Machine> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -53,11 +53,12 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
             holder = (EquipmentHolder) row.getTag();
         }
 
-        Equipment equipment = data.get(position);
-        if (equipment != null) {
-            holder.name.setText(equipment.getName());
-            holder.icon.setImageResource(equipment.getIcon());
-            holder.statusText.setText(equipment.getStatus());
+        Machine m = data.get(position);
+        if (m != null) {
+            holder.name.setText(m.getToolName());
+            holder.icon.setImageResource(setStatus(m.getToolIsOperational(), m.getCurrentUserUserName()));
+            holder.icon.setTag(setStatus(m.getToolIsOperational(), m.getCurrentUserUserName()));
+            holder.statusText.setText(setStatusText((Integer) holder.icon.getTag()));
         }
 
         return row;
@@ -69,4 +70,33 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
         TextView name;
         TextView statusText;
     }
+
+    public int setStatus(Boolean operational, String curUser) {
+        if (operational) {
+            if (curUser == "") {
+                return R.drawable.in_use;
+            }
+            return R.drawable.available;
+        }
+        return R.drawable.unavailable;
+
+    }
+
+    public String setStatusText(int statusIcon) {
+        switch (statusIcon) {
+
+            case R.drawable.unavailable:
+                return "Unavailable";
+            case R.drawable.available:
+                return "Available";
+            case R.drawable.in_use:
+                return "In Use";
+            default:
+                return "No information";
+        }
+
+    }
+
+
+
 }

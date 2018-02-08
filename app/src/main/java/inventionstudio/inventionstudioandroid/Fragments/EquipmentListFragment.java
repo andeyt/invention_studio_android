@@ -3,26 +3,41 @@ package inventionstudio.inventionstudioandroid.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
-import inventionstudio.inventionstudioandroid.Adapters.EquipmentAdapter;
+import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Adapters.MachineAdapter;
 import inventionstudio.inventionstudioandroid.Model.Equipment;
+import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
 */
 public class EquipmentListFragment extends MachineGroupFragment {
 
-
+    public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
+    private static Retrofit retrofit = null;
+    private ArrayList<Machine> machines;
+    private ListView listView;
+    private String machineGroup;
+    private TextView description;
 
     public EquipmentListFragment() {
         // Required empty public constructor
@@ -34,40 +49,19 @@ public class EquipmentListFragment extends MachineGroupFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Bundle bundle = getArguments();
-        String str= (String) bundle.getSerializable("MachineGroup");
+        machineGroup = (String) bundle.getSerializable("MachineGroup");
 
-        getActivity().setTitle(str);
+        getActivity().setTitle(machineGroup);
 
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
-        ArrayList<Equipment> equipment = new ArrayList<>();
-        equipment.add(new Equipment(2, "Machine A"));
-        equipment.add(new Equipment(1, "Machine B"));
-        equipment.add(new Equipment(1, "Machine C"));
-        equipment.add(new Equipment(0, "Machine D"));
-        equipment.add(new Equipment(2, "Machine E"));
-        equipment.add(new Equipment(1, "Machine F"));
-        equipment.add(new Equipment(2, "Machine G"));
-        equipment.add(new Equipment(0, "Machine H"));
-        equipment.add(new Equipment(2, "Machine J"));
-        equipment.add(new Equipment(1, "Machine K"));
-        equipment.add(new Equipment(0, "Machine L"));
-        equipment.add(new Equipment(0, "Machine M"));
-        equipment.add(new Equipment(2, "Machine N"));
-        equipment.add(new Equipment(1, "Machine O"));
-        equipment.add(new Equipment(0, "Machine P"));
-        equipment.add(new Equipment(2, "Machine Q"));
+        View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
 
 
-        Collections.sort(equipment);
 
-        EquipmentAdapter adapter = new EquipmentAdapter(getActivity(), R.layout.equipment_list_row, equipment);
-        View header = (View)getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
-
-        final ListView listView = (ListView) rootView.findViewById(R.id.equipment_list);
-        listView.setAdapter(adapter);
+        listView = (ListView) rootView.findViewById(R.id.equipment_list);
+        description = (TextView) header.findViewById(R.id.group_description);
         listView.addHeaderView(header, null, false);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -89,7 +83,54 @@ public class EquipmentListFragment extends MachineGroupFragment {
             }
 
         });
+
+        connectAndGetApiData();
+
         return rootView;
+    }
+
+
+    public void connectAndGetApiData(){
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        Call<List<Machine>> call = sumsApiService.getMachineList(8);
+        call.enqueue(new Callback<List<Machine>>() {
+            @Override
+            public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
+                List<Machine> e = response.body();
+
+                machines = new ArrayList<>();
+                for (Machine m : e) {
+                    if (m.getLocationName().equals(machineGroup)) {
+                        machines.add(m);
+                    }
+
+                }
+
+                MachineAdapter adapter = new MachineAdapter(getActivity(), R.layout.equipment_list_row, machines);
+
+                listView.setAdapter(adapter);
+                if (machines.isEmpty()) {
+                    description.setText("No machines in this group");
+                } else {
+                    description.setText(machines.get(0).getEquipmentGroupdescription());
+                }
+
+
+
+
+
+            }
+            @Override
+            public void onFailure(Call<List<Machine>> call, Throwable throwable) {
+                Log.e("REST", throwable.toString());
+            }
+        });
     }
 
 

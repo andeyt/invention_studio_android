@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.Machines;
+import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,24 +92,24 @@ public class MachineGroupFragment extends Fragment {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-        Call<List<Machines>> call = sumsApiService.getMachineList();
-        call.enqueue(new Callback<List<Machines>>() {
+        Call<List<Machine>> call = sumsApiService.getMachineList(8);
+        call.enqueue(new Callback<List<Machine>>() {
             @Override
-            public void onResponse(Call<List<Machines>> call, Response<List<Machines>> response) {
-                List<Machines> e = response.body();
+            public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
+                List<Machine> e = response.body();
                 groups = new HashSet<>();
                 for (int i = 0; i < e.size(); i++) {
                     groups.add(e.get(i).getLocationName());
                 }
                 ArrayList<String> groupList = new ArrayList<>(groups);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                         android.R.layout.simple_list_item_1, groupList);
 
                 listView.setAdapter(adapter);
 
             }
             @Override
-            public void onFailure(Call<List<Machines>> call, Throwable throwable) {
+            public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 Log.e("REST", throwable.toString());
             }
         });

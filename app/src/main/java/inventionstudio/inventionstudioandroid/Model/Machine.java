@@ -7,7 +7,9 @@ package inventionstudio.inventionstudioandroid.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Machines {
+import java.io.Serializable;
+
+public class Machine implements Serializable {
 
     @SerializedName("equipmentGroupId")
     @Expose
