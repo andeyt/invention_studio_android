@@ -5,12 +5,13 @@ package inventionstudio.inventionstudioandroid.API;
  */
 
 public class APIController {
+
     private static final APIController ourInstance = new APIController();
 
     static APIController getInstance() {
         return ourInstance;
     }
 
-    private APIController() {
-    }
+    private APIController() {}
+
 }
