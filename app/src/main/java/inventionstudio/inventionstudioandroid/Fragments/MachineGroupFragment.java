@@ -2,19 +2,28 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import inventionstudio.inventionstudioandroid.Model.Equipment;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Model.Machines;
 import inventionstudio.inventionstudioandroid.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -23,9 +32,16 @@ import inventionstudio.inventionstudioandroid.R;
 public class MachineGroupFragment extends Fragment {
 
 
+    public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
+    private static Retrofit retrofit = null;
+    private HashSet<String> groups;
+    private ListView listView;
+
+
     public MachineGroupFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -38,15 +54,8 @@ public class MachineGroupFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_machine_group, container, false);
 
+        listView = (ListView) rootView.findViewById(R.id.listview);
 
-        //Build adapter
-        String[] testArray = {"3D Printers", "Lasers", "Waterjet"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, testArray);
-
-        final ListView listView = (ListView) rootView.findViewById(R.id.listview);
-        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -69,10 +78,42 @@ public class MachineGroupFragment extends Fragment {
             }
         });
 
-
+        connectAndGetApiData();
 
         return rootView;
 
     }
 
+    public void connectAndGetApiData(){
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        Call<List<Machines>> call = sumsApiService.getMachineList();
+        call.enqueue(new Callback<List<Machines>>() {
+            @Override
+            public void onResponse(Call<List<Machines>> call, Response<List<Machines>> response) {
+                List<Machines> e = response.body();
+                groups = new HashSet<>();
+                for (int i = 0; i < e.size(); i++) {
+                    groups.add(e.get(i).getLocationName());
+                }
+                ArrayList<String> groupList = new ArrayList<>(groups);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_list_item_1, groupList);
+
+                listView.setAdapter(adapter);
+
+            }
+            @Override
+            public void onFailure(Call<List<Machines>> call, Throwable throwable) {
+                Log.e("REST", throwable.toString());
+            }
+        });
+    }
 }
+
+
