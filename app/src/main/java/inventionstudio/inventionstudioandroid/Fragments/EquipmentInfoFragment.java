@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
     private Retrofit retrofit;
     private String machineName;
     private Call<List<Machine>> call;
+    private ProgressBar loadProgress;
 
     public EquipmentInfoFragment() {
         // Required empty public constructor
@@ -52,6 +55,8 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         statusText = rootView.findViewById(R.id.status_text);
 
         description = rootView.findViewById(R.id.machine_description);
+
+        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
         connectAndGetApiData();
 
@@ -89,6 +94,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
 
                         description.setText(m.getToolDescription());
 
+                        loadProgress.setVisibility(View.GONE);
                         break;
                     }
                 }
@@ -97,7 +103,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                Log.e("REST", throwable.toString());
+                loadProgress.setVisibility(View.GONE);
             }
         });
     }

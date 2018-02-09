@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ public class QueueFragment extends Fragment {
     private HashSet<String> queues;
     private HashMap<String, List<String>> queueData;
     private Call<List<QueueMember>> call;
+    private ProgressBar loadProgress;
 
     public QueueFragment() {
         // Required empty public constructor
@@ -50,6 +53,7 @@ public class QueueFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
         expandableListView = rootView.findViewById(R.id.expandable_list);
         // Gives the queue data from the SUMS API
+        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         connectAndGetApiData();
 
         return rootView;
@@ -92,10 +96,11 @@ public class QueueFragment extends Fragment {
                 ArrayList<String> queueList = new ArrayList<>(queues);
                 adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
                 expandableListView.setAdapter(adapter);
+                loadProgress.setVisibility(View.GONE);
             }
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
-                Log.e("REST", throwable.toString());
+                loadProgress.setVisibility(View.GONE);
             }
         });
     }

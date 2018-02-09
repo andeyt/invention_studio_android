@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
     private String machineGroup;
     private TextView description;
     private Call<List<Machine>> call;
+    private ProgressBar loadProgress;
 
     public EquipmentListFragment() {
         // Required empty public constructor
@@ -53,6 +56,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
+        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
 
 
@@ -127,6 +131,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 } else {
                     description.setText(machines.get(0).getEquipmentGroupdescription());
                 }
+                loadProgress.setVisibility(View.GONE);
 
 
 
@@ -135,7 +140,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                Log.e("REST", throwable.toString());
+                loadProgress.setVisibility(View.GONE);
             }
         });
     }

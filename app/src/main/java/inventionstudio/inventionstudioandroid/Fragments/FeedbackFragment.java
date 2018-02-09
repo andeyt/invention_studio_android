@@ -28,10 +28,11 @@ public class FeedbackFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
+        getActivity().setTitle("Feedback");
 
         // EditText Instantiation
         EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
-//        textInput.setBackgroundResource(R.drawable.edittext_border);
+
 
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array,
