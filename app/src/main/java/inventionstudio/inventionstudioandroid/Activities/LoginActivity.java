@@ -40,6 +40,8 @@ public class LoginActivity extends Activity {
 
                 String cookies = CookieManager.getInstance().getCookie(url);
                 if (cookies.contains("CASTGT")) {
+
+
                     Intent homeIntent = new Intent(getApplicationContext(), AgreementActivity.class);
                     startActivity(homeIntent);
                     finish();
