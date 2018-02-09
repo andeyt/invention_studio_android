@@ -38,6 +38,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
     private ListView listView;
     private String machineGroup;
     private TextView description;
+    private Call<List<Machine>> call;
 
     public EquipmentListFragment() {
         // Required empty public constructor
@@ -71,8 +72,8 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment2 = new MainEquipmentFragment();
                 Bundle bundle = new Bundle();
-                Equipment obj = ((Equipment) o);
-                bundle.putSerializable("Equipment", obj);
+                Machine obj = ((Machine) o);
+                bundle.putSerializable("Machine", obj);
                 fragment2.setArguments(bundle);
                 // Replace the contents of the container with the new fragment
                 ft.replace(R.id.fragment_container, fragment2);
@@ -89,6 +90,16 @@ public class EquipmentListFragment extends MachineGroupFragment {
         return rootView;
     }
 
+    @Override
+    public void onPause () {
+        super.onPause();
+        if (call != null) {
+            call.cancel();
+        }
+
+
+    }
+
 
     public void connectAndGetApiData(){
         if (retrofit == null) {
@@ -98,7 +109,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-        Call<List<Machine>> call = sumsApiService.getMachineList(8);
+        call = sumsApiService.getMachineList(8);
         call.enqueue(new Callback<List<Machine>>() {
             @Override
             public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {

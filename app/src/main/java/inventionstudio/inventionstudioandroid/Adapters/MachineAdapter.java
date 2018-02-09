@@ -56,9 +56,8 @@ public class MachineAdapter extends ArrayAdapter<Machine> {
         Machine m = data.get(position);
         if (m != null) {
             holder.name.setText(m.getToolName());
-            holder.icon.setImageResource(setStatus(m.getToolIsOperational(), m.getCurrentUserUserName()));
-            holder.icon.setTag(setStatus(m.getToolIsOperational(), m.getCurrentUserUserName()));
-            holder.statusText.setText(setStatusText((Integer) holder.icon.getTag()));
+            holder.icon.setImageResource(m.statusIcon());
+            holder.statusText.setText(m.statusText());
         }
 
         return row;
@@ -71,31 +70,7 @@ public class MachineAdapter extends ArrayAdapter<Machine> {
         TextView statusText;
     }
 
-    public int setStatus(Boolean operational, String curUser) {
-        if (operational) {
-            if (curUser == "") {
-                return R.drawable.in_use;
-            }
-            return R.drawable.available;
-        }
-        return R.drawable.unavailable;
 
-    }
-
-    public String setStatusText(int statusIcon) {
-        switch (statusIcon) {
-
-            case R.drawable.unavailable:
-                return "Unavailable";
-            case R.drawable.available:
-                return "Available";
-            case R.drawable.in_use:
-                return "In Use";
-            default:
-                return "No information";
-        }
-
-    }
 
 
 

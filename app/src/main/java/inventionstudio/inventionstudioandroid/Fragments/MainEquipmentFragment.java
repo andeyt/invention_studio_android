@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import inventionstudio.inventionstudioandroid.Model.Equipment;
+import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
 
 /**
@@ -30,6 +31,10 @@ public class MainEquipmentFragment extends MachineGroupFragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main_equipment, container, false);
+        Bundle bundle = getArguments();
+        Machine obj= (Machine) bundle.getSerializable("Machine");
+
+        getActivity().setTitle(obj.getToolName());
 
 
         final RadioButton rb1 = (RadioButton) rootView.findViewById(R.id.info);
@@ -38,7 +43,6 @@ public class MainEquipmentFragment extends MachineGroupFragment {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         // Replace the contents of the container with the new fragment
         Fragment fragment2 = new EquipmentInfoFragment();
-        Bundle bundle = getArguments();
         fragment2.setArguments(bundle);
         // Replace the contents of the container with the new fragment
         ft.replace(R.id.equipment_fragment_container, fragment2);

@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import inventionstudio.inventionstudioandroid.R;
+
 public class Machine implements Serializable {
 
     @SerializedName("equipmentGroupId")
@@ -186,6 +188,28 @@ public class Machine implements Serializable {
 
     public void setToolIsOperational(Boolean toolIsOperational) {
         this.toolIsOperational = toolIsOperational;
+    }
+
+    public int statusIcon() {
+        if (toolIsOperational) {
+            if (toolCurrentUser.equals("")) {
+                return R.drawable.in_use;
+            }
+            return R.drawable.available;
+        }
+        return R.drawable.unavailable;
+
+    }
+
+    public String statusText() {
+        if (toolIsOperational) {
+            if (toolCurrentUser.equals("")) {
+                return "In Use";
+            }
+            return "Available";
+        }
+        return "Unavailable";
+
     }
 
 }

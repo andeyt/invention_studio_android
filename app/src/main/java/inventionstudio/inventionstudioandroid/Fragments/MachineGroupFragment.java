@@ -36,6 +36,7 @@ public class MachineGroupFragment extends Fragment {
     private static Retrofit retrofit = null;
     private HashSet<String> groups;
     private ListView listView;
+    private Call<List<Machine>> call;
 
 
     public MachineGroupFragment() {
@@ -84,7 +85,18 @@ public class MachineGroupFragment extends Fragment {
 
     }
 
-    public void connectAndGetApiData(){
+    @Override
+    public void onPause () {
+        super.onPause();
+        if (call != null) {
+            call.cancel();
+        }
+
+
+    }
+
+
+    public void connectAndGetApiData() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -92,14 +104,17 @@ public class MachineGroupFragment extends Fragment {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-        Call<List<Machine>> call = sumsApiService.getMachineList(8);
+        call = sumsApiService.getMachineList(8);
         call.enqueue(new Callback<List<Machine>>() {
             @Override
             public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
                 List<Machine> e = response.body();
                 groups = new HashSet<>();
-                for (int i = 0; i < e.size(); i++) {
-                    groups.add(e.get(i).getLocationName());
+                for (Machine m : e) {
+                    if (!(m.getLocationName().equals(""))) {
+                        groups.add(m.getLocationName());
+                    }
+
                 }
                 ArrayList<String> groupList = new ArrayList<>(groups);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
@@ -107,13 +122,17 @@ public class MachineGroupFragment extends Fragment {
 
                 listView.setAdapter(adapter);
 
+
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 Log.e("REST", throwable.toString());
             }
         });
+
+
     }
+
 }
 
 

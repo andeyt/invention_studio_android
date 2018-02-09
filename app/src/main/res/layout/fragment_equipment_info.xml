@@ -35,7 +35,9 @@
             <TextView
                 android:id="@+id/status_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
 
             <ImageView
                 android:id="@+id/status_icon"
@@ -45,7 +47,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/machine_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
