@@ -4,6 +4,7 @@ package inventionstudio.inventionstudioandroid.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Adapters.ExpandableListAdapter;
+import inventionstudio.inventionstudioandroid.Model.QueueMember;
 import inventionstudio.inventionstudioandroid.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -23,6 +31,8 @@ import inventionstudio.inventionstudioandroid.R;
  */
 public class QueueFragment extends Fragment {
 
+    public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
+    private static Retrofit retrofit = null;
     ExpandableListAdapter adapter;
     ExpandableListView expandableListView;
     List<String> queues;
@@ -39,8 +49,6 @@ public class QueueFragment extends Fragment {
         getActivity().setTitle("Queue");
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
 
-
-
         return rootView;
     }
 
@@ -51,33 +59,50 @@ public class QueueFragment extends Fragment {
         text.setText("To join a queue, head to the kiosk closest to the machine" +
                 " you're interested in. Find a PI (with a green armband) for more info.");
         expandableListView = view.findViewById(R.id.expandable_list);
-        prepareListData();
-        adapter = new ExpandableListAdapter(getActivity(), queues, queueData);
-        expandableListView.setAdapter(adapter);
+        // Gives the queue data from the SUMS API
+        connectAndGetApiData();
     }
 
-    private void prepareListData() {
-        // Here is where we will use the API to get all lists. Dummy data used now.
-        queues = new ArrayList<>();
-        queues.add("Queue 1");
-        queues.add("Queue 2");
-        queues.add("Queue 3");
-        queues.add("Queue 4");
+    public void connectAndGetApiData(){
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        Call<List<QueueMember>> call = sumsApiService.getQueueLists(8, "rkaup3");
+        call.enqueue(new Callback<List<QueueMember>>() {
+            @Override
+            public void onResponse(Call<List<QueueMember>> call, Response<List<QueueMember>> response) {
+                List<QueueMember> members = response.body();
+                System.out.println(members);
+                // Run through list of Queue members
+                // Create Queue list as well as HashMap
+                String currentQueue = "";
+                List<String> queueList = new ArrayList<>();
+                for (QueueMember q : members) {
+                    // set current queue name and add to queues if need be
+                    if (currentQueue.equals("")) {
+                        currentQueue = q.getName();
+                        queues.add(currentQueue);
+                    } else if (!currentQueue.equals(q.getName())) {
+                        queueData.put(currentQueue, queueList);
+                        queueList.clear();
+                        currentQueue = q.getName();
+                    }
 
-        // Only creating one child list here used in all queues
-        // In reality there will be a different one for each queue
-        queueData = new HashMap<>();
-        List<String> people = new ArrayList<>();
-        people.add("Maxwell");
-        people.add("Rishab");
-        people.add("Nick");
-        people.add("Noah");
-        people.add("Aman");
+                    // add memberName to list
+                    queueList.add(q.getMemberName());
+                }
 
-        queueData.put(queues.get(0), people);
-        queueData.put(queues.get(1), people);
-        queueData.put(queues.get(2), people);
-        queueData.put(queues.get(3), people);
+                adapter = new ExpandableListAdapter(getActivity(), queues, queueData);
+                expandableListView.setAdapter(adapter);
+            }
+            @Override
+            public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
+                Log.e("REST", throwable.toString());
+            }
+        });
     }
-
 }

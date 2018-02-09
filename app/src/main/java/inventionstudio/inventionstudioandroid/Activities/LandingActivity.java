@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 
-import inventionstudio.inventionstudioandroid.API.APIController;
 import inventionstudio.inventionstudioandroid.R;
 
 public class LandingActivity extends AppCompatActivity {
