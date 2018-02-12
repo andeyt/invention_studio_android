@@ -1,6 +1,7 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,12 +27,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class QueueFragment extends Fragment {
 
+    public static final String USER_PREFERENCES = "UserPrefs";
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private static Retrofit retrofit = null;
     private ExpandableListAdapter adapter;
@@ -75,6 +79,11 @@ public class QueueFragment extends Fragment {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        // Call to preferences to get username and OTP
+        // Replace hardcoded args when work in Login is complete.
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        // String username = prefs.getString("username");
+        // String otp = prefs.getString("otp");
         call = sumsApiService.getQueueLists(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
         call.enqueue(new Callback<List<QueueMember>>() {
             @Override

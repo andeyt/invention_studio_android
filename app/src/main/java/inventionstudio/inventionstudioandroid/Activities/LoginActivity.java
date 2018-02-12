@@ -28,6 +28,7 @@ import inventionstudio.inventionstudioandroid.R;
 //import edu.gatech.t_squaremobile.R;
 
 public class LoginActivity extends Activity {
+    public static final String USER_PREFERENCES = "UserPrefs";
     WebView webView;
 
     @Override
@@ -50,7 +51,13 @@ public class LoginActivity extends Activity {
                     URL urlObj = new URL(url);
                     String baseURL = urlObj.getProtocol() + "://" + urlObj.getHost();
                     if (baseURL.equals("https://sums.gatech.edu")) {
-
+                        // TODO: get the username and the OTP, waiting for Aman
+                        // String username = getUserName()
+                        // String otp = getOTP()
+                        SharedPreferences.Editor editor = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE).edit();
+                        // editor.putString("username", username);
+                        // editor.putString("OTP", otp);
+                        editor.apply();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
