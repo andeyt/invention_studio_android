@@ -1,6 +1,8 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 
 import android.app.Activity;
@@ -8,10 +10,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.net.URL;
 
 import inventionstudio.inventionstudioandroid.R;
 
@@ -31,22 +41,21 @@ public class LoginActivity extends Activity {
         webView.clearHistory();
         CookieManager.getInstance().removeAllCookies(null);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
-        webView.loadUrl("https://login.gatech.edu/cas/login");
+        webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums.gatech.edu/EditResearcherProfile.aspx");
         webView.setWebViewClient(new WebViewClient() {
 
             @Override
             public void onPageFinished(WebView webView, String url) {
-                Log.d("URL", url);
+                try {
+                    URL urlObj = new URL(url);
+                    String baseURL = urlObj.getProtocol() + "://" + urlObj.getHost();
+                    if (baseURL.equals("https://sums.gatech.edu")) {
 
-                String cookies = CookieManager.getInstance().getCookie(url);
-                if (cookies.contains("CASTGT")) {
-
-
-                    Intent homeIntent = new Intent(getApplicationContext(), AgreementActivity.class);
-                    startActivity(homeIntent);
-                    finish();
-
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
 
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {

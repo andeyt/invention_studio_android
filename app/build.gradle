@@ -36,7 +36,8 @@ dependencies {
     compile 'com.roughike:bottom-bar:2.0'
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support:preference-v14:26.+'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'org.jsoup:jsoup:1.11.2'
     testCompile 'junit:junit:4.12'
 }
