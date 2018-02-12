@@ -84,6 +84,8 @@ public class QueueFragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         // String username = prefs.getString("username");
         // String otp = prefs.getString("otp");
+
+        // TODO: Change to variables
         call = sumsApiService.getQueueLists(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
         call.enqueue(new Callback<List<QueueMember>>() {
             @Override

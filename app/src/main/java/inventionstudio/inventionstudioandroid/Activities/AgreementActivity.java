@@ -1,6 +1,7 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,17 +21,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AgreementActivity extends AppCompatActivity {
+    public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private Call<List<UserGroups>> call;
-    private boolean studioMember = false;
+    private boolean studioMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_agreement);
 
         Button submit = (Button) findViewById(R.id.agreementButton);
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,15 +54,23 @@ public class AgreementActivity extends AppCompatActivity {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        // Call to preferences to get username and OTP
+        // Replace hardcoded args when work in Login is complete.
+        SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        // String username = prefs.getString("username");
+        // String otp = prefs.getString("otp");
+        // TODO: Change to variables
         call = sumsApiService.getUserGroups("rkaup3", "HYXUVGNMLR34MKYZT20T");
         call.enqueue(new Callback<List<UserGroups>>() {
             @Override
             public void onResponse(Call<List<UserGroups>> call, Response<List<UserGroups>> response) {
                 List<UserGroups> groups = response.body();
                 studioMember = false;
-                for (UserGroups u : groups) {
-                    if (u.getEquipmentGroupId() == 8) {
-                        studioMember = true;
+                if (groups != null) {
+                    for (UserGroups u : groups) {
+                        if (u.getEquipmentGroupId() == 8) {
+                            studioMember = true;
+                        }
                     }
                 }
 
