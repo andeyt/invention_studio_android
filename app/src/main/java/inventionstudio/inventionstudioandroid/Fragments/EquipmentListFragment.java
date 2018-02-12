@@ -13,7 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
@@ -118,10 +124,14 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 machines = new ArrayList<>();
                 for (Machine m : e) {
                     if (m.getLocationName().equals(machineGroup)) {
+                        // set compareVal
+                        m.statusIcon();
                         machines.add(m);
                     }
 
                 }
+
+                Collections.sort(machines);
 
                 MachineAdapter adapter = new MachineAdapter(getActivity(), R.layout.equipment_list_row, machines);
 
