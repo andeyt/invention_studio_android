@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,18 +28,36 @@ public class FeedbackFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
         getActivity().setTitle("Feedback");
 
         // EditText Instantiation
         EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
 
 
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
+        final Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String text = spinner.getSelectedItem().toString();
+                View group = rootView.findViewById(R.id.rating_group);
+                if (text.equals("PI Feedback")) {
+                    group.setVisibility(View.VISIBLE);
+                } else {
+                    group.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
 
