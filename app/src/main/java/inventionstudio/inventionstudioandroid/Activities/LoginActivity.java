@@ -50,12 +50,12 @@ import java.net.URLConnection;
 
 public class LoginActivity extends Activity {
     public static final String USER_PREFERENCES = "UserPrefs";
-    WebView webView;
-    String otp;
-    String username;
+    private WebView webView;
+    private String otp;
+    private String username;
     final String usernameDisplayId = "LiverpoolTheme_wt1_block_wtMainContent_SilkUIFramework_wt8_block_wtColumn2_wt14_SilkUIFramework_wt14_block_wtContent1_wt15_SilkUIFramework_wt382_block_wtPanelContent_SilkUIFramework_wt109_block_wtColumn2_SilkUIFramework_wt289_block_wtPanelContent_SilkUIFramework_wtBrief_block_wtContent_wtUsernameDisplay";
     final String OtpDisplayId = "LiverpoolTheme_wt1_block_wtMainContent_SilkUIFramework_wt8_block_wtColumn2_wt14_SilkUIFramework_wt14_block_wtContent1_wt15_SilkUIFramework_wt382_block_wtPanelContent_SilkUIFramework_wt109_block_wtColumn2_SilkUIFramework_wt289_block_wtPanelContent_SilkUIFramework_wtBrief_block_wtContent_wtCalendarLink";
-
+    private View group;
 
 
     @Override
@@ -71,7 +71,7 @@ public class LoginActivity extends Activity {
         webView.clearHistory();
         CookieManager.getInstance().removeAllCookies(null);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
-
+        group = findViewById(R.id.progress_group);
 
 
         webView.setWebViewClient(new WebViewClient() {
@@ -82,7 +82,8 @@ public class LoginActivity extends Activity {
                     URL baseURL = new URL(url);
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
                     if (base.equals("https://sums-dev.gatech.edu")) {
-                        webView.setVisibility(View.INVISIBLE);
+                        webView.setVisibility(View.GONE);
+                        group.setVisibility(View.VISIBLE);
                     }
                 } catch (Exception e) {
 
@@ -96,7 +97,7 @@ public class LoginActivity extends Activity {
                     URL baseURL = new URL(url);
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
                     if (base.equals("https://sums-dev.gatech.edu")) {
-                        webView.setVisibility(View.INVISIBLE);
+                        webView.setVisibility(View.GONE);
                         webView.evaluateJavascript("document.getElementById(\"" + usernameDisplayId + "\").innerText", new ValueCallback<String>() {
                             @Override
                             public void onReceiveValue(String s) {
@@ -127,6 +128,7 @@ public class LoginActivity extends Activity {
 
                         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0,0);
                         finish();
                     }
 
