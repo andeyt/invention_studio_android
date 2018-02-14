@@ -82,12 +82,14 @@ public class QueueFragment extends Fragment {
     }
 
     public void connectAndGetApiData(){
+        // Create the retrofit for building the API data
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         // Call to preferences to get username and OTP
         // Replace hardcoded args when work in Login is complete.
@@ -107,13 +109,26 @@ public class QueueFragment extends Fragment {
                 queues = new HashSet<>();
                 queueData = new HashMap<>();
                 for (QueueMember q : members) {
-                    // set current queue name and add to queues if need be
+                    // Filter out trash/test daya
+                    if (q.getName().equals("reuse")) {
+                        continue;
+                    }
+                    // Add queue name to Hashset, check if it has an accompanying list
                     queues.add(q.getName());
                     if (queueData.get(q.getName()) == null) {
+                        // Add list as value of the queue key name
                         queueData.put(q.getName(), new ArrayList<String>());
                     }
-                    queueData.get(q.getName()).add(q.getMemberName());
+                    // Add member to the queue list
+                    if (q.getMemberName().trim().equals("")) {
+                        // if memberName is blank, do username
+                        queueData.get(q.getName()).add(q.getMemberUserName());
+                    } else {
+                        // use memberName otherwise
+                        queueData.get(q.getName()).add(q.getMemberName());
+                    }
                 }
+                // Setup and create ExpandableList
                 ArrayList<String> queueList = new ArrayList<>(queues);
                 adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
                 expandableListView.setAdapter(adapter);
