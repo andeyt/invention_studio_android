@@ -26,7 +26,9 @@
         </activity>
         <activity
             android:name=".Activities.AgreementActivity"
-            android:label="@string/title_activity_agreement"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.LoadingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
