@@ -12,27 +12,21 @@ public class QueueMember {
     @SerializedName("queueGroupId")
     @Expose
     private Integer queueGroupId;
-
     @SerializedName("memberName")
     @Expose
     private String memberName;
-
     @SerializedName("memberUserName")
     @Expose
     private String memberUserName;
-
     @SerializedName("name")
     @Expose
     private String name;
-
     @SerializedName("hasBeenNotified")
     @Expose
     private Boolean hasBeenNotified;
-
     @SerializedName("memberMinutesRemaining")
     @Expose
     private Integer memberMinutesRemaining;
-
     @SerializedName("memberQueueLocation")
     @Expose
     private Integer memberQueueLocation;

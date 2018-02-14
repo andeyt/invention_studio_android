@@ -4,6 +4,7 @@ package inventionstudio.inventionstudioandroid.Model;
  * Created by Rishab K on 2/8/2018.
  */
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +12,24 @@ import java.io.Serializable;
 
 import inventionstudio.inventionstudioandroid.R;
 
-public class Machine implements Serializable {
+public class Machine implements Serializable, Comparable<Machine>{
+
+
+
+
+    transient private int statusComparisonVal;
+
+    public int getStatusComparisonVal() {
+        return statusComparisonVal;
+    }
+
+    public int compareTo(Machine other) {
+        if (this.statusComparisonVal == other.getStatusComparisonVal()) {
+            return this.getToolName().compareTo(other.getToolName());
+        }
+        return this.statusComparisonVal - other.getStatusComparisonVal();
+    }
+
 
     @SerializedName("equipmentGroupId")
     @Expose
@@ -190,20 +208,27 @@ public class Machine implements Serializable {
         this.toolIsOperational = toolIsOperational;
     }
 
+
+
+
     public int statusIcon() {
         if (toolIsOperational) {
-            if (toolCurrentUser.equals("")) {
+            if (!toolCurrentUser.equals("")) {
+                statusComparisonVal = 0;
                 return R.drawable.in_use;
             }
+            statusComparisonVal = -1;
             return R.drawable.available;
+
         }
+        statusComparisonVal = 1;
         return R.drawable.unavailable;
 
     }
 
     public String statusText() {
         if (toolIsOperational) {
-            if (toolCurrentUser.equals("")) {
+            if (!toolCurrentUser.equals("")) {
                 return "In Use";
             }
             return "Available";

@@ -1,9 +1,11 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +44,8 @@ public class MachineGroupFragment extends Fragment {
     private HashSet<String> groups;
     private ListView listView;
     private Call<List<Machine>> call;
-
+    private ProgressBar loadProgress;
+    private SwipeRefreshLayout refreshLayout;
 
     public MachineGroupFragment() {
         // Required empty public constructor
@@ -56,6 +64,9 @@ public class MachineGroupFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_machine_group, container, false);
 
         listView = (ListView) rootView.findViewById(R.id.listview);
+        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,6 +92,15 @@ public class MachineGroupFragment extends Fragment {
 
         connectAndGetApiData();
 
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connectAndGetApiData();
+            }
+        });
+
         return rootView;
 
     }
@@ -104,6 +124,7 @@ public class MachineGroupFragment extends Fragment {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+
         call = sumsApiService.getMachineList(8);
         call.enqueue(new Callback<List<Machine>>() {
             @Override
@@ -121,12 +142,13 @@ public class MachineGroupFragment extends Fragment {
                         android.R.layout.simple_list_item_1, groupList);
 
                 listView.setAdapter(adapter);
-
+                loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
 
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                Log.e("REST", throwable.toString());
+                loadProgress.setVisibility(View.GONE);
             }
         });
 

@@ -3,21 +3,19 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
@@ -36,6 +34,8 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
     private Retrofit retrofit;
     private String machineName;
     private Call<List<Machine>> call;
+    private ProgressBar loadProgress;
+    private SwipeRefreshLayout refreshLayout;
 
     public EquipmentInfoFragment() {
         // Required empty public constructor
@@ -57,6 +57,17 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         statusText = rootView.findViewById(R.id.status_text);
 
         description = rootView.findViewById(R.id.machine_description);
+
+        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connectAndGetApiData();
+            }
+        });
 
         connectAndGetApiData();
 
@@ -94,6 +105,8 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
 
                         description.setText(m.getToolDescription());
 
+                        loadProgress.setVisibility(View.GONE);
+                        refreshLayout.setRefreshing(false);
                         break;
                     }
                 }
@@ -102,7 +115,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                Log.e("REST", throwable.toString());
+                loadProgress.setVisibility(View.GONE);
             }
         });
     }

@@ -1,6 +1,7 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,12 +12,26 @@ import android.widget.Button;
 import inventionstudio.inventionstudioandroid.R;
 
 public class LandingActivity extends AppCompatActivity {
-    Button login_button;
+    public static final String USER_PREFERENCES = "UserPrefs";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
+        // TODO: Check if user has ever logged in/ if they have, if current time is < 24hrs from last login
+//        long loginTime = getServerTime();
+//        SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+//        if (prefs.contains("lastLoginTime")) {
+//            long lastLoginTime = prefs.getLong("lastLoginTime", 0);
+//            if (lastLoginTime - loginTime < 24) {
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//            } else {
+//                setContentView(R.layout.activity_landing);
+//            }
+//        } else {
+//            setContentView(R.layout.activity_landing);
+//        }
 
+        setContentView(R.layout.activity_landing);
 
     }
     @Override
@@ -31,10 +46,7 @@ public class LandingActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_login:
-                final String KEY_ACTIVITY_NAME = "Action";
-
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.putExtra(KEY_ACTIVITY_NAME, "login");
                 startActivity(intent);
                 return true;
             default:

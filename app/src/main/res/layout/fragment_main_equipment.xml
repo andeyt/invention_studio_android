@@ -11,23 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1"><![CDATA[>
-
-        ]]>
+        android:weightSum="1">
 
         <info.hoang8f.android.segmented.SegmentedGroup
-            android:id="@+id/segmented2"
+            android:id="@+id/segmented"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             segmentedgroup:sc_checked_text_color="@color/colorPrimary"
-            segmentedgroup:sc_tint_color="@color/colorAccent">
+            segmentedgroup:sc_tint_color="@color/colorAccent"
+            android:checkedButton="@id/info"
+            >
 
             <RadioButton
                 android:id="@+id/info"
-                android:onClick="onRadioButtonClicked"
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Report A Problem"
-                android:onClick="onRadioButtonClicked"
+
                 />
         </info.hoang8f.android.segmented.SegmentedGroup>
 

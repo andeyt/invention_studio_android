@@ -3,23 +3,28 @@ package inventionstudio.inventionstudioandroid.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Adapters.MachineAdapter;
-import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
@@ -39,6 +44,8 @@ public class EquipmentListFragment extends MachineGroupFragment {
     private String machineGroup;
     private TextView description;
     private Call<List<Machine>> call;
+    private ProgressBar loadProgress;
+    private SwipeRefreshLayout refreshLayout;
 
     public EquipmentListFragment() {
         // Required empty public constructor
@@ -57,6 +64,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
+        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
 
 
@@ -83,6 +91,15 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 ft.commit();
             }
 
+        });
+
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connectAndGetApiData();
+            }
         });
 
         connectAndGetApiData();
@@ -118,10 +135,14 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 machines = new ArrayList<>();
                 for (Machine m : e) {
                     if (m.getLocationName().equals(machineGroup)) {
+                        // set compareVal
+                        m.statusIcon();
                         machines.add(m);
                     }
 
                 }
+
+                Collections.sort(machines);
 
                 MachineAdapter adapter = new MachineAdapter(getActivity(), R.layout.equipment_list_row, machines);
 
@@ -131,6 +152,8 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 } else {
                     description.setText(machines.get(0).getEquipmentGroupdescription());
                 }
+                loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
 
 
 
@@ -139,7 +162,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                Log.e("REST", throwable.toString());
+                loadProgress.setVisibility(View.GONE);
             }
         });
     }
