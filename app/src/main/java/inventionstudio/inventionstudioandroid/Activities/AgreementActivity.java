@@ -81,7 +81,7 @@ public class AgreementActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(AgreementActivity.this, "Sign Agreement", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AgreementActivity.this, "Please sign the User Agreement", Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -60,7 +60,6 @@ public class LoadingActivity extends AppCompatActivity {
         // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
-
         String otp = prefs.getString("OTP", "");
         // TODO: Change to variables
         call = sumsApiService.getUserGroups(username, otp);
@@ -71,7 +70,7 @@ public class LoadingActivity extends AppCompatActivity {
                 studioMember = false;
                 if (groups != null) {
                     for (UserGroups u : groups) {
-                        if (u.getEquipmentGroupId() == 8) {
+                        if (u.getEquipmentGroupId() == 7) {
                             studioMember = true;
                         }
                     }
