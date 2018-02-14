@@ -93,10 +93,10 @@ public class LoginActivity extends Activity {
             @Override
             public void onPageFinished(WebView webView, String url) {
                 try {
-                    webView.setVisibility(View.INVISIBLE);
                     URL baseURL = new URL(url);
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
                     if (base.equals("https://sums-dev.gatech.edu")) {
+                        webView.setVisibility(View.INVISIBLE);
                         webView.evaluateJavascript("document.getElementById(\"" + usernameDisplayId + "\").innerText", new ValueCallback<String>() {
                             @Override
                             public void onReceiveValue(String s) {
