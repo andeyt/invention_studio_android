@@ -70,7 +70,7 @@ public class LoadingActivity extends AppCompatActivity {
                 studioMember = false;
                 if (groups != null) {
                     for (UserGroups u : groups) {
-                        if (u.getEquipmentGroupId() == 7) {
+                        if (u.getEquipmentGroupId() == 8) {
                             studioMember = true;
                         }
                     }

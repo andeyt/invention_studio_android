@@ -58,6 +58,17 @@ public class QueueFragment extends Fragment {
         getActivity().setTitle("Queue");
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
         expandableListView = rootView.findViewById(R.id.expandable_list);
+
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousGroup = -1;
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition != previousGroup)
+                    expandableListView.collapseGroup(previousGroup);
+                previousGroup = groupPosition;
+            }
+        });
         // Gives the queue data from the SUMS API
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);

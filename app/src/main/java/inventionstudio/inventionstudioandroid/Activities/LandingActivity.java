@@ -51,7 +51,7 @@ public class LandingActivity extends AppCompatActivity {
             case R.id.action_login:
                 SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 if (prefs.contains("username") && prefs.contains("OTP")) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
