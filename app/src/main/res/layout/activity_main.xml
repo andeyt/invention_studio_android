@@ -16,14 +16,6 @@
         app:itemTextColor="@drawable/tab_text_tint"
         app:menu="@menu/bottom_nav_tabs"/>
 
-    <!--<com.roughike.bottombar.BottomBar-->
-        <!--android:id="@+id/bottomBar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--app:bb_behavior="underNavbar"-->
-        <!--app:bb_tabXmlResource="@xml/navigation_bar_menu" />-->
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container"

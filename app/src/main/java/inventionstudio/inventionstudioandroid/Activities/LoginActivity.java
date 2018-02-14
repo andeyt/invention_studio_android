@@ -66,12 +66,24 @@ public class LoginActivity extends Activity {
                     String baseURL = urlObj.getProtocol() + "://" + urlObj.getHost();
                     if (baseURL.equals("https://sums.gatech.edu")) {
                         // TODO: get the username and the OTP, waiting for Aman
+                        // TODO: get Server Time and put in shared prefs
+
                         // String username = getUserName()
                         // String otp = getOTP()
-                        SharedPreferences.Editor editor = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE).edit();
+                        // long lastLoginTime = getServerTime()
+
+
+                        // SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                        // SharedPreferences.Editor editor =prefs.edit();
+
+
                         // editor.putString("username", username);
-                        // editor.putString("OTP", otp);
-                        editor.apply();
+                        // editor.putString("OTP", otp)
+                        // editor.putLong("lastLoginTime", lastLoginTime)
+
+
+                        // editor.apply();
+
                         connectAndGetApiData();
                     }
                 } catch (Exception e) {

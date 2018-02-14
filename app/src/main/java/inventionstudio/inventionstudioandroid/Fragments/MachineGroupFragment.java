@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class MachineGroupFragment extends Fragment {
     private ListView listView;
     private Call<List<Machine>> call;
     private ProgressBar loadProgress;
+    private SwipeRefreshLayout refreshLayout;
 
     public MachineGroupFragment() {
         // Required empty public constructor
@@ -63,6 +65,8 @@ public class MachineGroupFragment extends Fragment {
 
         listView = (ListView) rootView.findViewById(R.id.listview);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,6 +91,15 @@ public class MachineGroupFragment extends Fragment {
         });
 
         connectAndGetApiData();
+
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connectAndGetApiData();
+            }
+        });
 
         return rootView;
 
@@ -130,7 +143,7 @@ public class MachineGroupFragment extends Fragment {
 
                 listView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
-
+                refreshLayout.setRefreshing(false);
 
             }
             @Override

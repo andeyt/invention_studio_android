@@ -3,6 +3,7 @@ package inventionstudio.inventionstudioandroid.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
     private TextView description;
     private Call<List<Machine>> call;
     private ProgressBar loadProgress;
+    private SwipeRefreshLayout refreshLayout;
 
     public EquipmentListFragment() {
         // Required empty public constructor
@@ -89,6 +91,15 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 ft.commit();
             }
 
+        });
+
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connectAndGetApiData();
+            }
         });
 
         connectAndGetApiData();
@@ -142,6 +153,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
                     description.setText(machines.get(0).getEquipmentGroupdescription());
                 }
                 loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
 
 
 
