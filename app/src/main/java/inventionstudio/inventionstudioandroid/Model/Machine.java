@@ -213,7 +213,7 @@ public class Machine implements Serializable, Comparable<Machine>{
 
     public int statusIcon() {
         if (toolIsOperational) {
-            if (toolCurrentUser.equals("")) {
+            if (!toolCurrentUser.equals("")) {
                 statusComparisonVal = 0;
                 return R.drawable.in_use;
             }
@@ -228,7 +228,7 @@ public class Machine implements Serializable, Comparable<Machine>{
 
     public String statusText() {
         if (toolIsOperational) {
-            if (toolCurrentUser.equals("")) {
+            if (!toolCurrentUser.equals("")) {
                 return "In Use";
             }
             return "Available";
