@@ -4,6 +4,7 @@ package inventionstudio.inventionstudioandroid.Fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class QueueFragment extends Fragment {
     private HashMap<String, List<String>> queueData;
     private Call<List<QueueMember>> call;
     private ProgressBar loadProgress;
+    private SwipeRefreshLayout refreshLayout;
 
     public QueueFragment() {
         // Required empty public constructor
@@ -58,6 +60,14 @@ public class QueueFragment extends Fragment {
         expandableListView = rootView.findViewById(R.id.expandable_list);
         // Gives the queue data from the SUMS API
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connectAndGetApiData();
+            }
+        });
         connectAndGetApiData();
 
         return rootView;
@@ -108,6 +118,7 @@ public class QueueFragment extends Fragment {
                 adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
                 expandableListView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
             }
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {

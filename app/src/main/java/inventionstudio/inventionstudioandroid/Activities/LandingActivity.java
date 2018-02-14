@@ -46,9 +46,7 @@ public class LandingActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_login:
-                //TODO: change back to loginActivity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 return true;
             default:
