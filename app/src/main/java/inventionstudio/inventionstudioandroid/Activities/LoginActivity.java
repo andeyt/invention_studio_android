@@ -1,7 +1,9 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -36,7 +38,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 //import edu.gatech.t_squaremobile.R;
-
+@TargetApi(26)
 public class LoginActivity extends Activity {
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
@@ -54,8 +56,15 @@ public class LoginActivity extends Activity {
         webView = (WebView)findViewById(R.id.webView);
         webView.clearCache(true);
         webView.clearHistory();
-        CookieManager.getInstance().removeAllCookies(null);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        if (Build.VERSION.SDK_INT <= 19) {
+            CookieManager.getInstance().removeAllCookie();
+        } else {
+
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        }
+
+
         webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums.gatech.edu/EditResearcherProfile.aspx");
         webView.setWebViewClient(new WebViewClient() {
 
