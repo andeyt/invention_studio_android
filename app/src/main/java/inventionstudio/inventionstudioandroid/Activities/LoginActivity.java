@@ -105,7 +105,7 @@ public class LoginActivity extends Activity {
                                 SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
 
-
+                                Log.d("REST", username);
                                 editor.putString("username", username);
                                 editor.apply();
 
@@ -120,7 +120,7 @@ public class LoginActivity extends Activity {
                                 SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
 
-
+                                Log.d("REST", otp);
                                 editor.putString("OTP", otp);
                                 editor.apply();
                             }

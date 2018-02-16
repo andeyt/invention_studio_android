@@ -17,9 +17,9 @@ import retrofit2.http.Query;
 public interface SumsApiService {
 
     @POST("equipmentGroup_tools")
-    Call<List<Machine>> getMachineList(@Query("DepartmentID") int id);
+    Call<List<Machine>> getMachineList(@Query("DepartmentID") int id,  @Query("userName") String userName, @Header("authorization") String otp);
 
-    @POST("equipmentGroup_queues")
+    @POST("equipmentGroup_queueUsers")
     Call<List<QueueMember>> getQueueLists(@Query("DepartmentID") int id, @Query("userName") String userName, @Header("authorization") String otp);
 
     @POST("user_info")

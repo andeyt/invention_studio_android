@@ -120,22 +120,22 @@ public class QueueFragment extends Fragment {
                 queueData = new HashMap<>();
                 for (QueueMember q : members) {
                     // Filter out trash/test daya
-                    if (q.getName().equals("reuse")) {
+                    if (q.getQueueName().equals("reuse")) {
                         continue;
                     }
                     // Add queue name to Hashset, check if it has an accompanying list
-                    queues.add(q.getName());
-                    if (queueData.get(q.getName()) == null) {
+                    queues.add(q.getQueueName());
+                    if (queueData.get(q.getQueueName()) == null) {
                         // Add list as value of the queue key name
-                        queueData.put(q.getName(), new ArrayList<String>());
+                        queueData.put(q.getQueueName(), new ArrayList<String>());
                     }
                     // Add member to the queue list
                     if (q.getMemberName().trim().equals("")) {
                         // if memberName is blank, do username
-                        queueData.get(q.getName()).add(q.getMemberUserName());
+                        queueData.get(q.getQueueName()).add(q.getMemberUserName());
                     } else {
                         // use memberName otherwise
-                        queueData.get(q.getName()).add(q.getMemberName());
+                        queueData.get(q.getQueueName()).add(q.getMemberName());
                     }
                 }
                 // Setup and create ExpandableList

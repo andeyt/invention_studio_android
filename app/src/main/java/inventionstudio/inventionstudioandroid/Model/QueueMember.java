@@ -20,7 +20,7 @@ public class QueueMember {
     private String memberUserName;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String queueName;
     @SerializedName("hasBeenNotified")
     @Expose
     private Boolean hasBeenNotified;
@@ -55,12 +55,12 @@ public class QueueMember {
         this.memberUserName = memberUserName;
     }
 
-    public String getName() {
-        return name;
+    public String getQueueName() {
+        return queueName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setQueueName(String queueName) {
+        this.queueName = queueName;
     }
 
     public Boolean getHasBeenNotified() {
