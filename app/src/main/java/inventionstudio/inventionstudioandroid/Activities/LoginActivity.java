@@ -98,7 +98,9 @@ public class LoginActivity extends Activity {
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
                     if (base.equals("https://sums-dev.gatech.edu")) {
                         webView.setVisibility(View.GONE);
-                        webView.evaluateJavascript("document.getElementById(\"" + usernameDisplayId + "\").innerText", new ValueCallback<String>() {
+//                        webView.evaluateJavascript("document.getElementById(\"" + usernameDisplayId + "\").innerText", new ValueCallback<String>() {
+                        webView.evaluateJavascript("document.querySelector('[id$=\"UsernameDisplay\"]').innerText", new ValueCallback<String>() {
+
                             @Override
                             public void onReceiveValue(String s) {
                                 username = s.substring(1, s.length() - 1);
@@ -112,7 +114,7 @@ public class LoginActivity extends Activity {
 
                             }
                         });
-                        webView.evaluateJavascript("document.getElementById(\"" + OtpDisplayId + "\").innerText", new ValueCallback<String>() {
+                        webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
                             @Override
                             public void onReceiveValue(String s) {
                                 otp = s.split("=")[1];
