@@ -18,7 +18,7 @@ public class QueueMember {
     @SerializedName("memberUserName")
     @Expose
     private String memberUserName;
-    @SerializedName("name")
+    @SerializedName("queueName")
     @Expose
     private String queueName;
     @SerializedName("hasBeenNotified")
@@ -86,5 +86,6 @@ public class QueueMember {
     public void setMemberQueueLocation(Integer memberQueueLocation) {
         this.memberQueueLocation = memberQueueLocation;
     }
+
 
 }

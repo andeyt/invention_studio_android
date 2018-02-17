@@ -40,12 +40,12 @@ public class Machine implements Serializable, Comparable<Machine>{
     @SerializedName("toolId")
     @Expose
     private Integer toolId;
-    @SerializedName("CurrentUserUserName")
+    @SerializedName("currentUserUserName")
     @Expose
     private String currentUserUserName;
-    @SerializedName("equipmentGroupdescription")
+    @SerializedName("equipmentGroupDescription")
     @Expose
-    private String equipmentGroupdescription;
+    private String equipmentGroupDescription;
     @SerializedName("equipmentGroupName")
     @Expose
     private String equipmentGroupName;
@@ -112,12 +112,12 @@ public class Machine implements Serializable, Comparable<Machine>{
         this.currentUserUserName = currentUserUserName;
     }
 
-    public String getEquipmentGroupdescription() {
-        return equipmentGroupdescription;
+    public String getEquipmentGroupDescription() {
+        return equipmentGroupDescription;
     }
 
-    public void setEquipmentGroupdescription(String equipmentGroupdescription) {
-        this.equipmentGroupdescription = equipmentGroupdescription;
+    public void setEquipmentGroupDescription(String equipmentGroupDescription) {
+        this.equipmentGroupDescription = equipmentGroupDescription;
     }
 
     public String getEquipmentGroupName() {

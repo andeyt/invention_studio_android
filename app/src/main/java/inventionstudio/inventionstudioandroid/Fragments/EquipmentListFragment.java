@@ -1,5 +1,6 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -32,6 +33,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
 */
@@ -126,7 +129,10 @@ public class EquipmentListFragment extends MachineGroupFragment {
                     .build();
         }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-        call = sumsApiService.getMachineList(8);
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        String username = prefs.getString("username", "");
+        String otp = prefs.getString("OTP", "");
+        call = sumsApiService.getMachineList(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
         call.enqueue(new Callback<List<Machine>>() {
             @Override
             public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
@@ -150,7 +156,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 if (machines.isEmpty()) {
                     description.setText("No machines in this group");
                 } else {
-                    description.setText(machines.get(0).getEquipmentGroupdescription());
+                    description.setText(machines.get(0).getEquipmentGroupDescription());
                 }
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
