@@ -138,13 +138,14 @@ public class QueueFragment extends Fragment {
                     // Add member to the queue list
                     if (q.getMemberName().trim().equals("")) {
                         // if memberName is blank, do username
-                        queueData.get(q.getQueueName()).add(Integer.toString(i) + ". " + q.getMemberUserName());
+                        queueData.get(q.getQueueName()).add(Integer.toString(queueData.get(q.getQueueName()).size() + 1) + ". " + q.getMemberUserName());
                     } else {
                         // use memberName otherwise
-                        queueData.get(q.getQueueName()).add(Integer.toString(i) + ". " + q.getMemberName());
+                        queueData.get(q.getQueueName()).add(Integer.toString(queueData.get(q.getQueueName()).size() + 1) + ". " + q.getMemberName());
                     }
-                    i++;
+
                 }
+                connectAndGetQueueGroups();
             }
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
@@ -215,11 +216,6 @@ public class QueueFragment extends Fragment {
         protected Void doInBackground(Void ... voids) {
             connectAndGetQueueMembers();
             return null;
-        }
-
-
-        protected void onPostExecute(Void voids) {
-            connectAndGetQueueGroups();
         }
     }
 }

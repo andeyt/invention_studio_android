@@ -20,19 +20,22 @@ public class LandingActivity extends AppCompatActivity {
 
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         // TODO: Check if user has ever logged in/ if they have, if current time is < 24hrs from last login
-//        long loginTime = getServerTime();
-//        SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-//        if (prefs.contains("lastLoginTime")) {
-//            long lastLoginTime = prefs.getLong("lastLoginTime", 0);
-//            if (lastLoginTime - loginTime < 24) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//            } else {
-//                setContentView(R.layout.activity_landing);
-//            }
-//        } else {
-//            setContentView(R.layout.activity_landing);
-//        }
+        //        long loginTime = getServerTime();
+        //
+        //        if (prefs.contains("lastLoginTime")) {
+        //            long lastLoginTime = prefs.getLong("lastLoginTime", 0);
+        //            if (lastLoginTime - loginTime < 24) {
+        //               SharedPreferences.Editor editor = prefs.edit();
+        //               editor.remove("username");
+        //               editor.remove("OTP");
+        //               editor.apply();
+        //            }
+        //        }
+
+        if (prefs.contains("username") && prefs.contains("OTP")) {
+            Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+            startActivity(intent);
+        }
 
         setContentView(R.layout.activity_landing);
 
@@ -49,14 +52,10 @@ public class LandingActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_login:
-                SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                if (prefs.contains("username") && prefs.contains("OTP")) {
-                    Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
+
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+
 
                 return true;
             default:
