@@ -2,7 +2,9 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Adapters.ExpandableListAdapter;
+import inventionstudio.inventionstudioandroid.Model.QueueGroups;
 import inventionstudio.inventionstudioandroid.Model.QueueMember;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
@@ -43,9 +46,9 @@ public class QueueFragment extends Fragment {
     private ExpandableListView expandableListView;
     private HashSet<String> queues;
     private HashMap<String, List<String>> queueData;
-    private Call<List<QueueMember>> call;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
+    private QueueTask queueTask;
 
     public QueueFragment() {
         // Required empty public constructor
@@ -76,23 +79,25 @@ public class QueueFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                connectAndGetApiData();
+                queueTask = new QueueTask();
+                queueTask.execute();
             }
         });
-        connectAndGetApiData();
 
+        queueTask = new QueueTask();
+        queueTask.execute();
         return rootView;
     }
 
     @Override
     public void onPause () {
         super.onPause();
-        if (call != null) {
-            call.cancel();
+        if (queueTask != null) {
+            queueTask.cancel(true);
         }
     }
 
-    public void connectAndGetApiData(){
+    public void connectAndGetQueueMembers(){
         // Create the retrofit for building the API data
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -100,6 +105,7 @@ public class QueueFragment extends Fragment {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
 
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         // Call to preferences to get username and OTP
@@ -109,22 +115,22 @@ public class QueueFragment extends Fragment {
         String otp = prefs.getString("OTP", "");
 
         // TODO: Change to variables
-        call = sumsApiService.getQueueLists(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
+        Call<List<QueueMember>> call = sumsApiService.getQueueMembers(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
+
         call.enqueue(new Callback<List<QueueMember>>() {
             @Override
             public void onResponse(Call<List<QueueMember>> call, Response<List<QueueMember>> response) {
                 List<QueueMember> members = response.body();
                 // Run through list of Queue members
                 // Create Queue list as well as HashMap
-                queues = new HashSet<>();
                 queueData = new HashMap<>();
+
                 for (QueueMember q : members) {
+                    int i = 1;
                     // Filter out trash/test daya
                     if (q.getQueueName().equals("reuse")) {
                         continue;
                     }
-                    // Add queue name to Hashset, check if it has an accompanying list
-                    queues.add(q.getQueueName());
                     if (queueData.get(q.getQueueName()) == null) {
                         // Add list as value of the queue key name
                         queueData.put(q.getQueueName(), new ArrayList<String>());
@@ -132,23 +138,88 @@ public class QueueFragment extends Fragment {
                     // Add member to the queue list
                     if (q.getMemberName().trim().equals("")) {
                         // if memberName is blank, do username
-                        queueData.get(q.getQueueName()).add(q.getMemberUserName());
+                        queueData.get(q.getQueueName()).add(Integer.toString(i) + ". " + q.getMemberUserName());
                     } else {
                         // use memberName otherwise
-                        queueData.get(q.getQueueName()).add(q.getMemberName());
+                        queueData.get(q.getQueueName()).add(Integer.toString(i) + ". " + q.getMemberName());
                     }
+                    i++;
                 }
-                // Setup and create ExpandableList
-                ArrayList<String> queueList = new ArrayList<>(queues);
-                adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
-                expandableListView.setAdapter(adapter);
-                loadProgress.setVisibility(View.GONE);
-                refreshLayout.setRefreshing(false);
             }
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
             }
         });
+
+
+
+    }
+
+    public void connectAndGetQueueGroups(){
+        // Create the retrofit for building the API data
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+
+        SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        // Call to preferences to get username and OTP
+        // Replace hardcoded args when work in Login is complete.
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        String username = prefs.getString("username", "");
+        String otp = prefs.getString("OTP", "");
+
+        // TODO: Change to variables
+        Call<List<QueueGroups>> call = sumsApiService.getQueueGroups(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
+
+        call.enqueue(new Callback<List<QueueGroups>>() {
+                @Override
+                public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
+                    List<QueueGroups> groups = response.body();
+
+                    queues = new HashSet<>();
+                    for (QueueGroups q : groups) {
+                        if (q.getIsGroup()) {
+                            queues.add(q.getName());
+                            if (queueData.get(q.getName()) == null) {
+                                queueData.put(q.getName(), new ArrayList<String>());
+                                queueData.get(q.getName()).add("No users in queue");
+
+                            }
+                        }
+                    }
+
+                    // Setup and create ExpandableList
+                    ArrayList<String> queueList = new ArrayList<>(queues);
+                    adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
+                    expandableListView.setAdapter(adapter);
+                    loadProgress.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
+                }
+                @Override
+                public void onFailure(Call<List<QueueGroups>> call, Throwable throwable) {
+                    loadProgress.setVisibility(View.GONE);
+                }
+            });
+
+
+
+    }
+
+    class QueueTask extends AsyncTask<Void, Void, Void> {
+
+        protected Void doInBackground(Void ... voids) {
+            connectAndGetQueueMembers();
+            return null;
+        }
+
+
+        protected void onPostExecute(Void voids) {
+            connectAndGetQueueGroups();
+        }
     }
 }

@@ -46,7 +46,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) Integer.toString(childPosition + 1) + ". " +  getChild(groupPosition, childPosition);
+        final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -63,8 +63,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .size();
+        List<String> s = this._listDataChild.get(this._listDataHeader.get(groupPosition));
+        if (s == null) {
+            return 0;
+        } else {
+            return s.size();
+        }
     }
 
     @Override

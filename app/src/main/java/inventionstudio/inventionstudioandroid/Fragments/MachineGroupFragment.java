@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -141,9 +142,10 @@ public class MachineGroupFragment extends Fragment {
                     if (!(m.getLocationName().equals(""))) {
                         groups.add(m.getLocationName());
                     }
-
                 }
+
                 ArrayList<String> groupList = new ArrayList<>(groups);
+                Collections.sort(groupList);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                         android.R.layout.simple_list_item_1, groupList);
 

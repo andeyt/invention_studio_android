@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,8 +112,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
 
                         statusText.setText(m.statusText());
 
-                        description.setText(m.getToolDescription());
-                        Log.d("REST", m.getToolDescription());
+                        description.setText(Html.fromHtml(m.getToolDescription()));
 
                         loadProgress.setVisibility(View.GONE);
                         refreshLayout.setRefreshing(false);

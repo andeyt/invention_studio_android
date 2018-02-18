@@ -233,7 +233,7 @@ public class Machine implements Serializable, Comparable<Machine>{
             }
             return "Available";
         }
-        return "Unavailable";
+        return "Down";
 
     }
 
