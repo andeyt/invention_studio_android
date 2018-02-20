@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -60,7 +61,7 @@ public class LoadingActivity extends AppCompatActivity {
         // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
-        String otp = prefs.getString("OTP", "");
+        String otp = prefs.getString("otp", "");
         // TODO: Change to variables
         call = sumsApiService.getUserGroups(username, otp);
         call.enqueue(new Callback<List<UserGroups>>() {
@@ -72,6 +73,11 @@ public class LoadingActivity extends AppCompatActivity {
                     for (UserGroups u : groups) {
                         if (u.getEquipmentGroupId() == 8) {
                             studioMember = true;
+                            SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+
+                            editor.putString("name", u.getUserName());
+                            editor.apply();
                         }
                     }
                 }

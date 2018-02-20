@@ -27,12 +27,12 @@ public class LandingActivity extends AppCompatActivity {
         //            if (lastLoginTime - loginTime < 24) {
         //               SharedPreferences.Editor editor = prefs.edit();
         //               editor.remove("username");
-        //               editor.remove("OTP");
+        //               editor.remove("otp");
         //               editor.apply();
         //            }
         //        }
 
-        if (prefs.contains("username") && prefs.contains("OTP")) {
+        if (prefs.contains("username") && prefs.contains("otp")) {
             Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
             startActivity(intent);
         }

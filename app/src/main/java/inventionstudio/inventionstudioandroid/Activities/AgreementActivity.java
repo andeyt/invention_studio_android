@@ -60,8 +60,7 @@ public class AgreementActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
 
-        String otp = prefs.getString("OTP", "");
-        // TODO: Change to variables
+        String otp = prefs.getString("otp", "");
         call = sumsApiService.getUserGroups(username, otp);
         call.enqueue(new Callback<List<UserGroups>>() {
             @Override

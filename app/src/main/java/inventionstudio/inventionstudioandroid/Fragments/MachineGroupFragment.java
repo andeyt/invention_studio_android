@@ -131,7 +131,7 @@ public class MachineGroupFragment extends Fragment {
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
-        String otp = prefs.getString("OTP", "");
+        String otp = prefs.getString("otp", "");
         call = sumsApiService.getMachineList(8, username, otp);
         call.enqueue(new Callback<List<Machine>>() {
             @Override

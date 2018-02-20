@@ -123,7 +123,7 @@ public class LoginActivity extends Activity {
                                 SharedPreferences.Editor editor = prefs.edit();
 
                                 Log.d("REST", otp);
-                                editor.putString("OTP", otp);
+                                editor.putString("otp", otp);
                                 editor.apply();
                             }
                         });

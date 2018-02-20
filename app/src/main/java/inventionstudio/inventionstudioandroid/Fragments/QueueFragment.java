@@ -112,7 +112,7 @@ public class QueueFragment extends Fragment {
         // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
-        String otp = prefs.getString("OTP", "");
+        String otp = prefs.getString("otp", "");
 
         // TODO: Change to variables
         Call<List<QueueMember>> call = sumsApiService.getQueueMembers(8, username, otp);
@@ -172,7 +172,7 @@ public class QueueFragment extends Fragment {
         // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
-        String otp = prefs.getString("OTP", "");
+        String otp = prefs.getString("otp", "");
 
         // TODO: Change to variables
         Call<List<QueueGroups>> call = sumsApiService.getQueueGroups(8, username, otp);
