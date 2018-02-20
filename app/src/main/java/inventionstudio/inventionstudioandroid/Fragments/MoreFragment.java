@@ -44,7 +44,9 @@ public class MoreFragment extends PreferenceFragmentCompat {
 
                 SharedPreferences prefs = getActivity().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.clear();
+                editor.remove("username");
+                editor.remove("otp");
+                editor.remove("name");
                 editor.apply();
                 getActivity().finish();
                 return true;
