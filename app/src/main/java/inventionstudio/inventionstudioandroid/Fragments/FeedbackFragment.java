@@ -42,12 +42,7 @@ public class FeedbackFragment extends Fragment {
         final String name = prefs.getString("name", "");
         final TextView nameText = (TextView) rootView.findViewById(R.id.name);
         nameText.setText(name);
-
-
         Switch anonSwitch = (Switch) rootView.findViewById(R.id.anon_switch);
-        // EditText Instantiation
-        EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
-
         anonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -57,6 +52,9 @@ public class FeedbackFragment extends Fragment {
                 }
             }
         });
+
+        // EditText Instantiation
+        EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
 
 
         final Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
