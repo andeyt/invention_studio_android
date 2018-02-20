@@ -128,25 +128,24 @@ public class LoginActivity extends Activity {
                             }
                         });
 
+                        // TODO: get Server Time and put in shared prefs
+
+                        // long lastLoginTime = getServerTime()
+
+                        // SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                        // SharedPreferences.Editor editor =prefs.edit();
+
+                        // editor.putLong("lastLoginTime", lastLoginTime)
+
+                        // editor.apply();
+
                         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0,0);
                         finish();
                     }
 
-                    // TODO: get Server Time and put in shared prefs
 
-
-                    // long lastLoginTime = getServerTime()
-
-
-                    // SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                    // SharedPreferences.Editor editor =prefs.edit();
-
-                    // editor.putLong("lastLoginTime", lastLoginTime)
-
-
-                    // editor.apply();
 
                 } catch (Exception e) {
 

@@ -28,7 +28,8 @@ public class LandingActivity extends AppCompatActivity {
         //               SharedPreferences.Editor editor = prefs.edit();
         //               editor.remove("username");
         //               editor.remove("otp");
-        //               editor.apply();
+        //               editor.remove("name");
+        //               editor.commit();
         //            }
         //        }
 
