@@ -132,7 +132,7 @@ public class MachineGroupFragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("OTP", "");
-        call = sumsApiService.getMachineList(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
+        call = sumsApiService.getMachineList(8, username, otp);
         call.enqueue(new Callback<List<Machine>>() {
             @Override
             public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {

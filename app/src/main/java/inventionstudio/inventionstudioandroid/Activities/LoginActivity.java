@@ -81,7 +81,7 @@ public class LoginActivity extends Activity {
                 try {
                     URL baseURL = new URL(url);
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
-                    if (base.equals("https://sums-dev.gatech.edu")) {
+                    if (base.equals("https://sums.gatech.edu")) {
                         webView.setVisibility(View.GONE);
                         group.setVisibility(View.VISIBLE);
                     }
@@ -92,60 +92,41 @@ public class LoginActivity extends Activity {
             }
 
             @Override
-            public void onPageFinished(final WebView webView, String url) {
+            public void onPageFinished(WebView webView, String url) {
                 try {
                     URL baseURL = new URL(url);
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
-                    if (base.equals("https://sums-dev.gatech.edu")) {
+                    if (base.equals("https://sums.gatech.edu")) {
                         webView.setVisibility(View.GONE);
 //                        webView.evaluateJavascript("document.getElementById(\"" + usernameDisplayId + "\").innerText", new ValueCallback<String>() {
-                        webView.post(new Runnable() {
+                        webView.evaluateJavascript("document.querySelector('[id$=\"UsernameDisplay\"]').innerText", new ValueCallback<String>() {
+
                             @Override
-                            public void run() {
-                                webView.evaluateJavascript("document.querySelector('[id$=\"UsernameDisplay\"]').innerText", new ValueCallback<String>() {
+                            public void onReceiveValue(String s) {
+                                username = s.substring(1, s.length() - 1);
+                                SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
 
-                                    @Override
-                                    public void onReceiveValue(String s) {
-                                        username = s.substring(1, s.length() - 1);
-                                        SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = prefs.edit();
-
-                                        Log.d("REST", username);
-                                        editor.putString("username", username);
-                                        editor.apply();
+                                Log.d("REST", username);
+                                editor.putString("username", username);
+                                editor.apply();
 
 
-                                    }
-                                });
-                                webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
-                                    @Override
-                                    public void onReceiveValue(String s) {
-                                        otp = s.split("=")[1];
-                                        otp = otp.substring(0, otp.length() - 1);
-                                        SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = prefs.edit();
-
-                                        Log.d("REST", otp);
-                                        editor.putString("OTP", otp);
-                                        editor.apply();
-                                    }
-                                });
                             }
                         });
+                        webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String s) {
+                                otp = s.split("=")[1];
+                                otp = otp.substring(0, otp.length() - 1);
+                                SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
 
-                        // TODO: get Server Time and put in shared prefs
-
-
-                        // long lastLoginTime = getServerTime()
-
-
-                        // SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                        // SharedPreferences.Editor editor =prefs.edit();
-
-                        // editor.putLong("lastLoginTime", lastLoginTime)
-
-
-                        // editor.apply();
+                                Log.d("REST", otp);
+                                editor.putString("OTP", otp);
+                                editor.apply();
+                            }
+                        });
 
                         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                         startActivity(intent);
@@ -153,7 +134,19 @@ public class LoginActivity extends Activity {
                         finish();
                     }
 
+                    // TODO: get Server Time and put in shared prefs
 
+
+                    // long lastLoginTime = getServerTime()
+
+
+                    // SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                    // SharedPreferences.Editor editor =prefs.edit();
+
+                    // editor.putLong("lastLoginTime", lastLoginTime)
+
+
+                    // editor.apply();
 
                 } catch (Exception e) {
 
@@ -194,7 +187,7 @@ public class LoginActivity extends Activity {
 
         });
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums-dev.gatech.edu/EditResearcherProfile.aspx");
+        webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums.gatech.edu/EditResearcherProfile.aspx");
 
 
 

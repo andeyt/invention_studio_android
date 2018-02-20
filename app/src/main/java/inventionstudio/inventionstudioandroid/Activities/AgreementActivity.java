@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AgreementActivity extends AppCompatActivity {
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
-    public static final String BASE_URL = "https://sums-dev.gatech.edu/SUMSAPI/rest/API/";
+    public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private Call<List<UserGroups>> call;
     private boolean studioMember;
 

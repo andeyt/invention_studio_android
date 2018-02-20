@@ -115,7 +115,7 @@ public class QueueFragment extends Fragment {
         String otp = prefs.getString("OTP", "");
 
         // TODO: Change to variables
-        Call<List<QueueMember>> call = sumsApiService.getQueueMembers(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
+        Call<List<QueueMember>> call = sumsApiService.getQueueMembers(8, username, otp);
 
         call.enqueue(new Callback<List<QueueMember>>() {
             @Override
@@ -175,7 +175,7 @@ public class QueueFragment extends Fragment {
         String otp = prefs.getString("OTP", "");
 
         // TODO: Change to variables
-        Call<List<QueueGroups>> call = sumsApiService.getQueueGroups(8, "rkaup3", "HYXUVGNMLR34MKYZT20T");
+        Call<List<QueueGroups>> call = sumsApiService.getQueueGroups(8, username, otp);
 
         call.enqueue(new Callback<List<QueueGroups>>() {
                 @Override
