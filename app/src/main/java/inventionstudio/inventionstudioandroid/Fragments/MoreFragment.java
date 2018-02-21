@@ -1,15 +1,12 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.Log;
 
-import inventionstudio.inventionstudioandroid.Activities.LandingActivity;
 import inventionstudio.inventionstudioandroid.R;
 
 import static android.content.Context.MODE_PRIVATE;

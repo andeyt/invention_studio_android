@@ -1,8 +1,7 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.support.annotation.IdRes;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -11,24 +10,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.lang.reflect.Field;
 
-import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.FeedbackFragment;
 import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
+import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
-import inventionstudio.inventionstudioandroid.Fragments.ReportAProblemFragment;
 import inventionstudio.inventionstudioandroid.R;
 
 public class MainActivity extends AppCompatActivity {
