@@ -28,8 +28,6 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_loading);
 
         Handler mHandler = new Handler();
@@ -41,8 +39,6 @@ public class LoadingActivity extends AppCompatActivity {
             }
 
         }, 2000L);
-
-
     }
 
     public void connectAndGetApiData() {
@@ -94,8 +90,5 @@ public class LoadingActivity extends AppCompatActivity {
                 Toast.makeText(getParent(), "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
-
 }

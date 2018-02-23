@@ -29,14 +29,12 @@ public class FeedbackFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
         getActivity().setTitle("Feedback");
-
 
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");
@@ -55,7 +53,6 @@ public class FeedbackFragment extends Fragment {
 
         // EditText Instantiation
         EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
-
 
         final Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array,
@@ -81,9 +78,6 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
-
-
         return rootView;
     }
-
 }

@@ -86,6 +86,4 @@ public class QueueMember {
     public void setMemberQueueLocation(Integer memberQueueLocation) {
         this.memberQueueLocation = memberQueueLocation;
     }
-
-
 }

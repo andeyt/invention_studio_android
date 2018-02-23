@@ -38,7 +38,6 @@ public class MoreFragment extends PreferenceFragmentCompat {
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
                 SharedPreferences prefs = getActivity().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
@@ -48,5 +47,4 @@ public class MoreFragment extends PreferenceFragmentCompat {
             }
         });
     }
-
 }

@@ -5,6 +5,7 @@ package inventionstudio.inventionstudioandroid.Model;
  */
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 public class QueueGroups {
 
     @SerializedName("name")
@@ -40,6 +41,5 @@ public class QueueGroups {
     public void setIsGroup(Boolean isGroup) {
         this.isGroup = isGroup;
     }
-
 
 }

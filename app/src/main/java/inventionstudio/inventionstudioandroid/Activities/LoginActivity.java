@@ -20,9 +20,6 @@ import java.net.URL;
 
 import inventionstudio.inventionstudioandroid.R;
 
-
-
-
 public class LoginActivity extends Activity {
     public static final String USER_PREFERENCES = "UserPrefs";
     private WebView webView;
@@ -32,15 +29,11 @@ public class LoginActivity extends Activity {
     final String OtpDisplayId = "LiverpoolTheme_wt1_block_wtMainContent_SilkUIFramework_wt8_block_wtColumn2_wt14_SilkUIFramework_wt14_block_wtContent1_wt15_SilkUIFramework_wt382_block_wtPanelContent_SilkUIFramework_wt109_block_wtColumn2_SilkUIFramework_wt289_block_wtPanelContent_SilkUIFramework_wtBrief_block_wtContent_wtCalendarLink";
     private View group;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
-
-
         webView = (WebView)findViewById(R.id.webView);
         webView.clearCache(true);
         webView.clearHistory();
@@ -48,9 +41,7 @@ public class LoginActivity extends Activity {
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
         group = findViewById(R.id.progress_group);
 
-
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public void onPageStarted(WebView webView, String url, Bitmap b) {
                 try {
@@ -63,7 +54,6 @@ public class LoginActivity extends Activity {
                 } catch (Exception e) {
 
                 }
-
             }
 
             @Override
@@ -85,8 +75,6 @@ public class LoginActivity extends Activity {
                                 Log.d("REST", username);
                                 editor.putString("username", username);
                                 editor.apply();
-
-
                             }
                         });
                         webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
@@ -119,9 +107,6 @@ public class LoginActivity extends Activity {
                         overridePendingTransition(0,0);
                         finish();
                     }
-
-
-
                 } catch (Exception e) {
 
                 }
@@ -156,23 +141,18 @@ public class LoginActivity extends Activity {
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-
             }
-
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums.gatech.edu/EditResearcherProfile.aspx");
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();
-
         }
     }
 

@@ -102,7 +102,6 @@ public class QueueFragment extends Fragment {
                     .build();
         }
 
-
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         // Call to preferences to get username and OTP
         // Replace hardcoded args when work in Login is complete.
@@ -139,7 +138,6 @@ public class QueueFragment extends Fragment {
                         // use memberName otherwise
                         queueData.get(q.getQueueName()).add(Integer.toString(queueData.get(q.getQueueName()).size() + 1) + ". " + q.getMemberName());
                     }
-
                 }
                 connectAndGetQueueGroups();
             }
@@ -148,9 +146,6 @@ public class QueueFragment extends Fragment {
                 loadProgress.setVisibility(View.GONE);
             }
         });
-
-
-
     }
 
     public void connectAndGetQueueGroups(){
@@ -161,7 +156,6 @@ public class QueueFragment extends Fragment {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-
 
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         // Call to preferences to get username and OTP
@@ -197,14 +191,12 @@ public class QueueFragment extends Fragment {
                     loadProgress.setVisibility(View.GONE);
                     refreshLayout.setRefreshing(false);
                 }
+
                 @Override
                 public void onFailure(Call<List<QueueGroups>> call, Throwable throwable) {
                     loadProgress.setVisibility(View.GONE);
                 }
             });
-
-
-
     }
 
     class QueueTask extends AsyncTask<Void, Void, Void> {

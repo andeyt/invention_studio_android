@@ -30,20 +30,15 @@ public class AgreementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_agreement);
 
         Button submit = (Button) findViewById(R.id.agreementButton);
-
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 connectAndGetApiData();
             }
         });
-
     }
 
     public void connectAndGetApiData() {
@@ -88,8 +83,5 @@ public class AgreementActivity extends AppCompatActivity {
                 Toast.makeText(getParent(), "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
-
 }

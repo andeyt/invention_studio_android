@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
         disableShiftMode(bottom);
         bottom.setOnNavigationItemSelectedListener(
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         switch (item.getItemId()) {
-
                             case R.id.home:
                                 if (!(currentFragment instanceof HomeFragment)){
                                     selectedFragment = new HomeFragment();
@@ -78,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                             transaction.commit();
                         }
 
-
                         return true;
                     }
                 });
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
     }
-
 
     @SuppressLint("RestrictedApi")
     private void disableShiftMode(BottomNavigationView view) {
@@ -112,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount != 0){
             super.onBackPressed();
@@ -120,5 +115,4 @@ public class MainActivity extends AppCompatActivity {
             bottom.setSelectedItemId(R.id.home);
         }
     }
-
 }
