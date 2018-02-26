@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorPrimaryDark">#7c86c7</color>
     <color name="colorAccent">#ff4081</color>
     <color name="primary_text_material_light">#ffffff</color>
     <color name="primary_text_material_dark">#000000</color>
     <color name="secondary_text_material_light">#000000</color>
     <color name="secondary_text_material_dark">#ffffff</color>
     <color name="background_material_light">#6f6f6f</color>
-    <color name="foreground_material_light">#f5ce56</color>
+    <color name="foreground_material_light">#7c1d1d</color>
+    <color name="colorPrimary_Light">#e4e8ea</color>
+    <color name="background_Light">#e4e8ea</color>
+    <color name="primary_Light">#283941</color>
+    <color name="accent_Light">#b29321</color>
+    <color name="text_Light">#07090a</color>
+    <color name="IS_primary_Light">#283941</color>
+    <color name="IS_accent_Light">#b29321</color>
+    <color name="IS_background_Light">#e4e8ea</color>
+    <color name="IS_foreground_Light">#d7dde0</color>
+    <color name="IS_primary_Dark">#0e1316</color>
+    <color name="IS_accent_Dark">#e6bc2b</color>
+    <color name="IS_background_Dark">#11171c</color>
+    <color name="IS_foreground_Dark">#0e1316</color>
+    <color name="IS_text_Dark">#cbd2d8</color>
+    <color name="text_color_secondary">#b227c818</color>
+    <color name="IS_text_secondary_Dark">#ffffff</color>
+    <color name="IS_text_Light">#07090a</color>
+    <color name="IS_text_secondary_Light">#020405</color>
 </resources>
