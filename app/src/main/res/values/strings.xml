@@ -36,5 +36,6 @@
     <string name="title_activity_landing">LandingActivity</string>
     <string name="title_activity_agreement">AgreementActivity</string>
     <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="theme_string">Theme:</string>
 
 </resources>

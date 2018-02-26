@@ -56,7 +56,6 @@ public class EquipmentListFragment extends MachineGroupFragment {
         machineGroup = (String) bundle.getSerializable("MachineGroup");
         getActivity().setTitle(machineGroup);
 
-
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
