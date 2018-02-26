@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -47,7 +45,6 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,15 +54,10 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
 
         Bundle bundle = getArguments();
         machineName = ((Machine) bundle.getSerializable("Machine")).getToolName();
-
         statusIcon = rootView.findViewById(R.id.status_icon);
-
         statusText = rootView.findViewById(R.id.status_text);
-
         description = rootView.findViewById(R.id.machine_description);
-
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
-
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
         refreshLayout.setColorSchemeResources(R.color.colorAccent);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,7 +68,6 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         });
 
         connectAndGetApiData();
-
         return rootView;
     }
 
@@ -86,8 +77,6 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         if (call != null) {
             call.cancel();
         }
-
-
     }
 
     public void connectAndGetApiData(){
@@ -119,8 +108,6 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
                         break;
                     }
                 }
-
-
             }
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
@@ -128,5 +115,4 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
             }
         });
     }
-
 }

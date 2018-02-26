@@ -1,13 +1,11 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,8 +50,6 @@ public class MachineGroupFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,14 +57,9 @@ public class MachineGroupFragment extends Fragment {
 
         //TODO: Programmatically populate the machine groups
         getActivity().setTitle("Machine Groups");
-
         View rootView = inflater.inflate(R.layout.fragment_machine_group, container, false);
-
         listView = (ListView) rootView.findViewById(R.id.listview);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
-
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -116,8 +103,6 @@ public class MachineGroupFragment extends Fragment {
         if (call != null) {
             call.cancel();
         }
-
-
     }
 
 
@@ -152,17 +137,14 @@ public class MachineGroupFragment extends Fragment {
                 listView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
-
             }
+
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
             }
         });
-
-
     }
-
 }
 
 

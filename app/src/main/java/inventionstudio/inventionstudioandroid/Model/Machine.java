@@ -14,9 +14,6 @@ import inventionstudio.inventionstudioandroid.R;
 
 public class Machine implements Serializable, Comparable<Machine>{
 
-
-
-
     transient private int statusComparisonVal;
 
     public int getStatusComparisonVal() {
@@ -29,7 +26,6 @@ public class Machine implements Serializable, Comparable<Machine>{
         }
         return this.statusComparisonVal - other.getStatusComparisonVal();
     }
-
 
     @SerializedName("equipmentGroupId")
     @Expose
@@ -208,9 +204,6 @@ public class Machine implements Serializable, Comparable<Machine>{
         this.toolIsOperational = toolIsOperational;
     }
 
-
-
-
     public int statusIcon() {
         if (toolIsOperational) {
             if (!toolCurrentUser.equals("")) {
@@ -234,7 +227,5 @@ public class Machine implements Serializable, Comparable<Machine>{
             return "Available";
         }
         return "Down";
-
     }
-
 }

@@ -36,8 +36,7 @@ public class MachineAdapter extends ArrayAdapter<Machine> {
         View row = convertView;
         EquipmentHolder holder = null;
 
-        if(row == null)
-        {
+        if(row == null) {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
@@ -48,8 +47,7 @@ public class MachineAdapter extends ArrayAdapter<Machine> {
 
             row.setTag(holder);
         }
-        else
-        {
+        else {
             holder = (EquipmentHolder) row.getTag();
         }
 
@@ -63,15 +61,9 @@ public class MachineAdapter extends ArrayAdapter<Machine> {
         return row;
     }
 
-    static class EquipmentHolder
-    {
+    static class EquipmentHolder {
         ImageView icon;
         TextView name;
         TextView statusText;
     }
-
-
-
-
-
 }

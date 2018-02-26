@@ -6,7 +6,7 @@ import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.Model.QueueGroups;
 import inventionstudio.inventionstudioandroid.Model.QueueMember;
 import inventionstudio.inventionstudioandroid.Model.UserGroups;
-import retrofit2.*;
+import retrofit2.Call;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;

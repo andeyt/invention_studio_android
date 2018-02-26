@@ -1,7 +1,6 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,7 +30,4 @@ public class HomeFragment extends Fragment {
 
         return rootView;
     }
-
-
-
 }

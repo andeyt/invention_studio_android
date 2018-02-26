@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
@@ -23,7 +22,6 @@ public class MainEquipmentFragment extends MachineGroupFragment {
     public MainEquipmentFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,5 +71,4 @@ public class MainEquipmentFragment extends MachineGroupFragment {
 
         return rootView;
     }
-
 }

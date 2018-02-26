@@ -74,6 +74,5 @@ public class UserGroups {
     public void setUserUserName(String userUserName) {
         this.userUserName = userUserName;
     }
-
 }
 

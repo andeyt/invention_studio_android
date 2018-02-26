@@ -1,8 +1,7 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.support.annotation.IdRes;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -11,24 +10,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.lang.reflect.Field;
 
-import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.FeedbackFragment;
 import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
+import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
-import inventionstudio.inventionstudioandroid.Fragments.ReportAProblemFragment;
 import inventionstudio.inventionstudioandroid.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
         disableShiftMode(bottom);
@@ -52,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         switch (item.getItemId()) {
-
                             case R.id.home:
                                 if (!(currentFragment instanceof HomeFragment)){
                                     selectedFragment = new HomeFragment();
@@ -87,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                             transaction.commit();
                         }
 
-
                         return true;
                     }
                 });
@@ -96,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
     }
-
 
     @SuppressLint("RestrictedApi")
     private void disableShiftMode(BottomNavigationView view) {
@@ -121,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount != 0){
             super.onBackPressed();
@@ -129,5 +115,4 @@ public class MainActivity extends AppCompatActivity {
             bottom.setSelectedItemId(R.id.home);
         }
     }
-
 }

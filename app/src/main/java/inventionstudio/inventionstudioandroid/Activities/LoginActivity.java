@@ -1,52 +1,24 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
-import android.annotation.TargetApi;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
-
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import java.net.URL;
-import java.util.List;
 
-import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.UserGroups;
 import inventionstudio.inventionstudioandroid.R;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-
-
-
 
 public class LoginActivity extends Activity {
     public static final String USER_PREFERENCES = "UserPrefs";
@@ -57,15 +29,11 @@ public class LoginActivity extends Activity {
     final String OtpDisplayId = "LiverpoolTheme_wt1_block_wtMainContent_SilkUIFramework_wt8_block_wtColumn2_wt14_SilkUIFramework_wt14_block_wtContent1_wt15_SilkUIFramework_wt382_block_wtPanelContent_SilkUIFramework_wt109_block_wtColumn2_SilkUIFramework_wt289_block_wtPanelContent_SilkUIFramework_wtBrief_block_wtContent_wtCalendarLink";
     private View group;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
-
-
         webView = (WebView)findViewById(R.id.webView);
         webView.clearCache(true);
         webView.clearHistory();
@@ -73,9 +41,7 @@ public class LoginActivity extends Activity {
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
         group = findViewById(R.id.progress_group);
 
-
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public void onPageStarted(WebView webView, String url, Bitmap b) {
                 try {
@@ -88,7 +54,6 @@ public class LoginActivity extends Activity {
                 } catch (Exception e) {
 
                 }
-
             }
 
             @Override
@@ -110,8 +75,6 @@ public class LoginActivity extends Activity {
                                 Log.d("REST", username);
                                 editor.putString("username", username);
                                 editor.apply();
-
-
                             }
                         });
                         webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
@@ -144,9 +107,6 @@ public class LoginActivity extends Activity {
                         overridePendingTransition(0,0);
                         finish();
                     }
-
-
-
                 } catch (Exception e) {
 
                 }
@@ -181,23 +141,18 @@ public class LoginActivity extends Activity {
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-
             }
-
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums.gatech.edu/EditResearcherProfile.aspx");
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();
-
         }
     }
 

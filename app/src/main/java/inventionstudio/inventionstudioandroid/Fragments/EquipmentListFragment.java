@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
@@ -61,20 +54,15 @@ public class EquipmentListFragment extends MachineGroupFragment {
         // Inflate the layout for this fragment
         Bundle bundle = getArguments();
         machineGroup = (String) bundle.getSerializable("MachineGroup");
-
         getActivity().setTitle(machineGroup);
 
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
-
-
-
         listView = (ListView) rootView.findViewById(R.id.equipment_list);
         description = (TextView) header.findViewById(R.id.group_description);
         listView.addHeaderView(header, null, false);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -106,7 +94,6 @@ public class EquipmentListFragment extends MachineGroupFragment {
         });
 
         connectAndGetApiData();
-
         return rootView;
     }
 
@@ -116,8 +103,6 @@ public class EquipmentListFragment extends MachineGroupFragment {
         if (call != null) {
             call.cancel();
         }
-
-
     }
 
 
@@ -149,7 +134,6 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 }
 
                 Collections.sort(machines);
-
                 MachineAdapter adapter = new MachineAdapter(getActivity(), R.layout.equipment_list_row, machines);
 
                 listView.setAdapter(adapter);
@@ -160,18 +144,12 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 }
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
-
-
-
-
-
             }
+
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
             }
         });
     }
-
-
 }
