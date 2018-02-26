@@ -24,7 +24,7 @@
     <color name="IS_foreground_Dark">#0e1316</color>
     <color name="IS_text_Dark">#cbd2d8</color>
     <color name="text_color_secondary">#b227c818</color>
-    <color name="IS_text_secondary_Dark">#ffffff</color>
+    <color name="IS_text_secondary_Dark">#8b99a5</color>
     <color name="IS_text_Light">#07090a</color>
-    <color name="IS_text_secondary_Light">#020405</color>
+    <color name="IS_text_secondary_Light">#d0d4d8</color>
 </resources>

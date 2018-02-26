@@ -3,5 +3,8 @@
     <Preference android:title="Logout"
         android:key="logout_button"
         />
+    <Preference android:title="Color Theme"
+        android:key="theme_button"
+        />
 
 </PreferenceScreen>

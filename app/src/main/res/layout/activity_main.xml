@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/IS_primary_Light"
         app:itemIconTint="@drawable/tab_text_tint"
         app:itemTextColor="@drawable/tab_text_tint"
         app:menu="@menu/bottom_nav_tabs"/>
-
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container"
