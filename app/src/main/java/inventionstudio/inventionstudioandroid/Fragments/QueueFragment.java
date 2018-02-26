@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -184,19 +185,19 @@ public class QueueFragment extends Fragment {
 
                     queues = new HashSet<>();
                     for (QueueGroups q : groups) {
-                        if (q.getIsGroup()) {
-                            queues.add(q.getName());
-                            if (queueData.get(q.getName()) == null) {
-                                queueData.put(q.getName(), new ArrayList<String>());
-                                queueData.get(q.getName()).add("No users in queue");
 
-                            }
+                        queues.add(q.getName());
+                        if (queueData.get(q.getName()) == null) {
+                            queueData.put(q.getName(), new ArrayList<String>());
+                            queueData.get(q.getName()).add("No users in queue");
                         }
+
                     }
 
                     // Setup and create ExpandableList
                     ArrayList<String> queueList = new ArrayList<>(queues);
-                    adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
+                    Collections.sort(queueList);
+                    adapter = new ExpandableListAdapter(getActivity(), queueList , queueData);
                     expandableListView.setAdapter(adapter);
                     loadProgress.setVisibility(View.GONE);
                     refreshLayout.setRefreshing(false);
