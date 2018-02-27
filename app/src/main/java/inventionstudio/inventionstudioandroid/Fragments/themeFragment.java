@@ -36,7 +36,12 @@ public class themeFragment extends Fragment {
         // Create view, set layout manager, adapter, and dividers
         RecyclerView list = rootView.findViewById(R.id.theme_list);
         list.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        adapter = new MyRecyclerViewAdapter(this.getContext(), themes);
+        adapter = new MyRecyclerViewAdapter(this.getContext(), themes, new MyRecyclerViewAdapter.CustomItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Log.d(TAG, "clicked position: " + position);
+            }
+        });
         list.setAdapter(adapter);
         list.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));
 
