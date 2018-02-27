@@ -1,5 +1,6 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +12,10 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import inventionstudio.inventionstudioandroid.Activities.MainActivity;
 import inventionstudio.inventionstudioandroid.Adapters.MyRecyclerViewAdapter;
 import inventionstudio.inventionstudioandroid.Model.SimpleDividerItemDecoration;
+import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
 import inventionstudio.inventionstudioandroid.R;
 
 import static android.content.ContentValues.TAG;
@@ -39,7 +42,9 @@ public class themeFragment extends Fragment {
         adapter = new MyRecyclerViewAdapter(this.getContext(), themes, new MyRecyclerViewAdapter.CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Log.d(TAG, "clicked position: " + position);
+                ThemeChanger.apply(position);
+                getActivity().finish();
+                startActivity(new Intent(getContext(), MainActivity.class));
             }
         });
         list.setAdapter(adapter);
