@@ -27,4 +27,5 @@
     <color name="IS_text_secondary_Dark">#8b99a5</color>
     <color name="IS_text_Light">#07090a</color>
     <color name="IS_text_secondary_Light">#d0d4d8</color>
+    <color name="black">#000000</color>
 </resources>
