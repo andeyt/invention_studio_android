@@ -48,18 +48,18 @@ public class MoreFragment extends PreferenceFragmentCompat {
             }
         });
 
-        Preference themeButton = findPreference("theme_button");
-        themeButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                fragmentManager.popBackStackImmediate(
-                        null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                transaction.replace(R.id.fragment_container, new themeFragment());
-                transaction.commit();
-                return true;
-            }
-        });
+//        Preference themeButton = findPreference("theme_button");
+//        themeButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//            @Override
+//            public boolean onPreferenceClick(Preference preference) {
+//                FragmentManager fragmentManager = getFragmentManager();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                fragmentManager.popBackStackImmediate(
+//                        null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                transaction.replace(R.id.fragment_container, new themeFragment());
+//                transaction.commit();
+//                return true;
+//            }
+//        });
     }
 }
