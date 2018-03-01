@@ -20,6 +20,7 @@ import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
+import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
 import inventionstudio.inventionstudioandroid.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(ThemeChanger.currentTheme);
         setContentView(R.layout.activity_main);
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
