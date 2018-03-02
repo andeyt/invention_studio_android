@@ -59,7 +59,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         description = rootView.findViewById(R.id.machine_description);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
-        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setColorSchemeResources(R.color.IS_accent_Light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

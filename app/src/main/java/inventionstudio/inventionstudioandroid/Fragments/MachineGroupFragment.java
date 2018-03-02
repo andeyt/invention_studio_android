@@ -85,7 +85,7 @@ public class MachineGroupFragment extends Fragment {
         connectAndGetApiData();
 
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
-        refreshLayout.setColorSchemeResources(R.color.colorAccent);
+        refreshLayout.setColorSchemeResources(R.color.IS_accent_Light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
