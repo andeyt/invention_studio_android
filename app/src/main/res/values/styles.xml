@@ -39,10 +39,10 @@
 
     <style name="IS_Light" parent="AppTheme" >
         <item name="colorPrimary">@color/IS_primary_Light</item>
-        <item name="android:colorBackground">@color/IS_foreground_Light</item>
+        <item name="android:colorBackground">@color/IS_background_Light</item>
         <item name="colorPrimaryDark">@color/IS_primary_Light</item>
         <item name="colorAccent">@color/IS_accent_Light</item>
-        <item name="android:colorForeground">@color/IS_foreground_Light</item>
+        <item name="android:colorForeground">@color/IS_background_Light</item>
         <item name="android:textColorPrimary">@color/IS_text_Light</item>
         <item name="android:windowBackground">@color/IS_background_Light</item>
         <item name="android:textColorSecondary">@color/IS_text_secondary_Light</item>
