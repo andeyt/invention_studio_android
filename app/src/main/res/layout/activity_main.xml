@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/IS_primary_Light"
+        android:background="@color/IS_HeaderFooter_Light"
         app:itemIconTint="@drawable/tab_text_tint"
         app:itemTextColor="@drawable/tab_text_tint"
         app:menu="@menu/bottom_nav_tabs"/>

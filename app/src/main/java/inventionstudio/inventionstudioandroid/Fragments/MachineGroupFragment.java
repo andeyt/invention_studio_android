@@ -78,14 +78,13 @@ public class MachineGroupFragment extends Fragment {
                 // or ft.add(R.id.your_placeholder, new FooFragment());
                 // Complete the changes added above
                 ft.commit();
-
             }
         });
 
         connectAndGetApiData();
 
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
-        refreshLayout.setColorSchemeResources(R.color.IS_accent_Light);
+        refreshLayout.setColorSchemeResources(R.color.IS_AccentPrimary_Light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

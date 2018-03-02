@@ -84,7 +84,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
         });
 
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
-        refreshLayout.setColorSchemeResources(R.color.IS_accent_Light);
+        refreshLayout.setColorSchemeResources(R.color.IS_AccentPrimary_Light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

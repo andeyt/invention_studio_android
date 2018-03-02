@@ -5,12 +5,10 @@
         android:icon="@drawable/ic_home"
         android:title="Home"
         />
-    <!--activeColor="@values/colors/colorAccent"-->
     <item
         android:id="@+id/equipment"
         android:icon="@drawable/ic_build"
         android:title="Equipment"/>
-    <!--activeColor="@color/colorAccent" />-->
     <item
         android:id="@+id/queue"
         android:icon="@drawable/ic_people"

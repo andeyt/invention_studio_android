@@ -13,5 +13,14 @@
     <color name="IS_AccentPrimary_Light">#b29321</color>
     <color name="IS_AccentSecondary_Light">#d0d4d8</color>
     <color name="IS_AccentTertiary_Light">#33393f</color>
-
+    <color name="IS_Background_Light">#e4e8ea</color>
+    <color name="IS_FocusBackground_Light">#d7dde0</color>
+    <color name="IS_HeaderFooter_Light">#283941</color>
+    <color name="IS_TitleHeader_Light">#ffffff</color>
+    <color name="IS_Text_Light">#07090a</color>
+    <color name="IS_Title_Light">#020405</color>
+    <color name="IS_StatusAvailable_Light">#39b215</color>
+    <color name="IS_StatusDown_Light">#db2b2e</color>
+    <color name="IS_StatusInUse_Light">#f8ac2e</color>
+    <color name="IS_StatusUnknown_Light">#aaaaaa</color>
 </resources>

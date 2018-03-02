@@ -72,7 +72,7 @@ public class QueueFragment extends Fragment {
         // Gives the queue data from the SUMS API
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
-        refreshLayout.setColorSchemeResources(R.color.IS_accent_Light);
+        refreshLayout.setColorSchemeResources(R.color.IS_AccentPrimary_Light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
