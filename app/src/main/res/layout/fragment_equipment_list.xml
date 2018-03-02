@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -27,7 +25,4 @@
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-
 </FrameLayout>

@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment">
+    tools:context="inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment"
+    android:background="@color/IS_Background_Light">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -15,13 +16,15 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/IS_Background_Light">
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/IS_FocusBackground_Light"
+            android:divider="@color/IS_AccentTertiary_Light" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

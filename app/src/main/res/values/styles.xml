@@ -24,6 +24,12 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
+    <style name="SwitchStyle" parent="IS_Light">
+        <item name="colorControlActivated">@color/IS_AccentPrimary_Light</item>
+        <item name="colorSwitchThumbNormal">@color/IS_FocusBackground_Light</item>
+        <item name="android:colorForeground">@color/IS_FocusBackground_Light</item>
+    </style>
+
     <style name="InventionStudio" parent="AppTheme" >
         <item name="android:textColorPrimary">@color/primary_text_material_dark</item>
         <item name="android:textColorPrimaryInverse">@color/primary_text_material_light</item>
@@ -38,8 +44,13 @@
     </style>
 
     <style name="IS_Light" parent="AppTheme" >
-    </style>
-
-    <style name="IS_Dark" parent="IS_Light" >
+        <item name="colorPrimary">@color/IS_HeaderFooter_Light</item>
+        <item name="android:statusBarColor">@color/IS_HeaderFooter_Light</item>
+        <item name="colorAccent">@color/IS_AccentPrimary_Light</item>
+        <item name="android:colorBackground">@color/IS_Background_Light</item>
+        <item name="android:colorForeground">@color/IS_Background_Light</item>
+        <item name="android:textColorPrimary">@color/IS_Title_Light</item>
+        <item name="android:textColorSecondary">@color/IS_Text_Light</item>
+        <item name="android:windowBackground">@color/IS_Background_Light</item>
     </style>
 </resources>

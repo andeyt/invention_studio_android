@@ -11,19 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@color/IS_HeaderFooter_Light">
 
         <info.hoang8f.android.segmented.SegmentedGroup
             android:id="@+id/segmented"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="@color/IS_HeaderFooter_Light"
+            android:checkedButton="@id/info"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            segmentedgroup:sc_checked_text_color="@color/colorPrimary"
-            segmentedgroup:sc_tint_color="@color/colorAccent"
-            android:checkedButton="@id/info"
-            >
+            segmentedgroup:sc_checked_text_color="@color/IS_HeaderFooter_Light"
+            segmentedgroup:sc_tint_color="@color/IS_AccentPrimary_Light">
 
             <RadioButton
                 android:id="@+id/info"
@@ -45,7 +46,8 @@
         <FrameLayout
             android:id="@+id/equipment_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/IS_Background_Light"/>
     </LinearLayout>
 
 

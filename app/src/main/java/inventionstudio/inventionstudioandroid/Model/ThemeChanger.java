@@ -18,8 +18,6 @@ public class ThemeChanger {
             case THEME_LIGHT:
                 currentTheme = R.style.IS_Light;
                 break;
-            case THEME_DARK:
-                currentTheme = R.style.IS_Dark;
         }
     }
 }

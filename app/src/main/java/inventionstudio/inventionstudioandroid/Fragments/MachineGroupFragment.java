@@ -132,7 +132,6 @@ public class MachineGroupFragment extends Fragment {
                 Collections.sort(groupList);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                         android.R.layout.simple_list_item_1, groupList);
-
                 listView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
