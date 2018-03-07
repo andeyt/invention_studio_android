@@ -22,9 +22,12 @@
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:background="@color/IS_FocusBackground_Light"
-            android:divider="@color/IS_AccentTertiary_Light" />
+            android:divider="@color/IS_AccentTertiary_Light"
+            android:dividerHeight="1dp"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>
