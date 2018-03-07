@@ -27,7 +27,7 @@
     <style name="SwitchStyle" parent="IS_Light">
         <item name="colorControlActivated">@color/IS_AccentPrimary_Light</item>
         <item name="colorSwitchThumbNormal">@color/IS_FocusBackground_Light</item>
-        <item name="android:colorForeground">@color/IS_FocusBackground_Light</item>
+        <item name="android:colorForeground">@color/IS_AccentTertiary_Light</item>
     </style>
 
     <style name="InventionStudio" parent="AppTheme" >
