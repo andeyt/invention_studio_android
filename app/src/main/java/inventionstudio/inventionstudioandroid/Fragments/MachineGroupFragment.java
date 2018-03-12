@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Adapters.GroupAdapter;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
@@ -130,8 +131,8 @@ public class MachineGroupFragment extends Fragment {
 
                 ArrayList<String> groupList = new ArrayList<>(groups);
                 Collections.sort(groupList);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_list_item_1, groupList);
+                GroupAdapter adapter = new GroupAdapter(getActivity(),
+                        R.layout.list_item, groupList);
                 listView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);

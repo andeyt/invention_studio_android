@@ -22,7 +22,7 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/IS_FocusBackground_Light"
+            android:background="@color/IS_Background_Light"
             android:divider="@color/IS_AccentTertiary_Light"
             android:dividerHeight="1dp"
             android:footerDividersEnabled="true"

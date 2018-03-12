@@ -129,7 +129,6 @@ public class EquipmentListFragment extends MachineGroupFragment {
                         m.statusIcon();
                         machines.add(m);
                     }
-
                 }
 
                 Collections.sort(machines);
