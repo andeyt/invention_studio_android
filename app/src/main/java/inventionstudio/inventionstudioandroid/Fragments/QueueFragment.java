@@ -46,6 +46,8 @@ public class QueueFragment extends Fragment {
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
     private QueueTask queueTask;
+    private Call<List<QueueMember>> queueMembersCall;
+    private Call<List<QueueGroups>> queueGroupsCall;
 
     public QueueFragment() {
         // Required empty public constructor
@@ -89,9 +91,13 @@ public class QueueFragment extends Fragment {
     @Override
     public void onPause () {
         super.onPause();
-        if (queueTask != null) {
-            queueTask.cancel(true);
+        if (queueMembersCall != null) {
+            queueMembersCall.cancel();
         }
+        if (queueGroupsCall != null) {
+            queueGroupsCall.cancel();
+        }
+
     }
 
     public void connectAndGetQueueMembers(){
@@ -111,9 +117,9 @@ public class QueueFragment extends Fragment {
         String otp = prefs.getString("otp", "");
 
         // TODO: Change to variables
-        Call<List<QueueMember>> call = sumsApiService.getQueueMembers(8, username, otp);
+        queueMembersCall = sumsApiService.getQueueMembers(8, username, otp);
 
-        call.enqueue(new Callback<List<QueueMember>>() {
+        queueMembersCall.enqueue(new Callback<List<QueueMember>>() {
             @Override
             public void onResponse(Call<List<QueueMember>> call, Response<List<QueueMember>> response) {
                 List<QueueMember> members = response.body();
@@ -166,9 +172,9 @@ public class QueueFragment extends Fragment {
         String otp = prefs.getString("otp", "");
 
         // TODO: Change to variables
-        Call<List<QueueGroups>> call = sumsApiService.getQueueGroups(8, username, otp);
+        queueGroupsCall = sumsApiService.getQueueGroups(8, username, otp);
 
-        call.enqueue(new Callback<List<QueueGroups>>() {
+        queueGroupsCall.enqueue(new Callback<List<QueueGroups>>() {
                 @Override
                 public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
                     List<QueueGroups> groups = response.body();
