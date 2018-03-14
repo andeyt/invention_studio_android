@@ -9,38 +9,15 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="IS_Light.NoActionBar" parent = "IS_Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="AppTheme.TransNav" parent="AppTheme">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="SwitchStyle" parent="IS_Light">
         <item name="colorControlActivated">@color/IS_AccentPrimary_Light</item>
         <item name="colorSwitchThumbNormal">@color/IS_FocusBackground_Light</item>
         <item name="android:colorForeground">@color/IS_AccentTertiary_Light</item>
-    </style>
-
-    <style name="InventionStudio" parent="AppTheme" >
-        <item name="android:textColorPrimary">@color/primary_text_material_dark</item>
-        <item name="android:textColorPrimaryInverse">@color/primary_text_material_light</item>
-        <item name="android:textColorSecondary">@color/secondary_text_material_light</item>
-        <item name="android:textColorSecondaryInverse">@color/secondary_text_material_dark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:colorBackground">@android:color/background_light</item>
-        <item name="android:colorForeground">@color/foreground_material_light</item>
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
-        <item name="android:statusBarColor">?android:attr/colorPrimary</item>
     </style>
 
     <style name="IS_Light" parent="AppTheme" >
