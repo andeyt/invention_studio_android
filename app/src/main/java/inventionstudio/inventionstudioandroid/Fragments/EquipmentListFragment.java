@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,7 +139,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 if (machines.isEmpty()) {
                     description.setText("No machines in this group");
                 } else {
-                    description.setText(machines.get(0).getEquipmentGroupDescription());
+                    description.setText(Html.fromHtml(machines.get(0).getLocationDescription()));
                 }
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);

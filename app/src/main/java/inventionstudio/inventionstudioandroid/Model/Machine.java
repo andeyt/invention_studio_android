@@ -54,6 +54,9 @@ public class Machine implements Serializable, Comparable<Machine>{
     @SerializedName("locationName")
     @Expose
     private String locationName;
+    @SerializedName("locationDescription")
+    @Expose
+    private String locationDescription;
     @SerializedName("locationUrl")
     @Expose
     private String locationUrl;
@@ -146,6 +149,14 @@ public class Machine implements Serializable, Comparable<Machine>{
 
     public void setLocationName(String locationName) {
         this.locationName = locationName;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 
     public String getLocationUrl() {

@@ -41,7 +41,7 @@ public class QueueFragment extends Fragment {
     private static Retrofit retrofit = null;
     private ExpandableListAdapter adapter;
     private ExpandableListView expandableListView;
-    private HashSet<String> queues;
+    private ArrayList<String> queues;
     private HashMap<String, List<String>> queueData;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
@@ -169,6 +169,7 @@ public class QueueFragment extends Fragment {
         // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
+        final String name = prefs.getString("name", "");
         String otp = prefs.getString("otp", "");
 
         // TODO: Change to variables
@@ -178,21 +179,36 @@ public class QueueFragment extends Fragment {
                 @Override
                 public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
                     List<QueueGroups> groups = response.body();
+                    ArrayList<String> queueList = new ArrayList<>();
 
-                    queues = new HashSet<>();
+                    queues = new ArrayList<>();
                     for (QueueGroups q : groups) {
-
                         queues.add(q.getName());
                         if (queueData.get(q.getName()) == null) {
                             queueData.put(q.getName(), new ArrayList<String>());
                             queueData.get(q.getName()).add("No users in queue");
                         }
+                        ArrayList<String> names = (ArrayList<String>) queueData.get(q.getName());
+                        for (String queueName: names) {
+                            if (queueName.contains(name)) {
+                                queueList.add(q.getName());
+                            }
+                        }
 
                     }
 
+
                     // Setup and create ExpandableList
-                    ArrayList<String> queueList = new ArrayList<>(queues);
-                    Collections.sort(queueList);
+                    Collections.sort(queues);
+                    for (String queue: queues) {
+                        if (queueList.contains(queue)) {
+                            continue;
+                        } else {
+                            queueList.add(queue);
+                        }
+                    }
+                    
+
                     adapter = new ExpandableListAdapter(getActivity(), queueList , queueData);
                     expandableListView.setAdapter(adapter);
                     loadProgress.setVisibility(View.GONE);

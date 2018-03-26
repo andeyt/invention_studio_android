@@ -1,6 +1,8 @@
 package inventionstudio.inventionstudioandroid.Adapters;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import java.util.List;
 
 import inventionstudio.inventionstudioandroid.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by Maxwell Broom on 1/23/2018.
  */
@@ -23,6 +27,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
+    public static final String USER_PREFERENCES = "UserPrefs";
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<String>> listChildData) {
@@ -56,7 +61,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.lblListItem);
+        SharedPreferences prefs = _context.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        String name = prefs.getString("name", "");
 
+        if (childText.contains(name)) {
+            txtListChild.setTypeface(null, Typeface.BOLD);
+        } else {
+            txtListChild.setTypeface(null, Typeface.NORMAL);
+        }
         txtListChild.setText(childText);
         return convertView;
     }
