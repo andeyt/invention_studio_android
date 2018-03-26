@@ -27,10 +27,12 @@
         </activity>
         <activity
             android:name=".Activities.AgreementActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme = "@style/IS_Light.NoActionBar"/>
         <activity
             android:name=".Activities.LoadingActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme = "@style/IS_Light.NoActionBar"/>
 
         <service
             android:name=".Firebase.MyFirebaseMessagingService">
@@ -49,6 +51,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
+
+
+
 
 
     </application>
