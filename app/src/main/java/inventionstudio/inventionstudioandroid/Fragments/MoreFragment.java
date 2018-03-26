@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import inventionstudio.inventionstudioandroid.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -43,6 +45,7 @@ public class MoreFragment extends PreferenceFragmentCompat {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
                 editor.apply();
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(prefs.getString("username", ""));
                 getActivity().finish();
                 return true;
             }

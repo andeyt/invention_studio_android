@@ -1,6 +1,7 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -12,6 +13,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Field;
 
@@ -25,12 +28,18 @@ import inventionstudio.inventionstudioandroid.R;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottom;
+    public static final String USER_PREFERENCES = "UserPrefs";
 //    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(ThemeChanger.currentTheme);
         setContentView(R.layout.activity_main);
+        SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        String username = prefs.getString("username", "");
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic(username);
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
         disableShiftMode(bottom);

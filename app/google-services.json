@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "523914394054",
+    "firebase_url": "https://invention-studio.firebaseio.com",
+    "project_id": "invention-studio",
+    "storage_bucket": "invention-studio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523914394054:android:dd29a2fa30784837",
+        "android_client_info": {
+          "package_name": "inventionstudio.inventionstudioandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523914394054-21b8tcn40l9tann32amr9oli84vld6vr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNQ8ywbhOrU89Z13pGAEkCQu_4Lf6pnU0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
