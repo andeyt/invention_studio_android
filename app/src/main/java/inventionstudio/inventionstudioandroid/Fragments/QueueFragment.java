@@ -155,6 +155,7 @@ public class QueueFragment extends Fragment {
         });
     }
 
+
     public void connectAndGetQueueGroups(){
         // Create the retrofit for building the API data
         if (retrofit == null) {
@@ -207,7 +208,7 @@ public class QueueFragment extends Fragment {
                             queueList.add(queue);
                         }
                     }
-                    
+
 
                     adapter = new ExpandableListAdapter(getActivity(), queueList , queueData);
                     expandableListView.setAdapter(adapter);

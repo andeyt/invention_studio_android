@@ -42,10 +42,11 @@ public class MoreFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SharedPreferences prefs = getActivity().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                String username = prefs.getString("username", "");
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
                 editor.apply();
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(prefs.getString("username", ""));
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(username);
                 getActivity().finish();
                 return true;
             }

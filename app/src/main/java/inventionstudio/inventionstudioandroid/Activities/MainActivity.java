@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
 
-
         FirebaseMessaging.getInstance().subscribeToTopic(username);
+
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
         disableShiftMode(bottom);
