@@ -16,16 +16,19 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.PIFeedback;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,8 +47,10 @@ public class FeedbackFragment extends Fragment {
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private static Retrofit retrofit = null;
     private ArrayList<String> machineNames;
+    private HashSet<String> machineTypes;
     private Call<List<Machine>> call;
     private Spinner machineSpinner;
+    private Spinner machineTypeSpinner;
 
     public FeedbackFragment() {
         // Required empty public constructor
@@ -62,7 +67,7 @@ public class FeedbackFragment extends Fragment {
         final String name = prefs.getString("name", "");
         final TextView nameText = (TextView) rootView.findViewById(R.id.name);
         nameText.setText(name);
-        Switch anonSwitch = (Switch) rootView.findViewById(R.id.anon_switch);
+        final Switch anonSwitch = (Switch) rootView.findViewById(R.id.anon_switch);
         anonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -73,8 +78,11 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
+        // Rating instantiation
+        SeekBar rating = (SeekBar) rootView.findViewById(R.id.rating);
+
         // EditText Instantiation
-        EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);
+        final EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);
         EditText piTextInput = (EditText) rootView.findViewById(R.id.piname_text_input);
 
         // Data for type of feedback
@@ -86,6 +94,7 @@ public class FeedbackFragment extends Fragment {
 
         // API machine data
         machineSpinner = (Spinner) rootView.findViewById(R.id.machine_spinner);
+        machineTypeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
         connectAndGetAPIData();
 
         // Machine broken data
@@ -100,17 +109,31 @@ public class FeedbackFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Submit functionality not implemented yet!");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Nothing will happen, returned to feedback fragment
-                        // Reset the page perhaps
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                String username;
+
+                // choose which username to use based on anonymity or not
+                if (anonSwitch.isChecked()) {
+                    username = "anonymous";
+                } else {
+                   username = prefs.getString("username", "");
+                }
+
+                // Create the correct object based on the type of data being sent
+                if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
+                    // PIFeedback feedback = new PIFeedback(username, commentTextInput.getText(), rating.get)
+                }
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setMessage("Submit functionality not implemented yet!");
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // Nothing will happen, returned to feedback fragment
+//                        // Reset the page perhaps
+//                    }
+//                });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
             }
         });
 
@@ -160,17 +183,21 @@ public class FeedbackFragment extends Fragment {
 
                 // Make list of all machine names for adding to the spinner
                 machineNames = new ArrayList<>();
+                machineTypes = new HashSet<>();
                 for (Machine m : e) {
+                    machineTypes.add(m.getLocationName());
                     machineNames.add(m.getToolName());
-                    Log.d(TAG, m.getToolName());
                 }
-                Log.d(TAG, machineNames.toString());
                 Collections.sort(machineNames);
-                Log.d(TAG, machineNames.toString());
 
                 ArrayAdapter<String> machineAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, machineNames);
                 machineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 machineSpinner.setAdapter(machineAdapter);
+
+                ArrayList<String> types = new ArrayList<>(machineTypes);
+                ArrayAdapter<String> machineTypeAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, types);
+                machineTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                machineTypeSpinner.setAdapter(machineTypeAdapter);
             }
 
             @Override
