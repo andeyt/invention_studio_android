@@ -5,6 +5,7 @@ package inventionstudio.inventionstudioandroid.Model;
  */
 
 public class GeneralFeedback {
+    private int equipmentGroudId = 8;
     private String username;
     private String comments;
 

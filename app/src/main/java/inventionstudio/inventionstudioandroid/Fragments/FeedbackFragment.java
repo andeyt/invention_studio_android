@@ -74,7 +74,8 @@ public class FeedbackFragment extends Fragment {
         });
 
         // EditText Instantiation
-        EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
+        EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);
+        EditText piTextInput = (EditText) rootView.findViewById(R.id.piname_text_input);
 
         // Data for type of feedback
         final Spinner feedbackSpinner = (Spinner) rootView.findViewById(R.id.spinner1);
