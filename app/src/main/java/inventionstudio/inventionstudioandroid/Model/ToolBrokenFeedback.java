@@ -4,7 +4,7 @@ package inventionstudio.inventionstudioandroid.Model;
  * Created by maxim_000 on 3/29/2018.
  */
 
-public class ToolBrokenFeedback {
+public class ToolBrokenFeedback extends GeneralFeedback {
     private int equipmentGroudId = 8;
     private String username;
     private String comments;
@@ -13,8 +13,7 @@ public class ToolBrokenFeedback {
     private String problem;
 
     public ToolBrokenFeedback(String username, String comments, String toolGroup, String toolName, String problem) {
-        this.username = username;
-        this.username = comments;
+        super(username, comments);
         this.toolGroup = toolGroup;
         this.toolName = toolName;
         this.problem = problem;

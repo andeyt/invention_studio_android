@@ -11,7 +11,7 @@ public class GeneralFeedback {
 
     public GeneralFeedback(String username, String comments) {
         this.username = username;
-        this.username = comments;
+        this.comments = comments;
     }
 
     public void setUsername(String username) {
@@ -28,5 +28,9 @@ public class GeneralFeedback {
 
     public String getComments() {
         return comments;
+    }
+
+    public String toString() {
+        return "User: " + username + ", comments: " + comments;
     }
 }
