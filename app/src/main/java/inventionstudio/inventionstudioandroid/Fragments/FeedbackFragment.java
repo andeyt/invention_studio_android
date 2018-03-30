@@ -1,9 +1,11 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +19,22 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.Model.PIFeedback;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,20 +124,30 @@ public class FeedbackFragment extends Fragment {
                     username = prefs.getString("username", "");
                 }
 
-                GeneralFeedback feedback;
+               ;
                 // Create the correct object based on the type of data being sent
                 if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
-                    feedback = new PIFeedback(username, commentTextInput.getText().toString(),
-                            rating.getProgress(), piTextInput.getText().toString());
+                    PIFeedback feedback = new PIFeedback(8, username, piTextInput.getText().toString(),
+                            rating.getProgress(), commentTextInput.getText().toString());
+
+                    connectAndSendPIFeedback(feedback);
+
+
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
-                    feedback = new ToolBrokenFeedback(username, commentTextInput.getText().toString(),
+                    ToolBrokenFeedback feedback = new ToolBrokenFeedback(
+                            8,
+                            username,
+                            issueSpinner.getSelectedItem().toString(),
                             machineTypeSpinner.getSelectedItem().toString(),
                             machineSpinner.getSelectedItem().toString(),
-                            issueSpinner.getSelectedItem().toString());
+                            commentTextInput.getText().toString()
+                            );
+                    connectAndSendToolFeedback(feedback);
+
+
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
-                    feedback = new GeneralFeedback(username, commentTextInput.getText().toString());
-                } else {
-                    feedback = new GeneralFeedback("NO USERNAME", "NO COMMENTS");
+                    GeneralFeedback feedback = new GeneralFeedback(8, username, commentTextInput.getText().toString());
+                    connectAndSendGeneralFeedback(feedback);
                 }
             }
         });
@@ -164,12 +180,12 @@ public class FeedbackFragment extends Fragment {
     }
 
     public void connectAndGetAPIData() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         String username = prefs.getString("username", "");
@@ -184,8 +200,10 @@ public class FeedbackFragment extends Fragment {
                 machineNames = new ArrayList<>();
                 machineTypes = new HashSet<>();
                 for (Machine m : e) {
-                    machineTypes.add(m.getLocationName());
-                    machineNames.add(m.getToolName());
+                    if (m.getLocationName() != "") {
+                        machineTypes.add(m.getLocationName());
+                        machineNames.add(m.getToolName());
+                    }
                 }
                 Collections.sort(machineNames);
 
@@ -194,6 +212,7 @@ public class FeedbackFragment extends Fragment {
                 machineSpinner.setAdapter(machineAdapter);
 
                 ArrayList<String> types = new ArrayList<>(machineTypes);
+                Collections.sort(types);
                 ArrayAdapter<String> machineTypeAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, types);
                 machineTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 machineTypeSpinner.setAdapter(machineTypeAdapter);
@@ -205,4 +224,94 @@ public class FeedbackFragment extends Fragment {
             }
         });
     }
+
+    public void connectAndSendGeneralFeedback(GeneralFeedback feedback) {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        String username = prefs.getString("username", "");
+        String otp = prefs.getString("otp", "");
+        Call<ResponseBody> generalCall = serverApiService.sendGeneralFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        generalCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // What on failure with no progress bar?
+            }
+        });
+    }
+
+    public void connectAndSendPIFeedback(PIFeedback feedback) {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        String username = prefs.getString("username", "");
+        String otp = prefs.getString("otp", "");
+        Call<ResponseBody> generalCall = serverApiService.sendPIFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        generalCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // What on failure with no progress bar?
+            }
+        });
+    }
+
+    public void connectAndSendToolFeedback(ToolBrokenFeedback feedback) {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        String username = prefs.getString("username", "");
+        String otp = prefs.getString("otp", "");
+        Call<ResponseBody> generalCall = serverApiService.sendToolFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        generalCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // What on failure with no progress bar?
+            }
+        });
+    }
+
 }

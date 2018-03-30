@@ -14,16 +14,25 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class ReportAProblemFragment extends MachineGroupFragment {
-
+    private static Retrofit retrofit = null;
 
     public ReportAProblemFragment() {
         // Required empty public constructor
@@ -77,10 +86,16 @@ public class ReportAProblemFragment extends MachineGroupFragment {
                 }
 
                 // Create feedback for tool broken
-                ToolBrokenFeedback feedback = new ToolBrokenFeedback(username, textInput.getText().toString(),
+                ToolBrokenFeedback feedback = new ToolBrokenFeedback(
+                        8,
+                        username,
+                        spinner.getSelectedItem().toString(),
                         obj.getLocationName(),
                         obj.getToolName(),
-                        spinner.getSelectedItem().toString());
+                        textInput.getText().toString()
+                );
+                connectAndSendToolFeedback(feedback);
+
 
             }
         });
@@ -88,16 +103,34 @@ public class ReportAProblemFragment extends MachineGroupFragment {
         return rootView;
     }
 
+    public void connectAndSendToolFeedback(ToolBrokenFeedback feedback) {
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        String username = prefs.getString("username", "");
+        String otp = prefs.getString("otp", "");
+        Call<ResponseBody> generalCall = serverApiService.sendToolFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        generalCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // What on failure with no progress bar?
+            }
+        });
+    }
+
 
 }

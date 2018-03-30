@@ -4,48 +4,89 @@ package inventionstudio.inventionstudioandroid.Model;
  * Created by maxim_000 on 3/29/2018.
  */
 
-public class PIFeedback extends GeneralFeedback {
-    private int equipmentGroudId = 8;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class PIFeedback {
+
+    @SerializedName("equipment_group_id")
+    @Expose
+    private Integer equipmentGroupId;
+    @SerializedName("username")
+    @Expose
     private String username;
+    @SerializedName("staff_name")
+    @Expose
+    private String staffName;
+    @SerializedName("rating")
+    @Expose
+    private Integer rating;
+    @SerializedName("comments")
+    @Expose
     private String comments;
-    private int rating;
-    private String name;
 
-    public PIFeedback(String username, String comments, int rating, String name) {
-        super(username, comments);
-        this.rating = rating;
-        this.name = name;
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public PIFeedback() {
     }
 
-    public void setUsername(String username) {
+    /**
+     *
+     * @param username
+     * @param equipmentGroupId
+     * @param staffName
+     * @param rating
+     * @param comments
+     */
+    public PIFeedback(Integer equipmentGroupId, String username, String staffName, Integer rating, String comments) {
+        super();
+        this.equipmentGroupId = equipmentGroupId;
         this.username = username;
-    }
-
-    public void setComments(String comments) {
+        this.staffName = staffName;
+        this.rating = rating;
         this.comments = comments;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public Integer getEquipmentGroupId() {
+        return equipmentGroupId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEquipmentGroupId(Integer equipmentGroupId) {
+        this.equipmentGroupId = equipmentGroupId;
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
     public String getComments() {
         return comments;
     }
 
-    public int getRating() {
-        return rating;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
-    public String getName() {
-        return name;
-    }
 }

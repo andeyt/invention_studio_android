@@ -61,7 +61,10 @@ public class MainEquipmentFragment extends MachineGroupFragment {
                 } else {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     // Replace the contents of the container with the new fragment
-                    ft.replace(R.id.equipment_fragment_container, new ReportAProblemFragment());
+                    Fragment fragment2 = new ReportAProblemFragment();
+                    fragment2.setArguments(bundle);
+                    // Replace the contents of the container with the new fragment
+                    ft.replace(R.id.equipment_fragment_container, fragment2);
                     // or ft.add(R.id.your_placeholder, new FooFragment());
                     // Complete the changes added above
                     ft.commit();
