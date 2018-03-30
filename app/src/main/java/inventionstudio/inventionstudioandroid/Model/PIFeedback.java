@@ -4,7 +4,7 @@ package inventionstudio.inventionstudioandroid.Model;
  * Created by maxim_000 on 3/29/2018.
  */
 
-public class PIFeedback {
+public class PIFeedback extends GeneralFeedback {
     private int equipmentGroudId = 8;
     private String username;
     private String comments;
@@ -12,8 +12,7 @@ public class PIFeedback {
     private String name;
 
     public PIFeedback(String username, String comments, int rating, String name) {
-        this.username = username;
-        this.username = comments;
+        super(username, comments);
         this.rating = rating;
         this.name = name;
     }

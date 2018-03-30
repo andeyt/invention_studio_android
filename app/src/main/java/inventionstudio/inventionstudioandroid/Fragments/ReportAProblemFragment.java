@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -32,12 +34,14 @@ public class ReportAProblemFragment extends MachineGroupFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_report_a_problem, container, false);
+        final Bundle bundle = getArguments();
+        final Machine obj = (Machine) bundle.getSerializable("Machine");
 
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");
         final TextView nameText = (TextView) rootView.findViewById(R.id.name);
         nameText.setText(name);
-        Switch anonSwitch = (Switch) rootView.findViewById(R.id.anon_switch);
+        final Switch anonSwitch = (Switch) rootView.findViewById(R.id.anon_switch);
         anonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -48,10 +52,10 @@ public class ReportAProblemFragment extends MachineGroupFragment {
             }
         });
 
-        EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
+        final EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
         //textInput.setBackgroundResource(R.drawable.edittext_border);
 
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
+        final Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.machine_feedback_array,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -62,17 +66,22 @@ public class ReportAProblemFragment extends MachineGroupFragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Submit functionality not implemented yet!");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Nothing will happen, returned to feedback fragment
-                        // Reset the page perhaps
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                String username;
+
+                // choose which username to use based on anonymity or not
+                if (anonSwitch.isChecked()) {
+                    username = "anonymous";
+                } else {
+                    username = prefs.getString("username", "");
+                }
+
+                // Create feedback for tool broken
+                ToolBrokenFeedback feedback = new ToolBrokenFeedback(username, textInput.getText().toString(),
+                        obj.getLocationName(),
+                        obj.getToolName(),
+                        spinner.getSelectedItem().toString());
+
             }
         });
 

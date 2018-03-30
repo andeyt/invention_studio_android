@@ -1,8 +1,6 @@
 package inventionstudio.inventionstudioandroid.Fragments;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -27,8 +24,10 @@ import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.Model.PIFeedback;
+import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,11 +78,11 @@ public class FeedbackFragment extends Fragment {
         });
 
         // Rating instantiation
-        SeekBar rating = (SeekBar) rootView.findViewById(R.id.rating);
+        final SeekBar rating = (SeekBar) rootView.findViewById(R.id.seekBar);
 
         // EditText Instantiation
         final EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);
-        EditText piTextInput = (EditText) rootView.findViewById(R.id.piname_text_input);
+        final EditText piTextInput = (EditText) rootView.findViewById(R.id.piname_text_input);
 
         // Data for type of feedback
         final Spinner feedbackSpinner = (Spinner) rootView.findViewById(R.id.spinner1);
@@ -116,24 +115,24 @@ public class FeedbackFragment extends Fragment {
                 if (anonSwitch.isChecked()) {
                     username = "anonymous";
                 } else {
-                   username = prefs.getString("username", "");
+                    username = prefs.getString("username", "");
                 }
 
+                GeneralFeedback feedback;
                 // Create the correct object based on the type of data being sent
                 if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
-                    // PIFeedback feedback = new PIFeedback(username, commentTextInput.getText(), rating.get)
+                    feedback = new PIFeedback(username, commentTextInput.getText().toString(),
+                            rating.getProgress(), piTextInput.getText().toString());
+                } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
+                    feedback = new ToolBrokenFeedback(username, commentTextInput.getText().toString(),
+                            machineTypeSpinner.getSelectedItem().toString(),
+                            machineSpinner.getSelectedItem().toString(),
+                            issueSpinner.getSelectedItem().toString());
+                } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
+                    feedback = new GeneralFeedback(username, commentTextInput.getText().toString());
+                } else {
+                    feedback = new GeneralFeedback("NO USERNAME", "NO COMMENTS");
                 }
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                builder.setMessage("Submit functionality not implemented yet!");
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // Nothing will happen, returned to feedback fragment
-//                        // Reset the page perhaps
-//                    }
-//                });
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
             }
         });
 
