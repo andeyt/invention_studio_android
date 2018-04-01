@@ -224,7 +224,7 @@ public class FeedbackFragment extends Fragment {
             }
         });
     }
-
+    //
     public void connectAndSendGeneralFeedback(GeneralFeedback feedback) {
 
         retrofit = new Retrofit.Builder()
