@@ -13,22 +13,34 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Field;
 
+import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.Fragments.FeedbackFragment;
 import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
+import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
 import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
+import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottom;
     public static final String USER_PREFERENCES = "UserPrefs";
+    private Retrofit retrofit;
 //    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         String username = prefs.getString("username", "");
 
         FirebaseMessaging.getInstance().subscribeToTopic(username);
+
+        connectAndSendLoginRecord();
 
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
@@ -125,5 +139,32 @@ public class MainActivity extends AppCompatActivity {
         } else {
             bottom.setSelectedItemId(R.id.home);
         }
+    }
+
+    public void connectAndSendLoginRecord() {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        String username = prefs.getString("username", "");
+        String name = prefs.getString("name", "");
+        String otp = prefs.getString("otp", "");
+        LoginFormObject login = new LoginFormObject(username, name, otp);
+        Call<ResponseBody> generalCall = serverApiService.sendLoginRecord(login, "771e6dd7-2d2e-4712-8944-7055ce69c9fb");
+        generalCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // What on failure with no progress bar?
+            }
+        });
     }
 }
