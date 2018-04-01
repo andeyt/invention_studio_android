@@ -158,6 +158,11 @@ public class MainActivity extends AppCompatActivity {
         generalCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+
+                }
 
             }
 
