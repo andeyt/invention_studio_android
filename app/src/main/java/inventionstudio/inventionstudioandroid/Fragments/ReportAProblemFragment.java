@@ -77,25 +77,34 @@ public class ReportAProblemFragment extends MachineGroupFragment {
             public void onClick(View view) {
                 SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 String username;
+                boolean fieldsFilled = false;
 
-                // choose which username to use based on anonymity or not
-                if (anonSwitch.isChecked()) {
-                    username = "anonymous";
+                // Show message if there are no comments on the problem
+                if (textInput.getText().toString().trim().equals("")) {
+                    showDialog("Please give a description of your specific issue.");
                 } else {
-                    username = prefs.getString("username", "");
+                    fieldsFilled = true;
                 }
 
-                // Create feedback for tool broken
-                ToolBrokenFeedback feedback = new ToolBrokenFeedback(
-                        8,
-                        username,
-                        spinner.getSelectedItem().toString(),
-                        obj.getLocationName(),
-                        obj.getToolName(),
-                        textInput.getText().toString()
-                );
-                connectAndSendToolFeedback(feedback);
+                if (fieldsFilled) {
+                    // choose which username to use based on anonymity or not
+                    if (anonSwitch.isChecked()) {
+                        username = "anonymous";
+                    } else {
+                        username = prefs.getString("username", "");
+                    }
 
+                    // Create feedback for tool broken
+                    ToolBrokenFeedback feedback = new ToolBrokenFeedback(
+                            8,
+                            username,
+                            spinner.getSelectedItem().toString(),
+                            obj.getLocationName(),
+                            obj.getToolName(),
+                            textInput.getText().toString()
+                    );
+                    connectAndSendToolFeedback(feedback);
+                }
 
             }
         });
@@ -132,5 +141,18 @@ public class ReportAProblemFragment extends MachineGroupFragment {
         });
     }
 
-
+    // Method to show dialogs when necessary
+    public void showDialog(String dialogText) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(dialogText);
+        builder.setTitle("Empty Field");
+        builder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

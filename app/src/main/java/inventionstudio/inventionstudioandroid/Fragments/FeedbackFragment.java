@@ -2,6 +2,8 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -116,38 +118,58 @@ public class FeedbackFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 String username;
+                boolean fieldsFilled = false;
 
-                // choose which username to use based on anonymity or not
-                if (anonSwitch.isChecked()) {
-                    username = "anonymous";
+                // error handling
+                if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
+                    // Show message if there is no PI name, or only white spaces
+                    if (piTextInput.getText().toString().trim().equals("")) {
+                        showDialog("Please fill out the PI name field.");
+                    }
+                } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
+                    // Show message if there are no comments on the problem
+                    if (commentTextInput.getText().toString().trim().equals("")) {
+                        showDialog("Please give a description of your specific issue.");
+                    }
+                } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
+                    // Show message if there are no comments, as it is the only feedback for this type
+                    if (commentTextInput.getText().toString().trim().equals("")) {
+                        showDialog("Please fill out the comments field.");
+                    }
                 } else {
-                    username = prefs.getString("username", "");
+                    fieldsFilled = true;
                 }
 
-               ;
-                // Create the correct object based on the type of data being sent
-                if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
-                    PIFeedback feedback = new PIFeedback(8, username, piTextInput.getText().toString(),
-                            rating.getProgress(), commentTextInput.getText().toString());
+                // only create and send info if the fields are filled
+                if (fieldsFilled) {
+                    // choose which username to use based on anonymity or not
+                    if (anonSwitch.isChecked()) {
+                        username = "anonymous";
+                    } else {
+                        username = prefs.getString("username", "");
+                    }
 
-                    connectAndSendPIFeedback(feedback);
+                    // Create the correct object based on the type of data being sent
+                    if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
+                        PIFeedback feedback = new PIFeedback(8, username, piTextInput.getText().toString(),
+                                rating.getProgress(), commentTextInput.getText().toString());
+                        connectAndSendPIFeedback(feedback);
 
+                    } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
+                        ToolBrokenFeedback feedback = new ToolBrokenFeedback(
+                                8,
+                                username,
+                                issueSpinner.getSelectedItem().toString(),
+                                machineTypeSpinner.getSelectedItem().toString(),
+                                machineSpinner.getSelectedItem().toString(),
+                                commentTextInput.getText().toString()
+                        );
+                        connectAndSendToolFeedback(feedback);
 
-                } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
-                    ToolBrokenFeedback feedback = new ToolBrokenFeedback(
-                            8,
-                            username,
-                            issueSpinner.getSelectedItem().toString(),
-                            machineTypeSpinner.getSelectedItem().toString(),
-                            machineSpinner.getSelectedItem().toString(),
-                            commentTextInput.getText().toString()
-                            );
-                    connectAndSendToolFeedback(feedback);
-
-
-                } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
-                    GeneralFeedback feedback = new GeneralFeedback(8, username, commentTextInput.getText().toString());
-                    connectAndSendGeneralFeedback(feedback);
+                    } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
+                        GeneralFeedback feedback = new GeneralFeedback(8, username, commentTextInput.getText().toString());
+                        connectAndSendGeneralFeedback(feedback);
+                    }
                 }
             }
         });
@@ -274,10 +296,7 @@ public class FeedbackFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 // What on failure with no progress bar?
@@ -314,4 +333,18 @@ public class FeedbackFragment extends Fragment {
         });
     }
 
+    // Method to show dialogs when necessary
+    public void showDialog(String dialogText) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(dialogText);
+        builder.setTitle("Empty Field");
+        builder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
