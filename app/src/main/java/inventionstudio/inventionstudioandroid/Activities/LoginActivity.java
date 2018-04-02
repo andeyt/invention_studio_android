@@ -15,18 +15,24 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import java.net.URL;
 
+import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.R;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends Activity {
     public static final String USER_PREFERENCES = "UserPrefs";
     private WebView webView;
     private String otp;
     private String username;
-    final String usernameDisplayId = "LiverpoolTheme_wt1_block_wtMainContent_SilkUIFramework_wt8_block_wtColumn2_wt14_SilkUIFramework_wt14_block_wtContent1_wt15_SilkUIFramework_wt382_block_wtPanelContent_SilkUIFramework_wt109_block_wtColumn2_SilkUIFramework_wt289_block_wtPanelContent_SilkUIFramework_wtBrief_block_wtContent_wtUsernameDisplay";
-    final String OtpDisplayId = "LiverpoolTheme_wt1_block_wtMainContent_SilkUIFramework_wt8_block_wtColumn2_wt14_SilkUIFramework_wt14_block_wtContent1_wt15_SilkUIFramework_wt382_block_wtPanelContent_SilkUIFramework_wt109_block_wtColumn2_SilkUIFramework_wt289_block_wtPanelContent_SilkUIFramework_wtBrief_block_wtContent_wtCalendarLink";
     private View group;
 
     @Override
@@ -63,7 +69,6 @@ public class LoginActivity extends Activity {
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
                     if (base.equals("https://sums.gatech.edu")) {
                         webView.setVisibility(View.GONE);
-//                        webView.evaluateJavascript("document.getElementById(\"" + usernameDisplayId + "\").innerText", new ValueCallback<String>() {
                         webView.evaluateJavascript("document.querySelector('[id$=\"UsernameDisplay\"]').innerText", new ValueCallback<String>() {
 
                             @Override
@@ -155,6 +160,7 @@ public class LoginActivity extends Activity {
             super.onBackPressed();
         }
     }
+
 
 }
 

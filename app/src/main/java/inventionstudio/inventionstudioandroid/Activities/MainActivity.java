@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic(username);
 
         connectAndSendLoginRecord();
-
+        connectAndCheckTimestamp();
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
         disableShiftMode(bottom);
@@ -158,17 +158,44 @@ public class MainActivity extends AppCompatActivity {
         generalCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 // What on failure with no progress bar?
+            }
+        });
+    }
+
+    public void connectAndCheckTimestamp() {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        Call<ResponseBody> generalCall = serverApiService.getTimestamp();
+        generalCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Toast.makeText(MainActivity.this,  response.body().string(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                throwable.printStackTrace();
             }
         });
     }

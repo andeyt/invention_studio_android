@@ -38,7 +38,7 @@ public interface ServerApiService {
     @POST("user/login")
     Call<ResponseBody> sendLoginRecord(@Body LoginFormObject login, @Header("x-api-key") String xapikey);
 
-    @GET("server/app_status")
-    Call<ResponseBody> getTimestamp(@Header("x-api-key") String xapikey);
+    @GET("server/timestamp")
+    Call<ResponseBody> getTimestamp();
 
 }

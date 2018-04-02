@@ -11,13 +11,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/IS_Light"
-        >
-        <activity android:name=".Activities.LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.LandingActivity"
+        android:theme="@style/IS_Light">
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.LandingActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,26 +27,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activities.AgreementActivity"
             android:screenOrientation="portrait"
-            android:theme = "@style/IS_Light.NoActionBar"/>
+            android:theme="@style/IS_Light.NoActionBar" />
         <activity
             android:name=".Activities.LoadingActivity"
             android:screenOrientation="portrait"
-            android:theme = "@style/IS_Light.NoActionBar"/>
+            android:theme="@style/IS_Light.NoActionBar" />
 
-        <service
-            android:name=".Firebase.MyFirebaseMessagingService">
+        <service android:name=".Firebase.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".Firebase.MyFirebaseInstanceIDService">
+        <service android:name=".Firebase.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -52,12 +52,6 @@
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
 
-
-
-
-
     </application>
-
-
 
 </manifest>
