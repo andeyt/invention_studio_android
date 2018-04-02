@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
 
             }

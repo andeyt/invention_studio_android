@@ -118,26 +118,27 @@ public class FeedbackFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 String username;
-                boolean fieldsFilled = false;
+                boolean fieldsFilled = true;
 
                 // error handling
                 if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
                     // Show message if there is no PI name, or only white spaces
                     if (piTextInput.getText().toString().trim().equals("")) {
                         showDialog("Please fill out the PI name field.");
+                        fieldsFilled = false;
                     }
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
                     // Show message if there are no comments on the problem
                     if (commentTextInput.getText().toString().trim().equals("")) {
                         showDialog("Please give a description of your specific issue.");
+                        fieldsFilled = false;
                     }
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
                     // Show message if there are no comments, as it is the only feedback for this type
                     if (commentTextInput.getText().toString().trim().equals("")) {
                         showDialog("Please fill out the comments field.");
+                        fieldsFilled = false;
                     }
-                } else {
-                    fieldsFilled = true;
                 }
 
                 // only create and send info if the fields are filled

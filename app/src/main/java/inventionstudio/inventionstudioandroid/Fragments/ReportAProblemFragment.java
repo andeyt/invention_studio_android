@@ -77,13 +77,12 @@ public class ReportAProblemFragment extends MachineGroupFragment {
             public void onClick(View view) {
                 SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 String username;
-                boolean fieldsFilled = false;
+                boolean fieldsFilled = true;
 
                 // Show message if there are no comments on the problem
                 if (textInput.getText().toString().trim().equals("")) {
                     showDialog("Please give a description of your specific issue.");
-                } else {
-                    fieldsFilled = true;
+                    fieldsFilled = false;
                 }
 
                 if (fieldsFilled) {
