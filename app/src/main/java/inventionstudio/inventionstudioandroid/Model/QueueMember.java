@@ -12,7 +12,7 @@ public class QueueMember {
     @SerializedName("queueGroupId")
     @Expose
     private Integer queueGroupId;
-    @SerializedName("queueGroupId")
+    @SerializedName("isGroup")
     @Expose
     private boolean isGroup;
     @SerializedName("memberName")

@@ -121,7 +121,6 @@ public class QueueFragment extends Fragment {
             @Override
             public void onResponse(Call<List<QueueMember>> call, Response<List<QueueMember>> response) {
                 List<QueueMember> members = response.body();
-                connectAndGetQueueGroups();
                 // Run through list of Queue members
                 // Create Queue list as well as HashMap
                 queueData = new HashMap<>();
@@ -174,11 +173,11 @@ public class QueueFragment extends Fragment {
 
 
     public void connectAndGetQueueGroups(){
-        // Create the retrofit for building the API data
-//        retrofit = new Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
+//      Create the retrofit for building the API data
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         // Call to preferences to get username and OTP
@@ -193,6 +192,7 @@ public class QueueFragment extends Fragment {
                 @Override
                 public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
                     groups = response.body();
+                    connectAndGetQueueMembers();
 
 //                    ArrayList<String> queueList = new ArrayList<>();
 //
@@ -236,7 +236,7 @@ public class QueueFragment extends Fragment {
     class QueueTask extends AsyncTask<Void, Void, Void> {
 
         protected Void doInBackground(Void ... voids) {
-            connectAndGetQueueMembers();
+            connectAndGetQueueGroups();
             return null;
         }
     }
