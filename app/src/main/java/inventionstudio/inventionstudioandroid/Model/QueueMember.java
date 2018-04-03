@@ -12,6 +12,9 @@ public class QueueMember {
     @SerializedName("queueGroupId")
     @Expose
     private Integer queueGroupId;
+    @SerializedName("queueGroupId")
+    @Expose
+    private boolean isGroup;
     @SerializedName("memberName")
     @Expose
     private String memberName;
@@ -30,6 +33,10 @@ public class QueueMember {
     @SerializedName("memberQueueLocation")
     @Expose
     private Integer memberQueueLocation;
+
+    public boolean getIsGroup() { return isGroup; }
+
+    public void setIsGroup(boolean isGroup) { this.isGroup = isGroup; }
 
     public Integer getQueueGroupId() {
         return queueGroupId;
