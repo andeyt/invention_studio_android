@@ -12,8 +12,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
+
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
+import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
+import inventionstudio.inventionstudioandroid.Model.StudioDescription;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
 import okhttp3.Credentials;
@@ -28,29 +42,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LandingActivity extends AppCompatActivity {
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
+    private Call call;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
 
-
-
-//        if (prefs.contains("lastLoginTime")) {
-//            long lastLoginTime = prefs.getLong("lastLoginTime", 0);
-//            if (currentTime - lastLoginTime < -1) {
-//                SharedPreferences.Editor editor = prefs.edit();
-//                editor.remove("username");
-//                editor.remove("otp");
-//                editor.remove("name");
-//                editor.commit();
-//            }
-//        }
-
         if (prefs.contains("username") && prefs.contains("otp")) {
             Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
             startActivity(intent);
         }
+
+        connectAndGetStudioDescription();
+
+
+
 
     }
     @Override
@@ -64,6 +71,7 @@ public class LandingActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_login:
+
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 return true;
@@ -72,29 +80,31 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
-    public void connectAndCheckTimestamp() {
+    @Override
+    public void onPause () {
+        super.onPause();
+        if (call != null) {
+            call.cancel();
+        }
+    }
+
+
+    public void connectAndGetStudioDescription() {
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .baseUrl("https://sums.gatech.edu/SUMSAPI/rest/API/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
-        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
-        Call<ResponseBody> generalCall = serverApiService.getTimestamp();
-        generalCall.enqueue(new Callback<ResponseBody>() {
+        SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
+        call = sumsApiService.getStudioDescription(8);
+        call.enqueue(new Callback<List<StudioDescription>>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Log.d("Timestamp", "Good");
-                    Toast.makeText(LandingActivity.this,  response.body().string(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<List<StudioDescription>> call, Response<List<StudioDescription>> response) {
+                List<StudioDescription> descriptions = response.body();
             }
-
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<List<StudioDescription>> call, Throwable throwable) {
                 throwable.printStackTrace();
             }
         });

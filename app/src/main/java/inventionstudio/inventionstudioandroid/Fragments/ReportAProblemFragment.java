@@ -33,6 +33,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ReportAProblemFragment extends MachineGroupFragment {
     private static Retrofit retrofit = null;
+    private Call call;
 
     public ReportAProblemFragment() {
         // Required empty public constructor
@@ -81,7 +82,7 @@ public class ReportAProblemFragment extends MachineGroupFragment {
 
                 // Show message if there are no comments on the problem
                 if (textInput.getText().toString().trim().equals("")) {
-                    showDialog("Please give a description of your specific issue.");
+                    showToast("Please give a description of your specific issue.");
                     fieldsFilled = false;
                 }
 
@@ -111,6 +112,14 @@ public class ReportAProblemFragment extends MachineGroupFragment {
         return rootView;
     }
 
+    @Override
+    public void onPause () {
+        super.onPause();
+        if (call != null) {
+            call.cancel();
+        }
+    }
+
     public void connectAndSendToolFeedback(ToolBrokenFeedback feedback) {
 
         retrofit = new Retrofit.Builder()
@@ -122,8 +131,8 @@ public class ReportAProblemFragment extends MachineGroupFragment {
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        Call<ResponseBody> generalCall = serverApiService.sendToolFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
-        generalCall.enqueue(new Callback<ResponseBody>() {
+        call = serverApiService.sendToolFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -141,17 +150,7 @@ public class ReportAProblemFragment extends MachineGroupFragment {
     }
 
     // Method to show dialogs when necessary
-    public void showDialog(String dialogText) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(dialogText);
-        builder.setTitle("Empty Field");
-        builder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    public void showToast(String dialogText) {
+        Toast.makeText(getActivity(), dialogText, Toast.LENGTH_SHORT).show();
     }
 }

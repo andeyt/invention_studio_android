@@ -34,6 +34,7 @@ public class LoginActivity extends Activity {
     private String otp;
     private String username;
     private View group;
+    private Call call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +97,9 @@ public class LoginActivity extends Activity {
                             }
                         });
 
-                        // TODO: get Server Time and put in shared prefs
+                        connectAndCheckTimestamp();
 
-                        // long lastLoginTime = getServerTime()
 
-                        // SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                        // SharedPreferences.Editor editor =prefs.edit();
-
-                        // editor.putLong("lastLoginTime", lastLoginTime)
-
-                        // editor.apply();
 
                         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                         startActivity(intent);
@@ -159,6 +153,52 @@ public class LoginActivity extends Activity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onPause () {
+        super.onPause();
+        if (call != null) {
+            call.cancel();
+        }
+    }
+
+    public void connectAndCheckTimestamp() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        call = serverApiService.getTimestamp();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String curTimeString = response.body().string();
+                    SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                    long lastLoginTime = Long.parseLong(curTimeString);
+
+                    SharedPreferences.Editor editor = prefs.edit();
+
+                    editor.putLong("lastLoginTime", lastLoginTime);
+
+                    editor.apply();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+
     }
 
 

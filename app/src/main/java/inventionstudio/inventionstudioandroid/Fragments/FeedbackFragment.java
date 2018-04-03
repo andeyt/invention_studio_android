@@ -2,13 +2,9 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +40,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.support.constraint.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +50,7 @@ public class FeedbackFragment extends Fragment {
     private static Retrofit retrofit = null;
     private ArrayList<String> machineNames;
     private HashSet<String> machineTypes;
-    private Call<List<Machine>> call;
+    private Call call;
     private Spinner machineSpinner;
     private Spinner machineTypeSpinner;
 
@@ -124,19 +119,19 @@ public class FeedbackFragment extends Fragment {
                 if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
                     // Show message if there is no PI name, or only white spaces
                     if (piTextInput.getText().toString().trim().equals("")) {
-                        showDialog("Please fill out the PI name field.");
+                        showToast("Please fill out the PI name field.");
                         fieldsFilled = false;
                     }
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
                     // Show message if there are no comments on the problem
                     if (commentTextInput.getText().toString().trim().equals("")) {
-                        showDialog("Please give a description of your specific issue.");
+                        showToast("Please give a description of your specific issue.");
                         fieldsFilled = false;
                     }
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
                     // Show message if there are no comments, as it is the only feedback for this type
                     if (commentTextInput.getText().toString().trim().equals("")) {
-                        showDialog("Please fill out the comments field.");
+                        showToast("Please fill out the comments field.");
                         fieldsFilled = false;
                     }
                 }
@@ -202,6 +197,14 @@ public class FeedbackFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onPause () {
+        super.onPause();
+        if (call != null) {
+            call.cancel();
+        }
+    }
+
     public void connectAndGetAPIData() {
 
         retrofit = new Retrofit.Builder()
@@ -259,8 +262,8 @@ public class FeedbackFragment extends Fragment {
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        Call<ResponseBody> generalCall = serverApiService.sendGeneralFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
-        generalCall.enqueue(new Callback<ResponseBody>() {
+        call = serverApiService.sendGeneralFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -288,8 +291,8 @@ public class FeedbackFragment extends Fragment {
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        Call<ResponseBody> generalCall = serverApiService.sendPIFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
-        generalCall.enqueue(new Callback<ResponseBody>() {
+        call = serverApiService.sendPIFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -316,8 +319,8 @@ public class FeedbackFragment extends Fragment {
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        Call<ResponseBody> generalCall = serverApiService.sendToolFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
-        generalCall.enqueue(new Callback<ResponseBody>() {
+        call = serverApiService.sendToolFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -335,17 +338,7 @@ public class FeedbackFragment extends Fragment {
     }
 
     // Method to show dialogs when necessary
-    public void showDialog(String dialogText) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(dialogText);
-        builder.setTitle("Empty Field");
-        builder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    public void showToast(String dialogText) {
+        Toast.makeText(getActivity(), dialogText, Toast.LENGTH_SHORT).show();
     }
 }
