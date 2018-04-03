@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         if (call != null) {
             call.cancel();
         }
+
     }
 
     @Override

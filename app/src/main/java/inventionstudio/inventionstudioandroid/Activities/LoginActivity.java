@@ -99,12 +99,6 @@ public class LoginActivity extends Activity {
 
                         connectAndCheckTimestamp();
 
-
-
-                        Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0,0);
-                        finish();
                     }
                 } catch (Exception e) {
 
@@ -185,7 +179,12 @@ public class LoginActivity extends Activity {
 
                     editor.putLong("lastLoginTime", lastLoginTime);
 
-                    editor.apply();
+                    editor.commit();
+
+                    Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0,0);
+                    finish();
 
 
                 } catch (Exception e) {

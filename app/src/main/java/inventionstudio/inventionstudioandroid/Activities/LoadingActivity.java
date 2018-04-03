@@ -73,7 +73,6 @@ public class LoadingActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        // TODO: Change to variables
         call = sumsApiService.getUserGroups(username, otp);
         call.enqueue(new Callback<List<UserGroups>>() {
             @Override
@@ -142,8 +141,8 @@ public class LoadingActivity extends AppCompatActivity {
                             editor.remove("name");
                             editor.commit();
                             AlertDialog.Builder builder = new AlertDialog.Builder(LoadingActivity.this);
-                            builder.setMessage("It has been over a week since you've opened the app.\n\n" +
-                                    "Please re-authenticate with Georgia Tech");
+                            builder.setMessage("It has been over a week since you've logged in.\n\n" +
+                                    "Please re-authenticate with Georgia Tech!");
                             builder.setTitle("Login Timeout");
                             builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                 @Override
