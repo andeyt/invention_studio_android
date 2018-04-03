@@ -118,6 +118,7 @@ public class QueueFragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
+        final String name = prefs.getString("name", "");
 
         queueMembersCall = sumsApiService.getQueueMembers(8, username, otp);
 
@@ -129,19 +130,18 @@ public class QueueFragment extends Fragment {
                 // Create Queue list as well as HashMap
                 queueData = new HashMap<>();
                 ArrayList<String> queueList = new ArrayList<>();
-
-                for (QueueGroups gp : groups) {
-                    if (queueData.get(gp.getName()) == null) {
-                        queueData.put(gp.getName(), new ArrayList<String>());
-                        queueList.add(gp.getName());
+                for (QueueGroups g : groups) {
+                    if (queueData.get(g.getName()) == null) {
+                        queueData.put(g.getName(), new ArrayList<String>());
                     }
                 }
+
                 for (QueueMember q : members) {
-                    Log.d(TAG, q.getMemberName() + " " + q.getQueueGroupId() + " " + q.getIsGroup());
+                    //Log.d(TAG, q.getMemberName() + " " + q.getQueueGroupId() + " " + q.getIsGroup());
                     for (QueueGroups g : groups) {
-                        Log.d(TAG, g.getId().toString() + " " + q.getIsGroup());
-                        if (q.getQueueGroupId() == g.getId()) {//&& q.getIsGroup() == g.getIsGroup()) {
-                            Log.d(TAG, "User was added to " + g.getName());
+                        //Log.d(TAG, g.getId().toString() + " " + q.getIsGroup());
+                        if (q.getQueueGroupId().equals(g.getId())) {//&& q.getIsGroup() == g.getIsGroup()) {
+                            //Log.d(TAG, "User was added to " + g.getName());
                             // If name is blank, do username
                             if (q.getMemberName().trim().equals("")) {
                                 queueData.get(g.getName()).add(Integer.toString(queueData.get(g.getName()).size() + 1) + ". " + q.getMemberUserName());
@@ -151,36 +151,40 @@ public class QueueFragment extends Fragment {
                             // Stop checking queues if the right one is found
                             break;
                         }
-//                    // Filter out trash/test data
-//                    if (q.getQueueName().equals("reuse")) {
-//                        continue;
-//                    }
-//                    if (queueData.get(q.getQueueName()) == null) {
-//                        // Add list as value of the queue key name
-//                        queueData.put(q.getQueueName(), new ArrayList<String>());
-//                    }
-//                    // Add member to the queue list
-//                    if (q.getMemberName().trim().equals("")) {
-//                        // if memberName is blank, do username
-//                        queueData.get(q.getQueueName()).add(Integer.toString(queueData.get(q.getQueueName()).size() + 1) + ". " + q.getMemberUserName());
-//                    } else {
-//                        // use memberName otherwise
-//                        queueData.get(q.getQueueName()).add(Integer.toString(queueData.get(q.getQueueName()).size() + 1) + ". " + q.getMemberName());
-//                    }
                     }
-
-                    // Add "No users in queue" if no members are in the queue
-                    for (String name : queueList) {
-                        if (queueData.get(name).size() == 0) {
-                            queueData.get(name).add("No users in queue");
+                }
+                queues = new ArrayList<>();
+                for (QueueGroups g : groups) {
+                    queues.add(g.getName());
+                    ArrayList<String> names = (ArrayList<String>) queueData.get(g.getName());
+                    for (String queueName: names) {
+                        if (queueName.contains(name)) {
+                            queueList.add(g.getName());
                         }
                     }
 
-                    adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
-                    expandableListView.setAdapter(adapter);
-                    loadProgress.setVisibility(View.GONE);
-                    refreshLayout.setRefreshing(false);
                 }
+
+                Collections.sort(queues);
+                for (String queue: queues) {
+                    if (!queueList.contains(queue)) {
+                        queueList.add(queue);
+                    }
+                }
+
+
+                    // Add "No users in queue" if no members are in the queue
+                for (String name : queueList) {
+                    if (queueData.get(name).size() == 0) {
+                        queueData.get(name).add("No users in queue");
+                    }
+                }
+
+                adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
+                expandableListView.setAdapter(adapter);
+                loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
+
             }
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
@@ -202,7 +206,6 @@ public class QueueFragment extends Fragment {
         // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
-        final String name = prefs.getString("name", "");
         String otp = prefs.getString("otp", "");
         queueGroupsCall = sumsApiService.getQueueGroups(8, username, otp);
 
