@@ -1,6 +1,8 @@
 package inventionstudio.inventionstudioandroid.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic(username);
 
         connectAndSendLoginRecord();
+        connectAndGetAppStatus();
 
 
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
@@ -188,6 +191,50 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 // What on failure with no progress bar?
+            }
+        });
+    }
+
+    public void connectAndGetAppStatus() {
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        ServerApiService serverApiService = retrofit.create(ServerApiService.class);
+        call = serverApiService.getAppStatus( "771e6dd7-2d2e-4712-8944-7055ce69c9fb");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    int statusCode = response.code();
+                    ResponseBody body = response.body();
+
+                    if (statusCode == 200) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage(body.string());
+                        builder.setTitle("App Update");
+                        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                    
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                throwable.printStackTrace();
             }
         });
     }
