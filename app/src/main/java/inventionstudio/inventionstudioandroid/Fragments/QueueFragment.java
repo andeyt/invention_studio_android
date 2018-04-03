@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Adapters.ExpandableListAdapter;
@@ -37,6 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class QueueFragment extends Fragment {
 
+    public static final String TAG = "Queue Fragment";
     public static final String USER_PREFERENCES = "UserPrefs";
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private static Retrofit retrofit = null;
@@ -103,11 +106,12 @@ public class QueueFragment extends Fragment {
 
     public void connectAndGetQueueMembers(){
         // Create the retrofit for building the API data
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         // Call to preferences to get username and OTP
         // Replace hardcoded args when work in Login is complete.
@@ -126,15 +130,20 @@ public class QueueFragment extends Fragment {
                 queueData = new HashMap<>();
                 ArrayList<String> queueList = new ArrayList<>();
 
+                for (QueueGroups gp : groups) {
+                    if (queueData.get(gp.getName()) == null) {
+                        queueData.put(gp.getName(), new ArrayList<String>());
+                        queueList.add(gp.getName());
+                    }
+                }
                 for (QueueMember q : members) {
+                    Log.d(TAG, q.getMemberName() + " " + q.getQueueGroupId() + " " + q.getIsGroup());
                     for (QueueGroups g : groups) {
-                        if (queueData.get(g.getName()) == null) {
-                            queueData.put(g.getName(), new ArrayList<String>());
-                            queueList.add(g.getName());
-                        }
-                        if (q.getQueueGroupId() == g.getId() && q.getIsGroup() == g.getIsGroup()) {
+                        Log.d(TAG, g.getId().toString() + " " + q.getIsGroup());
+                        if (q.getQueueGroupId() == g.getId()) {//&& q.getIsGroup() == g.getIsGroup()) {
+                            Log.d(TAG, "User was added to " + g.getName());
                             // If name is blank, do username
-                            if (q.getMemberName().trim().equals(""))
+                            if (q.getMemberName().trim().equals("")) {
                                 queueData.get(g.getName()).add(Integer.toString(queueData.get(g.getName()).size() + 1) + ". " + q.getMemberUserName());
                             } else {
                                 queueData.get(g.getName()).add(Integer.toString(queueData.get(g.getName()).size() + 1) + ". " + q.getMemberName());
@@ -158,12 +167,21 @@ public class QueueFragment extends Fragment {
 //                        // use memberName otherwise
 //                        queueData.get(q.getQueueName()).add(Integer.toString(queueData.get(q.getQueueName()).size() + 1) + ". " + q.getMemberName());
 //                    }
+                    }
+
+                    // Add "No users in queue" if no members are in the queue
+                    for (String name : queueList) {
+                        if (queueData.get(name).size() == 0) {
+                            queueData.get(name).add("No users in queue");
+                        }
+                    }
+
+                    adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
+                    expandableListView.setAdapter(adapter);
+                    loadProgress.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
                 }
-                adapter = new ExpandableListAdapter(getActivity(), queueList , queueData);
-                expandableListView.setAdapter(adapter);
-                loadProgress.setVisibility(View.GONE);
-                refreshLayout.setRefreshing(false);
-        }
+            }
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
