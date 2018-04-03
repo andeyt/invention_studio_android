@@ -41,4 +41,7 @@ public interface ServerApiService {
     @GET("server/timestamp")
     Call<ResponseBody> getTimestamp();
 
+    @GET("server/app_status")
+    Call<ResponseBody> getAppStatus(@Header("x-api-key") String xapikey);
+
 }
