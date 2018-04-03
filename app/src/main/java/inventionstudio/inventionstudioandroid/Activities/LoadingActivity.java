@@ -19,7 +19,9 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
@@ -205,12 +207,14 @@ public class LoadingActivity extends AppCompatActivity {
             String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
             tmf.init(keyStore);
+            TrustManager[] trustManagers = tmf.getTrustManagers();
+            X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
 
             // Create an SSLContext that uses our TrustManager
             SSLContext context = SSLContext.getInstance("TLS");
-            context.init(null, tmf.getTrustManagers(), null);
+            context.init(null, new TrustManager[] { trustManager }, null);
             // Tell the okhttp to use a SocketFactory from our SSLContext
-            okHttpClient_client = new OkHttpClient.Builder().sslSocketFactory(context.getSocketFactory()).build();
+            okHttpClient_client = new OkHttpClient.Builder().sslSocketFactory(context.getSocketFactory(),trustManager).build();
         } catch (Exception e) {
             e.printStackTrace();
         }
