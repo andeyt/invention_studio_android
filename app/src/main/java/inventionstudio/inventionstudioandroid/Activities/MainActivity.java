@@ -28,6 +28,7 @@ import inventionstudio.inventionstudioandroid.Fragments.HomeFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment;
 import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
+import inventionstudio.inventionstudioandroid.Model.AppStatus;
 import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
 import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
 
-        FirebaseMessaging.getInstance().subscribeToTopic(username);
+        FirebaseMessaging.getInstance().subscribeToTopic(username + "_android");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(username);
 
         connectAndSendLoginRecord();
         connectAndGetAppStatus();
@@ -205,17 +207,17 @@ public class MainActivity extends AppCompatActivity {
 
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         call = serverApiService.getAppStatus( "771e6dd7-2d2e-4712-8944-7055ce69c9fb");
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<AppStatus>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<AppStatus> call, Response<AppStatus> response) {
                 try {
                     int statusCode = response.code();
-                    ResponseBody body = response.body();
+                    AppStatus appStatus = response.body();
 
                     if (statusCode == 200) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage(body.string());
-                        builder.setTitle("App Update");
+                        builder.setMessage(appStatus.getMessage());
+                        builder.setTitle(appStatus.getTitle());
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -225,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-                    
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<AppStatus> call, Throwable throwable) {
                 throwable.printStackTrace();
             }
         });

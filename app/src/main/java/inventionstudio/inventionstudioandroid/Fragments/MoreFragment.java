@@ -46,7 +46,7 @@ public class MoreFragment extends PreferenceFragmentCompat {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.clear();
                 editor.apply();
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(username);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(username + "_android");
                 getActivity().finish();
                 return true;
             }

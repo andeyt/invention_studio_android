@@ -2,6 +2,7 @@ package inventionstudio.inventionstudioandroid.API;
 
 import java.util.List;
 
+import inventionstudio.inventionstudioandroid.Model.AppStatus;
 import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
 import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
 import inventionstudio.inventionstudioandroid.Model.Machine;
@@ -42,6 +43,6 @@ public interface ServerApiService {
     Call<ResponseBody> getTimestamp();
 
     @GET("server/app_status")
-    Call<ResponseBody> getAppStatus(@Header("x-api-key") String xapikey);
+    Call<AppStatus> getAppStatus(@Header("x-api-key") String xapikey);
 
 }
