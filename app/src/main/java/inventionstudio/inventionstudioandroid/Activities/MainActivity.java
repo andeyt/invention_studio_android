@@ -154,16 +154,9 @@ public class MainActivity extends AppCompatActivity {
         if (call != null) {
             call.cancel();
         }
-
+        finishAffinity();
     }
 
-    @Override
-    public void onRestart() {
-        super.onRestart();
-        Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     public void connectAndSendLoginRecord() {
 
