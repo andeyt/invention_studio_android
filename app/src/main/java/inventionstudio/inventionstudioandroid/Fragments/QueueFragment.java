@@ -66,6 +66,7 @@ public class QueueFragment extends Fragment {
         getActivity().setTitle("Queue");
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
         expandableListView = rootView.findViewById(R.id.expandable_list);
+        expandableListView.addHeaderView(new View(getContext()), null, true);
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int previousGroup = -1;
