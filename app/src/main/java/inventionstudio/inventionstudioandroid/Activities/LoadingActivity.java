@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -25,7 +24,6 @@ import javax.net.ssl.X509TrustManager;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
 import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
 import inventionstudio.inventionstudioandroid.Model.UserGroups;
 import inventionstudio.inventionstudioandroid.R;
@@ -62,7 +60,7 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
-    public void connectAndGetApiData() {
+    public void connectAndGetStudioMemberStatus() {
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -126,55 +124,54 @@ public class LoadingActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String curTimeString = response.body().string();
-                    SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                    long lastLoginTime = prefs.getLong("lastLoginTime", 0);
-                    Log.d("timeDiff", curTimeString);
-                    Log.d("timeDiff", Long.toString(lastLoginTime));
-                    Log.d("timeDiff", Long.toString(Long.parseLong(curTimeString) - lastLoginTime));
+                if (response.isSuccessful()) {
+                    try {
+                        String curTimeString = response.body().string();
+                        SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                        long lastLoginTime = prefs.getLong("lastLoginTime", 0);
+                        if (prefs.contains("lastLoginTime")) {
+                            if (Long.parseLong(curTimeString) - lastLoginTime > 604800) {
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.remove("username");
+                                editor.remove("otp");
+                                editor.remove("name");
+                                editor.commit();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(LoadingActivity.this);
+                                builder.setMessage("It has been over a week since you've logged in.\n\n" +
+                                        "Please re-authenticate with Georgia Tech!");
+                                builder.setTitle("Login Timeout");
+                                builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else {
+                                Handler mHandler = new Handler();
+                                mHandler.postDelayed(new Runnable() {
 
+                                    @Override
+                                    public void run() {
+                                        connectAndGetStudioMemberStatus();
+                                    }
 
-                    if (prefs.contains("lastLoginTime")) {
-                        if (Long.parseLong(curTimeString) - lastLoginTime > 604800) {
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.remove("username");
-                            editor.remove("otp");
-                            editor.remove("name");
-                            editor.commit();
-                            AlertDialog.Builder builder = new AlertDialog.Builder(LoadingActivity.this);
-                            builder.setMessage("It has been over a week since you've logged in.\n\n" +
-                                    "Please re-authenticate with Georgia Tech!");
-                            builder.setTitle("Login Timeout");
-                            builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        } else {
-                            Handler mHandler = new Handler();
-                            mHandler.postDelayed(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    connectAndGetApiData();
-                                }
-
-                            }, 1000L);
+                                }, 1000L);
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } else {
+                    Toast.makeText(LoadingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                throwable.printStackTrace();
+                Toast.makeText(LoadingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
 

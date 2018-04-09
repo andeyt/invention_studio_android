@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +62,10 @@ public class EquipmentListFragment extends MachineGroupFragment {
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         listView = (ListView) rootView.findViewById(R.id.equipment_list);
+
         description = (TextView) header.findViewById(R.id.group_description);
-        listView.addHeaderView(header, null, false);
+        listView.addHeaderView(header, null, true);
+        listView.addFooterView(new View(getContext()), null, true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -89,6 +92,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 connectAndGetApiData();
             }
         });
@@ -148,6 +152,10 @@ public class EquipmentListFragment extends MachineGroupFragment {
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

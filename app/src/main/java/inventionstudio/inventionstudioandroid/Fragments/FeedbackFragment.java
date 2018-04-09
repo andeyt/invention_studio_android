@@ -2,9 +2,12 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,8 @@ import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Activities.LoadingActivity;
+import inventionstudio.inventionstudioandroid.Activities.MainActivity;
 import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.Model.PIFeedback;
@@ -229,7 +234,7 @@ public class FeedbackFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                        // what to do on failure?
+                        Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -272,7 +277,7 @@ public class FeedbackFragment extends Fragment {
                 machineNames = new ArrayList<>();
                 machineTypes = new HashSet<>();
                 for (Machine m : e) {
-                    if (m.getLocationName() != "") {
+                    if (!m.getLocationName().equals("")) {
                         machineTypes.add(m.getLocationName());
                         if (m.getLocationName().equals("3D Printers")) {
                             machineNames.add(m.getToolName());
@@ -293,7 +298,9 @@ public class FeedbackFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
-                // What on failure with no progress bar?
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -313,16 +320,36 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (response.isSuccessful()) {
+                    try {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(response.body().string());
+                        builder.setTitle("Feedback Recorded");
+                        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, new FeedbackFragment());
+                                transaction.commit();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                // What on failure with no progress bar?
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -342,15 +369,35 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (response.isSuccessful()) {
+                    try {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(response.body().string());
+                        builder.setTitle("Feedback Recorded");
+                        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, new FeedbackFragment());
+                                transaction.commit();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
                 }
+
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                // What on failure with no progress bar?
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -370,16 +417,35 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (response.isSuccessful()) {
+                    try {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(response.body().string());
+                        builder.setTitle("Feedback Recorded");
+                        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, new FeedbackFragment());
+                                transaction.commit();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                // What on failure with no progress bar?
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

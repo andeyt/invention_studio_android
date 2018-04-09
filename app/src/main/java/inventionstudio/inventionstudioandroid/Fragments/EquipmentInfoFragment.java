@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -112,6 +113,10 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -105,7 +105,7 @@ public class LandingActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<List<StudioDescription>> call, Throwable throwable) {
-                throwable.printStackTrace();
+                Toast.makeText(LandingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -80,7 +80,7 @@ public class AgreementActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<List<UserGroups>> call, Throwable throwable) {
-                Toast.makeText(getParent(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AgreementActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }

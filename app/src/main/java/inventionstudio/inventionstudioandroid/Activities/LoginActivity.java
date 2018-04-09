@@ -170,31 +170,35 @@ public class LoginActivity extends Activity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String curTimeString = response.body().string();
-                    SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                    long lastLoginTime = Long.parseLong(curTimeString);
+                if (response.isSuccessful()) {
+                    try {
+                        String curTimeString = response.body().string();
+                        SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                        long lastLoginTime = Long.parseLong(curTimeString);
 
-                    SharedPreferences.Editor editor = prefs.edit();
+                        SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putLong("lastLoginTime", lastLoginTime);
+                        editor.putLong("lastLoginTime", lastLoginTime);
 
-                    editor.commit();
+                        editor.commit();
 
-                    Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(0,0);
-                    finish();
+                        Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        finish();
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                throwable.printStackTrace();
+                Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
 

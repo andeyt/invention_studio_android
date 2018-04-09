@@ -175,17 +175,14 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                try {
-//                    Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-
+                if (!response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "An Error Occurred Recording Login", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                // What on failure with no progress bar?
+                Toast.makeText(MainActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -229,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AppStatus> call, Throwable throwable) {
-                throwable.printStackTrace();
+                Toast.makeText(MainActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }

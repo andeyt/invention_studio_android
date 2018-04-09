@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,7 +137,20 @@ public class ReportAProblemFragment extends MachineGroupFragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Toast.makeText(getActivity(),  response.body().string(), Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(response.body().string());
+                    builder.setTitle("Feedback Recorded");
+                    builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.equipment_fragment_container, new ReportAProblemFragment());
+                            transaction.commit();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -144,7 +158,9 @@ public class ReportAProblemFragment extends MachineGroupFragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-                // What on failure with no progress bar?
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

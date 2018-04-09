@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,7 +159,7 @@ public class QueueFragment extends Fragment {
                     queues.add(g.getName());
                     ArrayList<String> names = (ArrayList<String>) queueData.get(g.getName());
                     for (String queueName: names) {
-                        if (queueName.contains(name)) {
+                        if (queueName.contains(name) && !queueList.contains(name)) {
                             queueList.add(g.getName());
                         }
                     }
@@ -189,6 +190,10 @@ public class QueueFragment extends Fragment {
             @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -214,42 +219,15 @@ public class QueueFragment extends Fragment {
                 public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
                     groups = response.body();
                     connectAndGetQueueMembers();
-
-//                    ArrayList<String> queueList = new ArrayList<>();
-//
-//                    queues = new ArrayList<>();
-//                    for (QueueGroups q : groups) {
-//                        queues.add(q.getName());
-//                        if (queueData.get(q.getName()) == null) {
-//                            queueData.put(q.getName(), new ArrayList<>(Arrays.asList("No users in queue")));
-//                        }
-//                        ArrayList<String> names = (ArrayList<String>) queueData.get(q.getName());
-//                        for (String queueName: names) {
-//                            if (queueName.contains(name)) {
-//                                queueList.add(q.getName());
-//                            }
-//                        }
-//                    }
-//
-//                    // Setup and create ExpandableList
-//                    Collections.sort(queues);
-//                    for (String queue: queues) {
-//                        if (queueList.contains(queue)) {
-//                            continue;
-//                        } else {
-//                            queueList.add(queue);
-//                        }
-//                    }
-//
-//                    adapter = new ExpandableListAdapter(getActivity(), queueList , queueData);
-//                    expandableListView.setAdapter(adapter);
-//                    loadProgress.setVisibility(View.GONE);
-//                    refreshLayout.setRefreshing(false);
                 }
 
                 @Override
                 public void onFailure(Call<List<QueueGroups>> call, Throwable throwable) {
                     loadProgress.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
+                    if (getActivity() != null) {
+                        Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
     }

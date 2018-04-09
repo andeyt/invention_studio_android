@@ -12,17 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <ListView
             android:id="@+id/equipment_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/IS_Background_Light"
             android:divider="@color/IS_AccentTertiary_Light"
-            android:dividerHeight="1dp"
+            android:dividerHeight=".5dp"
             android:footerDividersEnabled="true"
-            android:headerDividersEnabled="true" />
+            />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progressBar"

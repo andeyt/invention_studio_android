@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Activities.MainActivity;
 import inventionstudio.inventionstudioandroid.Adapters.GroupAdapter;
 import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.R;
@@ -60,6 +62,9 @@ public class MachineGroupFragment extends Fragment {
         getActivity().setTitle("Machine Groups");
         View rootView = inflater.inflate(R.layout.fragment_machine_group, container, false);
         listView = (ListView) rootView.findViewById(R.id.listview);
+        listView.addHeaderView(new View(getContext()), null, true);
+
+
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,6 +146,10 @@ public class MachineGroupFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Machine>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
