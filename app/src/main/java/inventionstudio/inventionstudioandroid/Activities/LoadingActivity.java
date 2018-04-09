@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -124,11 +125,16 @@ public class LoadingActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
+                try {
+                    if (response.isSuccessful()) {
+
                         String curTimeString = response.body().string();
                         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                         long lastLoginTime = prefs.getLong("lastLoginTime", 0);
+
+                        Log.d("LOGIN_TIME", Long.toString(lastLoginTime));
+                        Log.d("LOGIN_TIME", curTimeString);
+
                         if (prefs.contains("lastLoginTime")) {
                             if (Long.parseLong(curTimeString) - lastLoginTime > 604800) {
                                 SharedPreferences.Editor editor = prefs.edit();
@@ -160,12 +166,17 @@ public class LoadingActivity extends AppCompatActivity {
 
                                 }, 1000L);
                             }
+
+
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } else {
+                        Toast.makeText(LoadingActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
-                } else {
-                    Toast.makeText(LoadingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                        e.printStackTrace();
                 }
             }
 

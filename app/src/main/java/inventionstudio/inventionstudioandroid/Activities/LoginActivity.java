@@ -192,7 +192,8 @@ public class LoginActivity extends Activity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 

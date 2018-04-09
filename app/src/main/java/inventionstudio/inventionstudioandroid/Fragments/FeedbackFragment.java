@@ -320,10 +320,10 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
+                try {
+                    if (response.isSuccessful()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(response.body().string());
+                        builder.setMessage(response.message());
                         builder.setTitle("Feedback Recorded");
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
@@ -336,11 +336,12 @@ public class FeedbackFragment extends Fragment {
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+
+                    } else {
+                        Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -369,10 +370,10 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
+                try {
+                    if (response.isSuccessful()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(response.body().string());
+                        builder.setMessage(response.message());
                         builder.setTitle("Feedback Recorded");
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
@@ -385,11 +386,12 @@ public class FeedbackFragment extends Fragment {
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+
+                    } else {
+                        Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -417,10 +419,10 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
+                try {
+                    if (response.isSuccessful()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(response.body().string());
+                        builder.setMessage(response.message());
                         builder.setTitle("Feedback Recorded");
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
@@ -433,11 +435,12 @@ public class FeedbackFragment extends Fragment {
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+
+                    } else {
+                        Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
