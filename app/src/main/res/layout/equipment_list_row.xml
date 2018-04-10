@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_weight="75"
         android:textSize="18sp"
+        android:textColor="@color/IS_Text_Light"
         android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
         android:paddingEnd="0dp"/>
 
