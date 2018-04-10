@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                         Fragment currentFragment = getSupportFragmentManager().findFragmentById(
                                 R.id.fragment_container);
                         Fragment selectedFragment = null;
-                        String screenName = "Invention Studio";
 
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         switch (item.getItemId()) {
@@ -81,25 +80,24 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.equipment:
                                 if (!(currentFragment instanceof EquipmentGroupFragment)){
                                     selectedFragment = new EquipmentGroupFragment();
-                                    screenName = item.getTitle().toString();
                                 }
                                 break;
                             case R.id.queue:
                                 if (!(currentFragment instanceof QueueFragment)){
                                     selectedFragment = new QueueFragment();
-                                    screenName = item.getTitle().toString();
+
                                 }
                                 break;
                             case R.id.feedback:
                                 if (!(currentFragment instanceof FeedbackFragment)){
                                     selectedFragment = new FeedbackFragment();
-                                    screenName = item.getTitle().toString();
+
                                 }
                                 break;
                             case R.id.more:
                                 if (!(currentFragment instanceof MoreFragment)){
                                     selectedFragment = new MoreFragment();
-                                    screenName = item.getTitle().toString();
+
                                 }
                                 break;
                         }
@@ -109,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                                     null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             transaction.replace(R.id.fragment_container, selectedFragment);
                             transaction.commit();
-                            setTitle(screenName);
                         }
 
                         return true;
@@ -118,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new HomeFragment());
         transaction.commit();
-        setTitle("Invention Studio");
 
     }
 
@@ -166,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

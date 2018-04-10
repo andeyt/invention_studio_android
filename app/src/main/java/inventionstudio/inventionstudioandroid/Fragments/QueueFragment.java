@@ -69,6 +69,8 @@ public class QueueFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
+        BottomNavigationView bottom =  (getActivity().findViewById(R.id.bottomBar));
+        getActivity().setTitle(bottom.getMenu().findItem(bottom.getSelectedItemId()).getTitle());
         expandableListView = rootView.findViewById(R.id.expandable_list);
         expandableListView.addHeaderView(new View(getContext()), null, true);
 

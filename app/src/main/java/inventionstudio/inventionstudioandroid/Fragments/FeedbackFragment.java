@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -66,7 +67,8 @@ public class FeedbackFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
-
+        BottomNavigationView bottom =  (getActivity().findViewById(R.id.bottomBar));
+        getActivity().setTitle(bottom.getMenu().findItem(bottom.getSelectedItemId()).getTitle());
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");
         final TextView nameText = (TextView) rootView.findViewById(R.id.name);

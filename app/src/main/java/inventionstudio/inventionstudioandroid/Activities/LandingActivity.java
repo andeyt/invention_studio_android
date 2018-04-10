@@ -95,6 +95,12 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRestart () {
+        super.onRestart();
+        connectAndGetStudioDescription();
+    }
+
 
     public void connectAndGetStudioDescription() {
 

@@ -3,6 +3,7 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -56,6 +57,8 @@ public class EquipmentGroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_equipment_group, container, false);
+        BottomNavigationView bottom =  (getActivity().findViewById(R.id.bottomBar));
+        getActivity().setTitle(bottom.getMenu().findItem(bottom.getSelectedItemId()).getTitle());
         listView = (ListView) rootView.findViewById(R.id.listview);
         listView.addHeaderView(new View(getContext()), null, true);
 

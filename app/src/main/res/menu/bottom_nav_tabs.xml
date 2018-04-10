@@ -12,7 +12,7 @@
     <item
         android:id="@+id/queue"
         android:icon="@drawable/ic_people"
-        android:title="Queue"/>
+        android:title="Queues"/>
 
     <item
         android:id="@+id/feedback"

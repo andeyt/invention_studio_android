@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="inventionstudio.inventionstudioandroid.Activities.LandingActivity">
+
+    <Button
+        android:id="@+id/credits_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:fontFamily="sans-serif"
+        android:text="Credits"
+        android:elevation="2dp"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/IS_FocusBackground_Light"
+        android:elevation="2dp"
+        android:fontFamily="sans-serif"
+        android:text="Log Out"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FF0000"
+        android:textSize="18sp" />
+</android.widget.LinearLayout>

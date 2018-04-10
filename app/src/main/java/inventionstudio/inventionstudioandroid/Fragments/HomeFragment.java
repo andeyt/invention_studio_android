@@ -2,6 +2,7 @@ package inventionstudio.inventionstudioandroid.Fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        getActivity().setTitle("Invention Studio");
         // Inflate the layout for this fragment
         studioDescriptionText = rootView.findViewById(R.id.studio_description);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
