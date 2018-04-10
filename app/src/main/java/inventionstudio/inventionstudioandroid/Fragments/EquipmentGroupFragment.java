@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -21,9 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Activities.MainActivity;
 import inventionstudio.inventionstudioandroid.Adapters.GroupAdapter;
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,19 +35,19 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MachineGroupFragment extends Fragment {
+public class EquipmentGroupFragment extends Fragment {
 
 
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private static Retrofit retrofit = null;
     private HashSet<String> groups;
     private ListView listView;
-    private Call<List<Machine>> call;
+    private Call<List<Equipment>> call;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
     public static final String USER_PREFERENCES = "UserPrefs";
 
-    public MachineGroupFragment() {
+    public EquipmentGroupFragment() {
         // Required empty public constructor
     }
 
@@ -57,10 +55,7 @@ public class MachineGroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        //TODO: Programmatically populate the machine groups
-        getActivity().setTitle("Machine Groups");
-        View rootView = inflater.inflate(R.layout.fragment_machine_group, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_equipment_group, container, false);
         listView = (ListView) rootView.findViewById(R.id.listview);
         listView.addHeaderView(new View(getContext()), null, true);
 
@@ -123,12 +118,12 @@ public class MachineGroupFragment extends Fragment {
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         call = sumsApiService.getMachineList(8, username, otp);
-        call.enqueue(new Callback<List<Machine>>() {
+        call.enqueue(new Callback<List<Equipment>>() {
             @Override
-            public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
-                List<Machine> e = response.body();
+            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                List<Equipment> e = response.body();
                 groups = new HashSet<>();
-                for (Machine m : e) {
+                for (Equipment m : e) {
                     if (!(m.getLocationName().equals(""))) {
                         groups.add(m.getLocationName());
                     }
@@ -144,7 +139,7 @@ public class MachineGroupFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Machine>> call, Throwable throwable) {
+            public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
                 if (getActivity() != null) {

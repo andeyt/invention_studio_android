@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment">
+    tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentGroupFragment">
 
     <ScrollView
         android:layout_width="match_parent"

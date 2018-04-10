@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 import inventionstudio.inventionstudioandroid.R;
 
-public class Machine implements Serializable, Comparable<Machine>{
+public class Equipment implements Serializable, Comparable<Equipment>{
 
     transient private int statusComparisonVal;
 
@@ -20,7 +20,7 @@ public class Machine implements Serializable, Comparable<Machine>{
         return statusComparisonVal;
     }
 
-    public int compareTo(Machine other) {
+    public int compareTo(Equipment other) {
         if (this.statusComparisonVal == other.getStatusComparisonVal()) {
             return this.getToolName().compareTo(other.getToolName());
         }

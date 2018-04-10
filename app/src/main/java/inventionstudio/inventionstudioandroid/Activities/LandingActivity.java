@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RestrictTo;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -43,6 +47,8 @@ public class LandingActivity extends AppCompatActivity {
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
     private Call call;
+    private ProgressBar loadProgress;
+    private TextView studioDescriptionText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +59,8 @@ public class LandingActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
             startActivity(intent);
         }
-
+        studioDescriptionText = findViewById(R.id.studio_description);
+        loadProgress = (ProgressBar) findViewById(R.id.progressBar);
         connectAndGetStudioDescription();
 
 
@@ -98,14 +105,16 @@ public class LandingActivity extends AppCompatActivity {
 
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         call = sumsApiService.getStudioDescription(8);
-        call.enqueue(new Callback<List<StudioDescription>>() {
+        call.enqueue(new Callback<StudioDescription>() {
             @Override
-            public void onResponse(Call<List<StudioDescription>> call, Response<List<StudioDescription>> response) {
-                List<StudioDescription> descriptions = response.body();
+            public void onResponse(Call<StudioDescription> call, Response<StudioDescription> response) {
+                StudioDescription description = response.body();
+                loadProgress.setVisibility(View.GONE);
+                studioDescriptionText.setText(Html.fromHtml(description.getEquipmentGroupDescriptionHtml()));
             }
             @Override
-            public void onFailure(Call<List<StudioDescription>> call, Throwable throwable) {
-                Toast.makeText(LandingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<StudioDescription> call, Throwable throwable) {
+                loadProgress.setVisibility(View.GONE);
             }
         });
     }

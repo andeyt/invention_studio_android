@@ -35,7 +35,6 @@ public class MoreFragment extends PreferenceFragmentCompat {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
-        getActivity().setTitle("More");
 
         Preference logoutButton = findPreference("logout_button");
         logoutButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

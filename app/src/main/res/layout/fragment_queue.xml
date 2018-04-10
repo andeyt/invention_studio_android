@@ -4,7 +4,7 @@
     android:id="@+id/swipeToRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment">
+    tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentGroupFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

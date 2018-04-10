@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainEquipmentFragment extends MachineGroupFragment {
+public class MainEquipmentFragment extends EquipmentGroupFragment {
 
 
     public MainEquipmentFragment() {
@@ -29,7 +29,7 @@ public class MainEquipmentFragment extends MachineGroupFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main_equipment, container, false);
         final Bundle bundle = getArguments();
-        Machine obj= (Machine) bundle.getSerializable("Machine");
+        Equipment obj= (Equipment) bundle.getSerializable("Equipment");
 
         getActivity().setTitle(obj.getToolName());
 

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EquipmentInfoFragment extends MachineGroupFragment {
+public class EquipmentInfoFragment extends EquipmentGroupFragment {
     public static final String USER_PREFERENCES = "UserPrefs";
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private ImageView statusIcon;
@@ -38,7 +38,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
     private TextView description;
     private Retrofit retrofit;
     private String machineName;
-    private Call<List<Machine>> call;
+    private Call<List<Equipment>> call;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
 
@@ -54,7 +54,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         View rootView = inflater.inflate(R.layout.fragment_equipment_info, container, false);
 
         Bundle bundle = getArguments();
-        machineName = ((Machine) bundle.getSerializable("Machine")).getToolName();
+        machineName = ((Equipment) bundle.getSerializable("Equipment")).getToolName();
         statusIcon = rootView.findViewById(R.id.status_icon);
         statusText = rootView.findViewById(R.id.status_text);
         description = rootView.findViewById(R.id.machine_description);
@@ -92,11 +92,11 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         call = sumsApiService.getMachineList(8, username, otp);
-        call.enqueue(new Callback<List<Machine>>() {
+        call.enqueue(new Callback<List<Equipment>>() {
             @Override
-            public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
-                List<Machine> e = response.body();
-                for (Machine m : e) {
+            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                List<Equipment> e = response.body();
+                for (Equipment m : e) {
                     if (m.getToolName().equals(machineName)) {
                         statusIcon.setImageResource(m.statusIcon());
 
@@ -111,7 +111,7 @@ public class EquipmentInfoFragment extends MachineGroupFragment {
                 }
             }
             @Override
-            public void onFailure(Call<List<Machine>> call, Throwable throwable) {
+            public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
                 if (getActivity() != null) {

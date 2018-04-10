@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/IS_Background_Light"
-    tools:context="inventionstudio.inventionstudioandroid.Fragments.MachineGroupFragment">
+    tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentGroupFragment">
 
 
     <android.support.v4.widget.SwipeRefreshLayout

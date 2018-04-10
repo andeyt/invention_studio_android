@@ -3,6 +3,8 @@ package inventionstudio.inventionstudioandroid.Fragments;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -12,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.roughike.bottombar.BottomBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +59,7 @@ public class QueueFragment extends Fragment {
     private Call<List<QueueMember>> queueMembersCall;
     private Call<List<QueueGroups>> queueGroupsCall;
 
+
     public QueueFragment() {
         // Required empty public constructor
     }
@@ -63,7 +68,6 @@ public class QueueFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle("Queue");
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
         expandableListView = rootView.findViewById(R.id.expandable_list);
         expandableListView.addHeaderView(new View(getContext()), null, true);

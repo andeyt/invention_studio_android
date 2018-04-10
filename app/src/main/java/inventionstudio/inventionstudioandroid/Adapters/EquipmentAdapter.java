@@ -11,20 +11,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 
 /**
  * Created by Rishab K on 1/27/2018.
  */
 
-public class MachineAdapter extends ArrayAdapter<Machine> {
+public class EquipmentAdapter extends ArrayAdapter<Equipment> {
 
     Context context;
     int layoutResourceId;
-    ArrayList<Machine> data = null;
+    ArrayList<Equipment> data = null;
 
-    public MachineAdapter(Context context, int layoutResourceId, ArrayList<Machine> data) {
+    public EquipmentAdapter(Context context, int layoutResourceId, ArrayList<Equipment> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -51,7 +51,7 @@ public class MachineAdapter extends ArrayAdapter<Machine> {
             holder = (EquipmentHolder) row.getTag();
         }
 
-        Machine m = data.get(position);
+        Equipment m = data.get(position);
         if (m != null) {
             holder.name.setText(m.getToolName());
             holder.icon.setImageResource(m.statusIcon());

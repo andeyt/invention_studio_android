@@ -29,10 +29,8 @@ import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Activities.LoadingActivity;
-import inventionstudio.inventionstudioandroid.Activities.MainActivity;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
-import inventionstudio.inventionstudioandroid.Model.Machine;
 import inventionstudio.inventionstudioandroid.Model.PIFeedback;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
@@ -68,7 +66,6 @@ public class FeedbackFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
-        getActivity().setTitle("Feedback");
 
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");
@@ -104,7 +101,7 @@ public class FeedbackFragment extends Fragment {
         machineTypeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
         connectAndGetAPIData();
 
-        // Machine broken data
+        // Equipment broken data
         final Spinner issueSpinner = (Spinner) rootView.findViewById(R.id.issue_spinner);
         ArrayAdapter<CharSequence> issueAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.machine_feedback_array,
                 android.R.layout.simple_spinner_item);
@@ -127,7 +124,7 @@ public class FeedbackFragment extends Fragment {
                         showToast("Please fill out the PI name field.");
                         fieldsFilled = false;
                     }
-                } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
+                } else if (feedbackSpinner.getSelectedItem().toString().equals("Equipment Broken")) {
                     // Show message if there are no comments on the problem
                     if (commentTextInput.getText().toString().trim().equals("")) {
                         showToast("Please give a description of your specific issue.");
@@ -156,7 +153,7 @@ public class FeedbackFragment extends Fragment {
                                 rating.getProgress(), commentTextInput.getText().toString());
                         connectAndSendPIFeedback(feedback);
 
-                    } else if (feedbackSpinner.getSelectedItem().toString().equals("Machine Broken")) {
+                    } else if (feedbackSpinner.getSelectedItem().toString().equals("Equipment Broken")) {
                         ToolBrokenFeedback feedback = new ToolBrokenFeedback(
                                 8,
                                 username,
@@ -184,7 +181,7 @@ public class FeedbackFragment extends Fragment {
                 if (text.equals("PI Feedback")) {
                     ratingGroup.setVisibility(View.VISIBLE);
                     issueGroup.setVisibility(View.GONE);
-                } else if (text.equals("Machine Broken")) {
+                } else if (text.equals("Equipment Broken")) {
                     ratingGroup.setVisibility(View.GONE);
                     issueGroup.setVisibility(View.VISIBLE);
                 } else {
@@ -213,14 +210,14 @@ public class FeedbackFragment extends Fragment {
                 String username = prefs.getString("username", "");
                 String otp = prefs.getString("otp", "");
                 call = sumsApiService.getMachineList(8, username, otp);
-                call.enqueue(new Callback<List<Machine>>() {
+                call.enqueue(new Callback<List<Equipment>>() {
                     @Override
-                    public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
-                        List<Machine> e = response.body();
+                    public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                        List<Equipment> e = response.body();
 
                         // Make list of all machine names for adding to the spinner and types
                         machineNames = new ArrayList<>();
-                        for (Machine m : e) {
+                        for (Equipment m : e) {
                             if (m.getLocationName().equals(selected)) {
                                 machineNames.add(m.getToolName());
                             }
@@ -233,7 +230,7 @@ public class FeedbackFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Machine>> call, Throwable throwable) {
+                    public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                         Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -268,15 +265,15 @@ public class FeedbackFragment extends Fragment {
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         call = sumsApiService.getMachineList(8, username, otp);
-        call.enqueue(new Callback<List<Machine>>() {
+        call.enqueue(new Callback<List<Equipment>>() {
             @Override
-            public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
-                List<Machine> e = response.body();
+            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                List<Equipment> e = response.body();
 
                 // Make list of all machine names for adding to the spinner and types
                 machineNames = new ArrayList<>();
                 machineTypes = new HashSet<>();
-                for (Machine m : e) {
+                for (Equipment m : e) {
                     if (!m.getLocationName().equals("")) {
                         machineTypes.add(m.getLocationName());
                         if (m.getLocationName().equals("3D Printers")) {
@@ -297,7 +294,7 @@ public class FeedbackFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Machine>> call, Throwable throwable) {
+            public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                 if (getActivity() != null) {
                     Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
                 }

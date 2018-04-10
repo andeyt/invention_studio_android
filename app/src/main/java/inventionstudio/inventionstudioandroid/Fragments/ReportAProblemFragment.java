@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
 import okhttp3.Credentials;
@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class ReportAProblemFragment extends MachineGroupFragment {
+public class ReportAProblemFragment extends EquipmentGroupFragment {
     private static Retrofit retrofit = null;
     private Call call;
 
@@ -46,7 +46,7 @@ public class ReportAProblemFragment extends MachineGroupFragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_report_a_problem, container, false);
         final Bundle bundle = getArguments();
-        final Machine obj = (Machine) bundle.getSerializable("Machine");
+        final Equipment obj = (Equipment) bundle.getSerializable("Equipment");
 
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");

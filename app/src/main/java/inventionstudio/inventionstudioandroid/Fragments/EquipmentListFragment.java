@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Adapters.MachineAdapter;
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Adapters.EquipmentAdapter;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,15 +33,15 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
 */
-public class EquipmentListFragment extends MachineGroupFragment {
+public class EquipmentListFragment extends EquipmentGroupFragment {
 
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
     private static Retrofit retrofit = null;
-    private ArrayList<Machine> machines;
+    private ArrayList<Equipment> machines;
     private ListView listView;
     private String machineGroup;
     private TextView description;
-    private Call<List<Machine>> call;
+    private Call<List<Equipment>> call;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
 
@@ -74,8 +74,8 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment2 = new MainEquipmentFragment();
                 Bundle bundle = new Bundle();
-                Machine obj = ((Machine) o);
-                bundle.putSerializable("Machine", obj);
+                Equipment obj = ((Equipment) o);
+                bundle.putSerializable("Equipment", obj);
                 fragment2.setArguments(bundle);
                 // Replace the contents of the container with the new fragment
                 ft.replace(R.id.fragment_container, fragment2);
@@ -122,13 +122,13 @@ public class EquipmentListFragment extends MachineGroupFragment {
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         call = sumsApiService.getMachineList(8, username, otp);
-        call.enqueue(new Callback<List<Machine>>() {
+        call.enqueue(new Callback<List<Equipment>>() {
             @Override
-            public void onResponse(Call<List<Machine>> call, Response<List<Machine>> response) {
-                List<Machine> e = response.body();
+            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                List<Equipment> e = response.body();
 
                 machines = new ArrayList<>();
-                for (Machine m : e) {
+                for (Equipment m : e) {
                     if (m.getLocationName().equals(machineGroup)) {
                         // set compareVal
                         m.statusIcon();
@@ -137,7 +137,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
                 }
 
                 Collections.sort(machines);
-                MachineAdapter adapter = new MachineAdapter(getActivity(), R.layout.equipment_list_row, machines);
+                EquipmentAdapter adapter = new EquipmentAdapter(getActivity(), R.layout.equipment_list_row, machines);
 
                 listView.setAdapter(adapter);
                 if (machines.isEmpty()) {
@@ -150,7 +150,7 @@ public class EquipmentListFragment extends MachineGroupFragment {
             }
 
             @Override
-            public void onFailure(Call<List<Machine>> call, Throwable throwable) {
+            public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
                 if (getActivity() != null) {

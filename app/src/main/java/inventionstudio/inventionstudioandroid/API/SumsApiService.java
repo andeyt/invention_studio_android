@@ -2,13 +2,12 @@ package inventionstudio.inventionstudioandroid.API;
 
 import java.util.List;
 
-import inventionstudio.inventionstudioandroid.Model.Machine;
+import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.QueueGroups;
 import inventionstudio.inventionstudioandroid.Model.QueueMember;
 import inventionstudio.inventionstudioandroid.Model.StudioDescription;
 import inventionstudio.inventionstudioandroid.Model.UserGroups;
 import retrofit2.Call;
-import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -20,7 +19,7 @@ import retrofit2.http.Query;
 public interface SumsApiService {
 
     @POST("equipmentGroup_tools")
-    Call<List<Machine>> getMachineList(@Query("DepartmentID") int id,  @Query("userName") String userName, @Header("authorization") String otp);
+    Call<List<Equipment>> getMachineList(@Query("DepartmentID") int id, @Query("userName") String userName, @Header("authorization") String otp);
 
     @POST("equipmentGroup_queueUsers")
     Call<List<QueueMember>> getQueueMembers(@Query("DepartmentID") int id, @Query("userName") String userName, @Header("authorization") String otp);
@@ -31,6 +30,6 @@ public interface SumsApiService {
     @POST("equipmentGroup_queueGroups")
     Call<List<QueueGroups>> getQueueGroups(@Query("DepartmentID") int id, @Query("userName") String userName, @Header("authorization") String otp);
 
-    @GET("equipmentGroup_info")
-    Call<List<StudioDescription>> getStudioDescription(@Query("equipmentGroupId") int id);
+    @POST("equipmentGroup_info")
+    Call<StudioDescription> getStudioDescription(@Query("equipmentGroupId") int id);
 }
