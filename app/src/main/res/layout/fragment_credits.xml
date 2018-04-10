@@ -7,4 +7,26 @@
     android:orientation="vertical"
     tools:context="inventionstudio.inventionstudioandroid.Activities.LandingActivity">
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Attributions:"
+        android:textSize="18sp"
+        android:paddingStart = "10dp"
+        android:paddingEnd="10dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart = "10dp"
+        android:paddingEnd="10dp"
+        android:text="\n- Home Icon created by Viktor Vorobyev from Noun Project.
+        \n\n- 3D printer icon created by Peter van Driel from Noun Project.
+        \n\n- Queue Icon created by Deepak M from Noun Project.
+        \n\n- Feedback Icon Created by dilakuscan from Noun Project.
+        \n\n- More Icon created by Ilaria Bernareggi from Noun Project."
+        />
 </android.widget.LinearLayout>
