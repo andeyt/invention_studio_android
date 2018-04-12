@@ -183,7 +183,7 @@ public class FeedbackFragment extends Fragment {
                 if (text.equals("PI Feedback")) {
                     ratingGroup.setVisibility(View.VISIBLE);
                     issueGroup.setVisibility(View.GONE);
-                } else if (text.equals("Equipment Broken")) {
+                } else if (text.equals("Machine Broken")) {
                     ratingGroup.setVisibility(View.GONE);
                     issueGroup.setVisibility(View.VISIBLE);
                 } else {
