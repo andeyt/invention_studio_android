@@ -20,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AgreementActivity extends AppCompatActivity {
+
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
@@ -41,24 +42,35 @@ public class AgreementActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * method created to connect to the SUMS API and pull down the list of studio
+     * members to confirm if user is a part of the studio
+     */
     public void connectAndGetApiData() {
+
+        // Create a retrofit to contact the API and pass in necessary arguments
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
+        // Create API class and grab user info from stored app data
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-        // Call to preferences to get username and OTP
-        // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
 
+        // Call the API via arguments and set method enqueue to parse through
+        // all members and find if the logged in user is a part of the studio
         String otp = prefs.getString("otp", "");
         call = sumsApiService.getUserGroups(username, otp);
         call.enqueue(new Callback<List<UserGroups>>() {
             @Override
             public void onResponse(Call<List<UserGroups>> call, Response<List<UserGroups>> response) {
+
+                // Parse through list of usergroups for the user, if one is
+                // the studio, log them in
                 List<UserGroups> groups = response.body();
                 studioMember = false;
                 if (groups != null) {
@@ -69,6 +81,8 @@ public class AgreementActivity extends AppCompatActivity {
                     }
                 }
 
+                // If a part of the studio, send to main activity
+                // else, show agreement page so they can sign it and log in
                 if (studioMember) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
@@ -79,6 +93,9 @@ public class AgreementActivity extends AppCompatActivity {
 
             }
             @Override
+            /**
+             * Give a toast if any issue occurs with connecting to the API
+             */
             public void onFailure(Call<List<UserGroups>> call, Throwable throwable) {
                 Toast.makeText(AgreementActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }

@@ -29,6 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends Activity {
+
     public static final String USER_PREFERENCES = "UserPrefs";
     private WebView webView;
     private String otp;
@@ -40,6 +41,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Setup layout to accept the webview of GT login
         setContentView(R.layout.activity_login);
         webView = (WebView)findViewById(R.id.webView);
         webView.clearCache(true);
@@ -50,6 +52,9 @@ public class LoginActivity extends Activity {
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
+            /**
+             * Show the SUMS login page in the activity
+             */
             public void onPageStarted(WebView webView, String url, Bitmap b) {
                 try {
                     URL baseURL = new URL(url);
@@ -64,11 +69,20 @@ public class LoginActivity extends Activity {
             }
 
             @Override
+            /**
+             * method which takes the login to SUMS and navigates to the necessary pages
+             * in order to grab the username and One-Time-Password of the user for
+             * using in SUMS API authentication later
+             */
             public void onPageFinished(WebView webView, String url) {
                 try {
                     URL baseURL = new URL(url);
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
+
+                    // If we get to the correct base URL
                     if (base.equals("https://sums.gatech.edu")) {
+
+                        // Grab the usermane by using javascript to parse the html
                         webView.setVisibility(View.GONE);
                         webView.evaluateJavascript("document.querySelector('[id$=\"UsernameDisplay\"]').innerText", new ValueCallback<String>() {
 
@@ -78,11 +92,14 @@ public class LoginActivity extends Activity {
                                 SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
 
+                                // Log the username and store in shared preferences
                                 Log.d("REST", username);
                                 editor.putString("username", username);
                                 editor.apply();
                             }
                         });
+
+                        // Grab the One-Time-Password by using javascript to pare the html
                         webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
                             @Override
                             public void onReceiveValue(String s) {
@@ -91,6 +108,7 @@ public class LoginActivity extends Activity {
                                 SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
 
+                                // Log the OTP and store in shared preferences
                                 Log.d("REST", otp);
                                 editor.putString("otp", otp);
                                 editor.apply();
@@ -157,37 +175,41 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * method to connect to our API and grab the current timestamp to add
+     * to the app storage for autologin checks
+     */
     public void connectAndCheckTimestamp() {
 
+        // Create a retrofit to connect to our API
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
+        // Create API class and call timestamp to store it later
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         call = serverApiService.getTimestamp();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                // If a successful response from the server, store login time
                 if (response.isSuccessful()) {
                     try {
+                        // Parse current time and store it in shared preferences
                         String curTimeString = response.body().string();
                         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                         long lastLoginTime = Long.parseLong(curTimeString);
-
                         SharedPreferences.Editor editor = prefs.edit();
-
                         editor.putLong("lastLoginTime", lastLoginTime);
-
                         editor.commit();
 
+                        // Send user to loading activity then to main activity
                         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         finish();
-
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -198,6 +220,9 @@ public class LoginActivity extends Activity {
             }
 
             @Override
+            /**
+             * Any error connecting to the API will notif the user an error has occured
+             */
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }

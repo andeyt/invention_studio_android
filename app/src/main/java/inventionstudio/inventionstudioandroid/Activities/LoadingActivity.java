@@ -37,6 +37,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoadingActivity extends AppCompatActivity {
+
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
     public static final String BASE_URL = "https://sums.gatech.edu/SUMSAPI/rest/API/";
@@ -48,9 +49,7 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(ThemeChanger.currentTheme);
         setContentView(R.layout.activity_loading);
-
         connectAndCheckTimestamp();
-
     }
 
     @Override
@@ -61,20 +60,27 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * method which connects to the SUMS API and collects user info
+     * and status that will be used later in the application
+     */
     public void connectAndGetStudioMemberStatus() {
 
+        // Create a retrofit to contact the API and pass in necessary arguments
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        // Create API class, grab arguments from app storage, request API
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-        // Call to preferences to get username and OTP
-        // Replace hardcoded args when work in Login is complete.
         SharedPreferences prefs = this.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         call = sumsApiService.getUserGroups(username, otp);
+
+        // Call to the API which parses through usergroups to find the user
+        // and collect their name for later use
         call.enqueue(new Callback<List<UserGroups>>() {
             @Override
             public void onResponse(Call<List<UserGroups>> call, Response<List<UserGroups>> response) {
@@ -93,6 +99,8 @@ public class LoadingActivity extends AppCompatActivity {
                     }
                 }
 
+                // if they are in fact a studio member, send to the main activity
+                // else send to the agreement page to sign user agreement
                 if (studioMember) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
@@ -105,29 +113,42 @@ public class LoadingActivity extends AppCompatActivity {
 
             }
             @Override
+            /**
+             * if any connection error occurs, tell the user an error occured
+             */
             public void onFailure(Call<List<UserGroups>> call, Throwable throwable) {
                 Toast.makeText(LoadingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /**
+     * method created to check the timestamp of the last login and autologin
+     * if it has been less than 7 days
+     */
     public void connectAndCheckTimestamp() {
 
+        // Create a retrofit to contact the API and pass in necessary arguments
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getCertClient())
                 .build();
 
-
+        // Create API class and request
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         call = serverApiService.getTimestamp();
+
+        /**
+         * method which gets the current login time and compares it to the last
+         * login time to see if the app can autologin the user
+         */
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-
+                        // Grab current and previous login times
                         String curTimeString = response.body().string();
                         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                         long lastLoginTime = prefs.getLong("lastLoginTime", 0);
@@ -135,7 +156,12 @@ public class LoadingActivity extends AppCompatActivity {
                         Log.d("LOGIN_TIME", Long.toString(lastLoginTime));
                         Log.d("LOGIN_TIME", curTimeString);
 
+                        // If there is a last login time, check if autologin is possible
                         if (prefs.contains("lastLoginTime")) {
+
+                            // If last login is more than a week ago, remove saved info
+                            // and request the user verify with GT login again.
+                            // Else login and get info
                             if (Long.parseLong(curTimeString) - lastLoginTime > 604800) {
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.remove("username");
@@ -178,12 +204,16 @@ public class LoadingActivity extends AppCompatActivity {
             }
 
             @Override
+            /**
+             * If an API connection issue occurs, tell the user an error occured
+             */
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 Toast.makeText(LoadingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
 
     private OkHttpClient getCertClient() {
         OkHttpClient okHttpClient_client = new OkHttpClient();

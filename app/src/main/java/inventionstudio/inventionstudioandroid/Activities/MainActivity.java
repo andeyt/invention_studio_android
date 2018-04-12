@@ -40,26 +40,30 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+
     private BottomNavigationView bottom;
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
     private Call call;
-//    private FragmentTransaction transaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set theme of the app, grab username to be used later
         setTheme(ThemeChanger.currentTheme);
         setContentView(R.layout.activity_main);
         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
 
+        // Set up connection to the server, record login, get app status
         FirebaseMessaging.getInstance().subscribeToTopic(username + "_android");
         FirebaseMessaging.getInstance().unsubscribeFromTopic(username);
-
         connectAndSendLoginRecord();
         connectAndGetAppStatus();
 
-
+        // Inititialize bottom bar view, set each icon to switch to the
+        // designated fragments
         bottom = (BottomNavigationView) findViewById(R.id.bottomBar);
         disableShiftMode(bottom);
         bottom.setOnNavigationItemSelectedListener(
@@ -69,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
                         Fragment currentFragment = getSupportFragmentManager().findFragmentById(
                                 R.id.fragment_container);
                         Fragment selectedFragment = null;
-
                         FragmentManager fragmentManager = getSupportFragmentManager();
+
+                        // Create new Fragment based on which icon is clicked
                         switch (item.getItemId()) {
                             case R.id.home:
                                 if (!(currentFragment instanceof HomeFragment)){
@@ -101,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 break;
                         }
+
+                        // Take selected Fragment and navigate to it accordingly
                         if (selectedFragment != null) {
                             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                             fragmentManager.popBackStackImmediate(
@@ -112,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        // Set original Fragment as the Home Fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new HomeFragment());
         transaction.commit();
@@ -119,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("RestrictedApi")
+    /**
+     *
+     */
     private void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -140,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    /**
+     * Super the onBackPressed if there is a stack, if not go home
+     */
     public void onBackPressed() {
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount != 0){
@@ -165,14 +180,18 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-
+    /**
+     * method to send a login record to the server
+     */
     public void connectAndSendLoginRecord() {
 
+        // retrofit created to connect to our server
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        // Get all necessary data to apply to the login and send it to the server
         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         String username = prefs.getString("username", "");
@@ -182,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
         call = serverApiService.sendLoginRecord(login, "771e6dd7-2d2e-4712-8944-7055ce69c9fb");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
+            /**
+             * Give the user a message when the login is recorded correctly
+             */
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(MainActivity.this, response.message(), Toast.LENGTH_SHORT).show();
@@ -189,6 +211,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
+            /**
+             * If connection issues occur, notify the user
+             */
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 Toast.makeText(MainActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
@@ -197,22 +222,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void connectAndGetAppStatus() {
 
+        // Retrofit created to connect to the server
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
+        // Call to server to get the app status
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         call = serverApiService.getAppStatus( "771e6dd7-2d2e-4712-8944-7055ce69c9fb");
         call.enqueue(new Callback<AppStatus>() {
             @Override
             public void onResponse(Call<AppStatus> call, Response<AppStatus> response) {
                 try {
+                    // Grab status code and AppStatus object
                     int statusCode = response.code();
                     AppStatus appStatus = response.body();
 
+                    // if code of 200 is received
                     if (statusCode == 200) {
+
+                        // Create a dialog with the given AppStatus message
+                        // Display it to the user until they dismiss it
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setMessage(appStatus.getMessage());
                         builder.setTitle(appStatus.getTitle());
@@ -225,14 +256,15 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
+            /**
+             * If a connection error occurs, notify the user
+             */
             public void onFailure(Call<AppStatus> call, Throwable throwable) {
                 Toast.makeText(MainActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
