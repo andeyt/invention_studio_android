@@ -10,7 +10,7 @@
                 </shape>
             </item>
             <item android:right="8dp">
-                <bitmap android:gravity="center_vertical|right" android:src="@drawable/down_arrow"></bitmap>
+                <bitmap android:gravity="center_vertical|right" android:src="@drawable/ic_down_arrow"></bitmap>
             </item>
         </layer-list>
     </item>
