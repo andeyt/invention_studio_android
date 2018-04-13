@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
+import inventionstudio.inventionstudioandroid.Model.CustomSeekBar;
 import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
 import inventionstudio.inventionstudioandroid.Model.PIFeedback;
@@ -84,8 +86,10 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
-        // Rating instantiation
-        final SeekBar rating = (SeekBar) rootView.findViewById(R.id.seekBar);
+        // New SeekBar creation
+        LinearLayout seekBarLayout = (LinearLayout) rootView.findViewById(R.id.seekbar_layout);
+        final CustomSeekBar ratingBar = new CustomSeekBar(this.getContext(), 11, R.color.IS_Text_Light);
+        ratingBar.addSeekBar(seekBarLayout);
 
         // EditText Instantiation
         final EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);
@@ -152,7 +156,7 @@ public class FeedbackFragment extends Fragment {
                     // Create the correct object based on the type of data being sent
                     if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
                         PIFeedback feedback = new PIFeedback(8, username, piTextInput.getText().toString(),
-                                rating.getProgress(), commentTextInput.getText().toString());
+                                ratingBar.getProgress(), commentTextInput.getText().toString());
                         connectAndSendPIFeedback(feedback);
 
                     } else if (feedbackSpinner.getSelectedItem().toString().equals("Equipment Broken")) {
@@ -170,6 +174,10 @@ public class FeedbackFragment extends Fragment {
                         GeneralFeedback feedback = new GeneralFeedback(8, username, commentTextInput.getText().toString());
                         connectAndSendGeneralFeedback(feedback);
                     }
+
+                    commentTextInput.setText("");
+                    piTextInput.setText("");
+                    ratingBar.setProgress(0);
                 }
             }
         });
@@ -342,7 +350,6 @@ public class FeedbackFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -434,7 +441,6 @@ public class FeedbackFragment extends Fragment {
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-
                     } else {
                         Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
