@@ -1,7 +1,6 @@
 package inventionstudio.inventionstudioandroid.Model;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -29,6 +28,7 @@ public class CustomSeekBar {
     public void addSeekBar(LinearLayout parent) {
 
         if (parent instanceof LinearLayout) {
+            // Create seekbar and set layout orientation to vertical
             parent.setOrientation(LinearLayout.VERTICAL);
             mSeekBar = new SeekBar(mContext);
             mSeekBar.setMax(maxCount - 1);
@@ -41,20 +41,26 @@ public class CustomSeekBar {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            params.setMargins(35, 10, 35, 0);
+            params.setMargins(35, 10, 35, 15);
             mSeekLin.setLayoutParams(params);
-            params.setMargins(0, 10, 10, 0);
-            addLabelsBelowSeekBar();
-            parent.addView(mSeekBar);
+            params.setMargins(0, 10, 10, 30);
+            addLabelsAboveSeekBar();
             parent.addView(mSeekLin);
+            parent.addView(mSeekBar);
         } else {
             Log.e("CustomSeekBar", " Parent is not a LinearLayout");
         }
     }
 
-    private void addLabelsBelowSeekBar() {
+    /**
+     * method to add labels above the seekbar
+     */
+    private void addLabelsAboveSeekBar() {
+        // Loop through all values and create textview for each at an interval
         for (int count = 0; count < maxCount; count++) {
             TextView textView = new TextView(mContext);
+
+            // Make first selection N/A if not needed.
             if (count == 0) {
                 textView.setText("N/A");
             } else {
@@ -67,6 +73,7 @@ public class CustomSeekBar {
         }
     }
 
+    // use methods from the parent seekbar for progress
     public int getProgress() {
         return mSeekBar.getProgress();
     }
