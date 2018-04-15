@@ -18,6 +18,10 @@ import retrofit2.http.POST;
 
 public interface ServerApiService {
 
+    /**
+     * Full interface for communication with our personal server
+     * Information on each call is documented online: https://is-apps.me.gatech.edu/api/
+     */
     @POST("feedback/general")
     Call<ResponseBody> sendGeneralFeedback(@Body GeneralFeedback generalFeedback, @Header("x-api-key") String xapikey, @Header("Authorization") String authorization);
 

@@ -18,6 +18,10 @@ import retrofit2.http.Query;
 
 public interface SumsApiService {
 
+    /**
+     * Full Interface for communication with the SUMS API
+     * Information on each call can be found online: https://sums.gatech.edu/SUMSAPI/rest/API/
+     */
     @POST("equipmentGroup_tools")
     Call<List<Equipment>> getMachineList(@Query("DepartmentID") int id, @Query("userName") String userName, @Header("authorization") String otp);
 
