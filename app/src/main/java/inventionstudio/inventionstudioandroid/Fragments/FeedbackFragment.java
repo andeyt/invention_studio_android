@@ -69,12 +69,18 @@ public class FeedbackFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_feedback, container, false);
+
+        // Use the bottom bar to set the title of the page
         BottomNavigationView bottom =  (getActivity().findViewById(R.id.bottomBar));
         getActivity().setTitle(bottom.getMenu().findItem(bottom.getSelectedItemId()).getTitle());
+
+        // Get the user's name from shared preferences and put in a textview
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");
         final TextView nameText = (TextView) rootView.findViewById(R.id.name);
         nameText.setText(name);
+
+        // Create the anon switch and set it to change the user's name to anonymous if on
         final Switch anonSwitch = (Switch) rootView.findViewById(R.id.anon_switch);
         anonSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -123,7 +129,8 @@ public class FeedbackFragment extends Fragment {
                 String username;
                 boolean fieldsFilled = true;
 
-                // error handling
+                // Checks to see if all necessary inputs are filled for whichever
+                // type of feedback is being sent
                 if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
                     // Show message if there is no PI name, or only white spaces
                     if (piTextInput.getText().toString().trim().equals("")) {
@@ -155,6 +162,7 @@ public class FeedbackFragment extends Fragment {
 
                     // Create the correct object based on the type of data being sent
                     if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
+                        // If N/A is selected in ratingBar, will return a 0
                         PIFeedback feedback = new PIFeedback(8, username, piTextInput.getText().toString(),
                                 ratingBar.getProgress(), commentTextInput.getText().toString());
                         connectAndSendPIFeedback(feedback);
@@ -175,6 +183,7 @@ public class FeedbackFragment extends Fragment {
                         connectAndSendGeneralFeedback(feedback);
                     }
 
+                    // Reset input elements when feedback is submitted
                     commentTextInput.setText("");
                     piTextInput.setText("");
                     ratingBar.setProgress(0);
@@ -182,6 +191,10 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
+        /**
+         * Method creation to change the view based on which type of feedback is selected
+         * so that the correct elements are shown to the user
+         */
         feedbackSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -206,15 +219,21 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
+        /**
+         * Method to change the machine spinner based on what machine type is selected
+         */
         machineTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                // Get the string of the selected item, create retrofit to call SUMS API
                 final String selected = machineTypeSpinner.getSelectedItem().toString();
                 retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
+                // Gather necessary information for the API call
                 SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
                 SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
                 String username = prefs.getString("username", "");
@@ -225,7 +244,7 @@ public class FeedbackFragment extends Fragment {
                     public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
                         List<Equipment> e = response.body();
 
-                        // Make list of all machine names for adding to the spinner and types
+                        // Make list of all machine names that match the selected type
                         machineNames = new ArrayList<>();
                         for (Equipment m : e) {
                             if (m.getLocationName().equals(selected)) {
@@ -233,6 +252,7 @@ public class FeedbackFragment extends Fragment {
                             }
                         }
 
+                        // Sort alphabetically and set to the machinespinner via its adapter
                         Collections.sort(machineNames);
                         ArrayAdapter<String> machineNameAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, machineNames);
                         machineNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -240,6 +260,9 @@ public class FeedbackFragment extends Fragment {
                     }
 
                     @Override
+                    /**
+                     * give a toast if there is failure in making the call to the API
+                     */
                     public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                         Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
                     }
@@ -263,13 +286,19 @@ public class FeedbackFragment extends Fragment {
         }
     }
 
+    /**
+     * method which contacts the SUMS API and populates all necessary spinners
+     * with the returned data
+     */
     public void connectAndGetAPIData() {
 
+        // Create a retrofit to communicate with the SUMS API
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        // Grab information to pass in as headers to the API call
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         String username = prefs.getString("username", "");
@@ -304,6 +333,9 @@ public class FeedbackFragment extends Fragment {
             }
 
             @Override
+            /**
+             * Show a toast if there is a problem connecting with the API
+             */
             public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                 if (getActivity() != null) {
                     Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
@@ -311,9 +343,15 @@ public class FeedbackFragment extends Fragment {
             }
         });
     }
-    //
+
+    /**
+     * Method to send general feedback to our server
+     * @param feedback - General Feedback object being sent to the server
+     */
     public void connectAndSendGeneralFeedback(GeneralFeedback feedback) {
 
+        // Create retrofit to send data to the server
+        // Get header info and pass it
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -329,6 +367,8 @@ public class FeedbackFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
+
+                        // Show a dialog to tell the user the feedback was successfully sent
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(response.message());
                         builder.setTitle("Feedback Recorded");
@@ -345,6 +385,7 @@ public class FeedbackFragment extends Fragment {
                         dialog.show();
 
                     } else {
+                        // Show a toast to tell the user that the feedback was not submitted correctly
                         Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
@@ -354,6 +395,7 @@ public class FeedbackFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // Tell user that feedback was not sent
                 if (getActivity() != null) {
                     Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
                 }
@@ -361,8 +403,14 @@ public class FeedbackFragment extends Fragment {
         });
     }
 
+    /**
+     * method to send PI feedback to the server
+     * @param feedback - PI feedback to send to the server
+     */
     public void connectAndSendPIFeedback(PIFeedback feedback) {
 
+        // Create retrofit to send data to the server
+        // Get header info and pass it
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -378,6 +426,8 @@ public class FeedbackFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
+
+                        // Show a dialog to tell the user the feedback was successfully sent
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(response.message());
                         builder.setTitle("Feedback Recorded");
@@ -394,6 +444,7 @@ public class FeedbackFragment extends Fragment {
                         dialog.show();
 
                     } else {
+                        // Show a toast to tell the user that the feedback was not submitted correctly
                         Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
@@ -403,6 +454,7 @@ public class FeedbackFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // Tell user that feedback was not sent
                 if (getActivity() != null) {
                     Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
                 }
@@ -410,8 +462,14 @@ public class FeedbackFragment extends Fragment {
         });
     }
 
+    /**
+     * Method to send tool broken feedback to our server
+     * @param feedback - tool broken feedback to send to server
+     */
     public void connectAndSendToolFeedback(ToolBrokenFeedback feedback) {
 
+        // Create retrofit to send data to the server
+        // Get header info and pass it
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://is-apps.me.gatech.edu/api/v1-0/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -427,6 +485,8 @@ public class FeedbackFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
+
+                        // Show a dialog to tell the user the feedback was successfully sent
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(response.message());
                         builder.setTitle("Feedback Recorded");
@@ -442,6 +502,7 @@ public class FeedbackFragment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     } else {
+                        // Show a toast to tell the user that the feedback was not submitted correctly
                         Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
@@ -451,6 +512,7 @@ public class FeedbackFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                // Tell user that feedback was not submitted
                 if (getActivity() != null) {
                     Toast.makeText(getActivity(), "An Error Occurred Recording Feedback, Try Again Later", Toast.LENGTH_SHORT).show();
                 }

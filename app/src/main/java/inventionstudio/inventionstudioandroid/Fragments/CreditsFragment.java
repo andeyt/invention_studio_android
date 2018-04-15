@@ -28,13 +28,14 @@ public class CreditsFragment extends Fragment {
     }
 
     @Override
+    /**
+     * Method to create the fragment and instantiate its view
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         getActivity().setTitle("Credits");
         View rootView = inflater.inflate(R.layout.fragment_credits, container, false);
-
-
         return rootView;
     }
 

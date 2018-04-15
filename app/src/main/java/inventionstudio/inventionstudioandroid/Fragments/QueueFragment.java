@@ -59,7 +59,6 @@ public class QueueFragment extends Fragment {
     private Call<List<QueueMember>> queueMembersCall;
     private Call<List<QueueGroups>> queueGroupsCall;
 
-
     public QueueFragment() {
         // Required empty public constructor
     }
@@ -69,14 +68,16 @@ public class QueueFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
+
+        // Use bottom bar to set the title of the page
         BottomNavigationView bottom =  (getActivity().findViewById(R.id.bottomBar));
         getActivity().setTitle(bottom.getMenu().findItem(bottom.getSelectedItemId()).getTitle());
         expandableListView = rootView.findViewById(R.id.expandable_list);
         expandableListView.addHeaderView(new View(getContext()), null, true);
 
+        // Set functionality when a group is expanded - close all other groups
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int previousGroup = -1;
-
             @Override
             public void onGroupExpand(int groupPosition) {
                 if(groupPosition != previousGroup)
@@ -84,6 +85,7 @@ public class QueueFragment extends Fragment {
                 previousGroup = groupPosition;
             }
         });
+
         // Gives the queue data from the SUMS API
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
@@ -113,6 +115,7 @@ public class QueueFragment extends Fragment {
     }
 
     public void connectAndGetQueueMembers(){
+
         // Create the retrofit for building the API data
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -127,13 +130,12 @@ public class QueueFragment extends Fragment {
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         final String name = prefs.getString("name", "");
-
         queueMembersCall = sumsApiService.getQueueMembers(8, username, otp);
-
         queueMembersCall.enqueue(new Callback<List<QueueMember>>() {
             @Override
             public void onResponse(Call<List<QueueMember>> call, Response<List<QueueMember>> response) {
                 List<QueueMember> members = response.body();
+
                 // Run through list of Queue members
                 // Create Queue list as well as HashMap
                 queueData = new HashMap<>();
@@ -144,12 +146,13 @@ public class QueueFragment extends Fragment {
                     }
                 }
 
+                // Iterate over all members in all queues
                 for (QueueMember q : members) {
-                    //Log.d(TAG, q.getMemberName() + " " + q.getQueueGroupId() + " " + q.getIsGroup());
+                    // Iterate over each queue
                     for (QueueGroups g : groups) {
-                        //Log.d(TAG, g.getId().toString() + " " + q.getIsGroup());
-                        if (q.getQueueGroupId().equals(g.getId())) {//&& q.getIsGroup() == g.getIsGroup()) {
-                            //Log.d(TAG, "User was added to " + g.getName());
+
+                        // If the member is in this queue, add them to the queueData.
+                        if (q.getQueueGroupId().equals(g.getId())) {
                             // If name is blank, do username
                             if (q.getMemberName().trim().equals("")) {
                                 queueData.get(g.getName()).add(Integer.toString(queueData.get(g.getName()).size() + 1) + ". " + q.getMemberUserName());
@@ -161,6 +164,8 @@ public class QueueFragment extends Fragment {
                         }
                     }
                 }
+
+                // Set up a list of just the queue names to pass to the expandable list adapter
                 queues = new ArrayList<>();
                 for (QueueGroups g : groups) {
                     queues.add(g.getName());
@@ -170,9 +175,9 @@ public class QueueFragment extends Fragment {
                             queueList.add(g.getName());
                         }
                     }
-
                 }
 
+                // Sort the queue names
                 Collections.sort(queues);
                 for (String queue: queues) {
                     if (!queueList.contains(queue)) {
@@ -180,14 +185,14 @@ public class QueueFragment extends Fragment {
                     }
                 }
 
-
-                    // Add "No users in queue" if no members are in the queue
+                // Add "No users in queue" if no members are in the queue
                 for (String name : queueList) {
                     if (queueData.get(name).size() == 0) {
                         queueData.get(name).add("No users in queue");
                     }
                 }
 
+                // Add data the expandable list and show it
                 adapter = new ExpandableListAdapter(getActivity(), queueList, queueData);
                 expandableListView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
@@ -195,6 +200,9 @@ public class QueueFragment extends Fragment {
 
             }
             @Override
+            /**
+             * method to alert the user when there is an error in retrieving the queue data
+             */
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
@@ -207,7 +215,8 @@ public class QueueFragment extends Fragment {
 
 
     public void connectAndGetQueueGroups(){
-//      Create the retrofit for building the API data
+
+        // Create the retrofit for building the API data
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -220,15 +229,22 @@ public class QueueFragment extends Fragment {
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
         queueGroupsCall = sumsApiService.getQueueGroups(8, username, otp);
-
         queueGroupsCall.enqueue(new Callback<List<QueueGroups>>() {
                 @Override
+                /**
+                 * method to first set the names of all queue groups for use in the
+                 * connectAndGetQueueMembers method
+                 */
                 public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
                     groups = response.body();
+                    // populate queueData with group and member data
                     connectAndGetQueueMembers();
                 }
 
                 @Override
+                /**
+                 * method to alert the user when there is an error in retrieving queue data
+                 */
                 public void onFailure(Call<List<QueueGroups>> call, Throwable throwable) {
                     loadProgress.setVisibility(View.GONE);
                     refreshLayout.setRefreshing(false);
@@ -239,8 +255,8 @@ public class QueueFragment extends Fragment {
             });
     }
 
+    // Class created to handle the task of setting up the queues in the background
     class QueueTask extends AsyncTask<Void, Void, Void> {
-
         protected Void doInBackground(Void ... voids) {
             connectAndGetQueueGroups();
             return null;
