@@ -32,10 +32,14 @@ public class GroupAdapter extends ArrayAdapter<String> {
     }
 
     @Override
+    /**
+     * method to create a row for a group
+     */
     public View getView(int position, View convertView, ViewGroup container) {
         View row = convertView;
         TextHolder holder = null;
 
+        // Set the textview in the holder
         if (row == null) {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(resource, container, false);
@@ -48,6 +52,7 @@ public class GroupAdapter extends ArrayAdapter<String> {
             holder = (TextHolder)row.getTag();
         }
 
+        // Put the name of the group into the given textview
         String group = groups.get(position);
         if (group != null) {
             holder.name.setText(group);
@@ -56,6 +61,7 @@ public class GroupAdapter extends ArrayAdapter<String> {
         return row;
     }
 
+    // Class to hold the elements in the row of a group
     static class TextHolder {
         TextView name;
     }

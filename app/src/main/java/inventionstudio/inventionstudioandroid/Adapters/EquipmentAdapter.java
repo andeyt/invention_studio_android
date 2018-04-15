@@ -36,6 +36,7 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
         View row = convertView;
         EquipmentHolder holder = null;
 
+        // Set row with the icon, name, and status of the equipment
         if(row == null) {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
@@ -51,6 +52,7 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
             holder = (EquipmentHolder) row.getTag();
         }
 
+        // Set values of each element in the row
         Equipment m = data.get(position);
         if (m != null) {
             holder.name.setText(m.getToolName());
@@ -61,6 +63,7 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
         return row;
     }
 
+    // Class to hold the different elements of the row
     static class EquipmentHolder {
         ImageView icon;
         TextView name;

@@ -24,11 +24,13 @@ import static android.content.Context.MODE_PRIVATE;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader; // header titles
+    // header titles
+    private List<String> _listDataHeader;
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
     public static final String USER_PREFERENCES = "UserPrefs";
 
+    // Pass in headers as a list and a map of the header to the list of data
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<String>> listChildData) {
         this._context = context;
@@ -37,17 +39,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
+    /**
+     * method to get the child at a position in its list
+     */
     public Object getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosititon);
     }
 
     @Override
+    /**
+     * method which returns the position of a child in a list
+     */
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
     @Override
+    /**
+     * method to set the name of the user to bold font if in the list
+     */
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
@@ -59,6 +70,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_item, null);
         }
 
+        // Get the name of the particular child, if it is the name of the current
+        // user of the application, make it bold for easier viewing
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.lblListItem);
         SharedPreferences prefs = _context.getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
@@ -74,6 +87,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
+    /**
+     * method to return the size of a particular queue
+     */
     public int getChildrenCount(int groupPosition) {
         List<String> s = this._listDataChild.get(this._listDataHeader.get(groupPosition));
         if (s == null) {
@@ -84,21 +100,34 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
+    /**
+     * method to return a header at a particular position
+     */
     public Object getGroup(int groupPosition) {
         return this._listDataHeader.get(groupPosition);
     }
 
     @Override
+    /**
+     * method to return how many headers or groups there are
+     */
     public int getGroupCount() {
         return this._listDataHeader.size();
     }
 
     @Override
+    /**
+     * method to return the group position
+     */
     public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
     @Override
+    /**
+     * method to get the title of a particular group and set it as
+     * the title in a textview
+     */
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
