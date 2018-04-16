@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -59,6 +58,7 @@ public class FeedbackFragment extends Fragment {
     private Call call;
     private Spinner machineSpinner;
     private Spinner machineTypeSpinner;
+    private TextView seekText;
 
     public FeedbackFragment() {
         // Required empty public constructor
@@ -93,10 +93,13 @@ public class FeedbackFragment extends Fragment {
         });
 
         // New SeekBar creation
+        seekText = (TextView) rootView.findViewById(R.id.seek_text);
         LinearLayout seekBarLayout = (LinearLayout) rootView.findViewById(R.id.seekbar_layout);
-        final CustomSeekBar ratingBar = new CustomSeekBar(this.getContext(), 11, R.color.IS_Text_Light);
+        final CustomSeekBar ratingBar = new CustomSeekBar(this.getContext(), 11, R.color.IS_Text_Light, seekText);
         ratingBar.addSeekBar(seekBarLayout);
         ratingBar.setProgress(11);
+
+
 
         // EditText Instantiation
         final EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);

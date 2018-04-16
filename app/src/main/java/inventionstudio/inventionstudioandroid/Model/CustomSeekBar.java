@@ -3,6 +3,7 @@ package inventionstudio.inventionstudioandroid.Model;
 import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -18,11 +19,13 @@ public class CustomSeekBar {
     Context mContext;
     LinearLayout mSeekLin;
     SeekBar mSeekBar;
+    TextView textSeekbar;
 
-    public CustomSeekBar(Context context, int maxCount, int textColor) {
+    public CustomSeekBar(Context context, int maxCount, int textColor, TextView textSeekbar) {
         this.mContext = context;
         this.maxCount = maxCount;
         this.textColor = textColor;
+        this.textSeekbar = textSeekbar;
     }
 
     public void addSeekBar(LinearLayout parent) {
@@ -50,6 +53,34 @@ public class CustomSeekBar {
         } else {
             Log.e("CustomSeekBar", " Parent is not a LinearLayout");
         }
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                int val = (progress * seekBar.getWidth()) / seekBar.getMax();
+                if (progress == 0) {
+                    val += 2 * seekBar.getThumbOffset();
+                    textSeekbar.setText("N/A");
+                } else {
+                    if (progress == maxCount - 1) {
+                        val -= 2 * seekBar.getThumbOffset();
+                    }
+                    textSeekbar.setText(String.valueOf(progress));
+                }
+
+                textSeekbar.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                textSeekbar.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                textSeekbar.setVisibility(View.GONE);
+            }
+        });
     }
 
     /**
@@ -67,7 +98,7 @@ public class CustomSeekBar {
                 textView.setText(String.valueOf(count));
             }
             textView.setTextColor(mContext.getResources().getColor(R.color.IS_Text_Light));
-            textView.setGravity(Gravity.LEFT);
+            textView.setGravity(Gravity.START);
             mSeekLin.addView(textView);
             textView.setLayoutParams((count == maxCount - 1) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
         }
