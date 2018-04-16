@@ -110,9 +110,6 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
                         statusText.setText(m.statusText());
 
                         description.setText(Html.fromHtml(m.getToolDescription()));
-
-                        loadProgress.setVisibility(View.GONE);
-                        refreshLayout.setRefreshing(false);
                         break;
                     }
                 }

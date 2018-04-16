@@ -1,39 +1,39 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentListFragment">
 
 
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-
-
-        <ListView
-            android:id="@+id/equipment_list"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/IS_Background_Light"
-            android:divider="@color/IS_AccentTertiary_Light"
-            android:dividerHeight=".5dp"
-            android:footerDividersEnabled="true"
-            />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
+            <ListView
+                android:id="@+id/equipment_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/IS_Background_Light"
+                android:divider="@color/IS_AccentTertiary_Light"
+                android:dividerHeight=".5dp"
+                android:footerDividersEnabled="true" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity = "center"
-        />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
 
 </FrameLayout>

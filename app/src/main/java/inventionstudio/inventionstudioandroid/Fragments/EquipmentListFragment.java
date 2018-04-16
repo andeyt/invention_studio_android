@@ -67,7 +67,7 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
         image = header.findViewById(R.id.imageView);
-        loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        loadProgress = (ProgressBar) header.findViewById(R.id.progressBar);
         listView = (ListView) rootView.findViewById(R.id.equipment_list);
 
         description = (TextView) header.findViewById(R.id.group_description);

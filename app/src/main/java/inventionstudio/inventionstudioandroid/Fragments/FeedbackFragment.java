@@ -375,10 +375,10 @@ public class FeedbackFragment extends Fragment {
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.fragment_container, new FeedbackFragment());
                                 transaction.commit();
+                                dialog.dismiss();
                             }
                         });
                         AlertDialog dialog = builder.create();
@@ -433,10 +433,10 @@ public class FeedbackFragment extends Fragment {
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.fragment_container, new FeedbackFragment());
                                 transaction.commit();
+                                dialog.dismiss();
                             }
                         });
                         AlertDialog dialog = builder.create();
@@ -490,10 +490,10 @@ public class FeedbackFragment extends Fragment {
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.fragment_container, new FeedbackFragment());
                                 transaction.commit();
+                                dialog.dismiss();
                             }
                         });
                         AlertDialog dialog = builder.create();
