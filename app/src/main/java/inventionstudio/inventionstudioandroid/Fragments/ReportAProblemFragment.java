@@ -35,7 +35,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class ReportAProblemFragment extends EquipmentGroupFragment {
     private static Retrofit retrofit = null;
     private Call call;
-
+    private EditText textInput;
+    private Spinner spinner;
     public ReportAProblemFragment() {
         // Required empty public constructor
     }
@@ -63,10 +64,10 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
             }
         });
 
-        final EditText textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
+        textInput = (EditText) rootView.findViewById(R.id.plain_text_input);
         //textInput.setBackgroundResource(R.drawable.edittext_border);
 
-        final Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner1);
+        spinner = (Spinner) rootView.findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.machine_feedback_array,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,7 +143,8 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
                     builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            textInput.setText("");
+                            spinner.setSelection(0);
                             dialog.dismiss();
                         }
                     });
