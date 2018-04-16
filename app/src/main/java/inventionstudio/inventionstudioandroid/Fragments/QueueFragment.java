@@ -15,7 +15,6 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.roughike.bottombar.BottomBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;

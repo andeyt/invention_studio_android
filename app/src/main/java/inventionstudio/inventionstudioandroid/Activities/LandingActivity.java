@@ -2,6 +2,7 @@ package inventionstudio.inventionstudioandroid.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RestrictTo;
@@ -12,9 +13,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -50,6 +54,7 @@ public class LandingActivity extends AppCompatActivity {
     private Call call;
     private ProgressBar loadProgress;
     private TextView studioDescriptionText;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class LandingActivity extends AppCompatActivity {
 
         studioDescriptionText = findViewById(R.id.studio_description);
         loadProgress = (ProgressBar) findViewById(R.id.progressBar);
+        image = (ImageView) findViewById(R.id.imageView);
         connectAndGetStudioDescription();
     }
 
@@ -125,8 +131,22 @@ public class LandingActivity extends AppCompatActivity {
                 // Sets correct visibility of the description and sets the body
                 // to the data collected from the API
                 StudioDescription description = response.body();
-                loadProgress.setVisibility(View.GONE);
                 studioDescriptionText.setText(Html.fromHtml(description.getEquipmentGroupDescriptionHtml()));
+                Picasso.get()
+                        .load(
+                                "https://is-apps.me.gatech.edu/resources/images/headers/invention_studio.jpg")
+                        .into(image, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loadProgress.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        });
+
             }
             @Override
             /**

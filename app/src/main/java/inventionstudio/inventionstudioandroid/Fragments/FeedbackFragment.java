@@ -96,6 +96,7 @@ public class FeedbackFragment extends Fragment {
         LinearLayout seekBarLayout = (LinearLayout) rootView.findViewById(R.id.seekbar_layout);
         final CustomSeekBar ratingBar = new CustomSeekBar(this.getContext(), 11, R.color.IS_Text_Light);
         ratingBar.addSeekBar(seekBarLayout);
+        ratingBar.setProgress(11);
 
         // EditText Instantiation
         final EditText commentTextInput = (EditText) rootView.findViewById(R.id.plain_text_input);
@@ -204,7 +205,7 @@ public class FeedbackFragment extends Fragment {
                 if (text.equals("PI Feedback")) {
                     ratingGroup.setVisibility(View.VISIBLE);
                     issueGroup.setVisibility(View.GONE);
-                } else if (text.equals("Machine Broken")) {
+                } else if (text.equals("Equipment Broken")) {
                     ratingGroup.setVisibility(View.GONE);
                     issueGroup.setVisibility(View.VISIBLE);
                 } else {
@@ -370,8 +371,7 @@ public class FeedbackFragment extends Fragment {
 
                         // Show a dialog to tell the user the feedback was successfully sent
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(response.message());
-                        builder.setTitle("Feedback Recorded");
+                        builder.setTitle(response.body().string());
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -429,8 +429,7 @@ public class FeedbackFragment extends Fragment {
 
                         // Show a dialog to tell the user the feedback was successfully sent
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(response.message());
-                        builder.setTitle("Feedback Recorded");
+                        builder.setTitle(response.body().string());
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -485,11 +484,9 @@ public class FeedbackFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-
                         // Show a dialog to tell the user the feedback was successfully sent
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(response.message());
-                        builder.setTitle("Feedback Recorded");
+                        builder.setTitle(response.body().string());
                         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

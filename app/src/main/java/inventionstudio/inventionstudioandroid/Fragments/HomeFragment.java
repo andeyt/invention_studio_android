@@ -8,8 +8,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Model.StudioDescription;
@@ -29,6 +32,7 @@ public class HomeFragment extends Fragment {
     private Call call;
     private ProgressBar loadProgress;
     private TextView studioDescriptionText;
+    private ImageView image;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -43,6 +47,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         studioDescriptionText = rootView.findViewById(R.id.studio_description);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        image = (ImageView) rootView.findViewById(R.id.imageView);
         connectAndGetStudioDescription();
         return rootView;
     }
@@ -68,8 +73,21 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<StudioDescription> call, Response<StudioDescription> response) {
                 StudioDescription description = response.body();
-                loadProgress.setVisibility(View.GONE);
                 studioDescriptionText.setText(Html.fromHtml(description.getEquipmentGroupDescriptionHtml()));
+                Picasso.get()
+                        .load(
+                                "https://is-apps.me.gatech.edu/resources/images/headers/invention_studio.jpg")
+                        .into(image, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loadProgress.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        });
 
             }
             @Override

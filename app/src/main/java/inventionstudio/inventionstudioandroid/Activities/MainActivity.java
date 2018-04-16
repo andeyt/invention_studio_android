@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -16,9 +17,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
 
@@ -30,7 +33,6 @@ import inventionstudio.inventionstudioandroid.Fragments.MoreFragment;
 import inventionstudio.inventionstudioandroid.Fragments.QueueFragment;
 import inventionstudio.inventionstudioandroid.Model.AppStatus;
 import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
-import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
 import inventionstudio.inventionstudioandroid.R;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -42,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottom;
+
     public static final String USER_PREFERENCES = "UserPrefs";
     private Retrofit retrofit;
     private Call call;
@@ -51,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Set theme of the app, grab username to be used later
-        setTheme(ThemeChanger.currentTheme);
         setContentView(R.layout.activity_main);
         SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
@@ -220,6 +222,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * method to get app update status messages from server
+     */
     public void connectAndGetAppStatus() {
 
         // Retrofit created to connect to the server

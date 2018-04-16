@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="250sp"
         android:scaleType="centerCrop"
-        android:src="@drawable/gt2" />
+        />
 
     <TextView
         android:id="@+id/group_description"

@@ -6,14 +6,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 /**
 */
@@ -44,6 +49,7 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
     private Call<List<Equipment>> call;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
+    private ImageView image;
 
     public EquipmentListFragment() {
         // Required empty public constructor
@@ -60,6 +66,7 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_equipment_list, container, false);
         View header = (View) getActivity().getLayoutInflater().inflate(R.layout.equipment_list_header, null);
+        image = header.findViewById(R.id.imageView);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
         listView = (ListView) rootView.findViewById(R.id.equipment_list);
 
@@ -69,20 +76,22 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object o = listView.getItemAtPosition(position);
+                if (position != 0) {
+                    Object o = listView.getItemAtPosition(position);
 
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fragment2 = new MainEquipmentFragment();
-                Bundle bundle = new Bundle();
-                Equipment obj = ((Equipment) o);
-                bundle.putSerializable("Equipment", obj);
-                fragment2.setArguments(bundle);
-                // Replace the contents of the container with the new fragment
-                ft.replace(R.id.fragment_container, fragment2);
-                ft.addToBackStack(null);
-                // or ft.add(R.id.your_placeholder, new FooFragment());
-                // Complete the changes added above
-                ft.commit();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    Fragment fragment2 = new MainEquipmentFragment();
+                    Bundle bundle = new Bundle();
+                    Equipment obj = ((Equipment) o);
+                    bundle.putSerializable("Equipment", obj);
+                    fragment2.setArguments(bundle);
+                    // Replace the contents of the container with the new fragment
+                    ft.replace(R.id.fragment_container, fragment2);
+                    ft.addToBackStack(null);
+                    // or ft.add(R.id.your_placeholder, new FooFragment());
+                    // Complete the changes added above
+                    ft.commit();
+                }
             }
 
         });
@@ -145,8 +154,30 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
                 } else {
                     description.setText(Html.fromHtml(machines.get(0).getLocationDescription()));
                 }
-                loadProgress.setVisibility(View.GONE);
-                refreshLayout.setRefreshing(false);
+
+                String formattedGroup = machineGroup.replaceAll("[^A-Za-z0-9\\s]", " ")
+                        .replaceAll(" +", " ")
+                        .trim()
+                        .replace(" " , "_")
+                        .toLowerCase();
+                Log.d("Formatted", formattedGroup);
+                Picasso.get()
+                        .load("https://is-apps.me.gatech.edu/resources/images/tools/"
+                                + formattedGroup
+                                + "/header.jpg")
+                        .into(image, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        loadProgress.setVisibility(View.GONE);
+                        refreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+
             }
 
             @Override

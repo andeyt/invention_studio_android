@@ -138,15 +138,12 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(response.body().string());
-                    builder.setTitle("Feedback Recorded");
+                    builder.setTitle(response.body().string());
                     builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
                             dialog.dismiss();
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.equipment_fragment_container, new ReportAProblemFragment());
-                            transaction.commit();
                         }
                     });
                     AlertDialog dialog = builder.create();

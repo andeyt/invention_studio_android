@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
     private TextView description;
     private Retrofit retrofit;
     private String machineName;
+    private String machineGroup;
+    private ImageView image;
     private Call<List<Equipment>> call;
     private ProgressBar loadProgress;
     private SwipeRefreshLayout refreshLayout;
@@ -55,7 +60,9 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
 
         Bundle bundle = getArguments();
         machineName = ((Equipment) bundle.getSerializable("Equipment")).getToolName();
+        machineGroup = ((Equipment) bundle.getSerializable("Equipment")).getLocationName();
         statusIcon = rootView.findViewById(R.id.status_icon);
+        image = rootView.findViewById(R.id.imageView);
         statusText = rootView.findViewById(R.id.status_text);
         description = rootView.findViewById(R.id.machine_description);
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
@@ -109,6 +116,39 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
                         break;
                     }
                 }
+                String formattedGroup = machineGroup.replaceAll("[^A-Za-z0-9\\s]", " ")
+                        .replaceAll(" +", " ")
+                        .trim()
+                        .replace(" " , "_")
+                        .toLowerCase();
+
+                String formattedEquipment = machineName.replaceAll("[^A-Za-z0-9\\s]", " ")
+                        .replaceAll(" +", " ")
+                        .trim()
+                        .replace(" " , "_")
+                        .toLowerCase();
+
+                Log.d("Formatted", formattedGroup);
+                Log.d("Formatted", formattedEquipment);
+                Picasso.get()
+                        .load("https://is-apps.me.gatech.edu/resources/images/tools/"
+                                + formattedGroup
+                                + "/"
+                                + formattedEquipment
+                                + ".jpg")
+                        .into(image, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loadProgress.setVisibility(View.GONE);
+                                refreshLayout.setRefreshing(false);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        });
+
             }
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable throwable) {

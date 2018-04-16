@@ -25,7 +25,6 @@ import javax.net.ssl.X509TrustManager;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.ThemeChanger;
 import inventionstudio.inventionstudioandroid.Model.UserGroups;
 import inventionstudio.inventionstudioandroid.R;
 import okhttp3.OkHttpClient;
@@ -47,7 +46,6 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(ThemeChanger.currentTheme);
         setContentView(R.layout.activity_loading);
         connectAndCheckTimestamp();
     }
