@@ -167,8 +167,12 @@ public class FeedbackFragment extends Fragment {
                     // Create the correct object based on the type of data being sent
                     if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
                         // If N/A is selected in ratingBar, will return a 0
-                        PIFeedback feedback = new PIFeedback(8, username, piTextInput.getText().toString(),
-                                ratingBar.getProgress(), commentTextInput.getText().toString());
+                        PIFeedback feedback = new PIFeedback(
+                                8,
+                                username,
+                                piTextInput.getText().toString().trim(),
+                                ratingBar.getProgress(),
+                                commentTextInput.getText().toString().trim());
                         connectAndSendPIFeedback(feedback);
 
                     } else if (feedbackSpinner.getSelectedItem().toString().equals("Equipment Broken")) {
@@ -178,19 +182,17 @@ public class FeedbackFragment extends Fragment {
                                 issueSpinner.getSelectedItem().toString(),
                                 machineTypeSpinner.getSelectedItem().toString(),
                                 machineSpinner.getSelectedItem().toString(),
-                                commentTextInput.getText().toString()
+                                commentTextInput.getText().toString().trim()
                         );
                         connectAndSendToolFeedback(feedback);
 
                     } else if (feedbackSpinner.getSelectedItem().toString().equals("General Feedback")) {
-                        GeneralFeedback feedback = new GeneralFeedback(8, username, commentTextInput.getText().toString());
+                        GeneralFeedback feedback = new GeneralFeedback(
+                                8,
+                                username,
+                                commentTextInput.getText().toString().trim());
                         connectAndSendGeneralFeedback(feedback);
                     }
-
-                    // Reset input elements when feedback is submitted
-                    commentTextInput.setText("");
-                    piTextInput.setText("");
-                    ratingBar.setProgress(0);
                 }
             }
         });
