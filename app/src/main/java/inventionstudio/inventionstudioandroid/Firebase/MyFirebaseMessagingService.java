@@ -94,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentIntent(pendingIntent)
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(messageBody))
-                        .setPriority(Notification.PRIORITY_HIGH);
+                        .setPriority(NotificationCompat.PRIORITY_HIGH);
 
 
         notificationBuilder.setDefaults(Notification.DEFAULT_ALL);
