@@ -113,6 +113,9 @@ public class QueueFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to get queue members from api
+     */
     public void connectAndGetQueueMembers(){
 
         // Create the retrofit for building the API data
@@ -198,10 +201,11 @@ public class QueueFragment extends Fragment {
                 refreshLayout.setRefreshing(false);
 
             }
-            @Override
+
             /**
              * method to alert the user when there is an error in retrieving the queue data
              */
+            @Override
             public void onFailure(Call<List<QueueMember>> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
@@ -212,7 +216,9 @@ public class QueueFragment extends Fragment {
         });
     }
 
-
+    /**
+     * Method to get queue groups from API
+     */
     public void connectAndGetQueueGroups(){
 
         // Create the retrofit for building the API data
@@ -229,11 +235,8 @@ public class QueueFragment extends Fragment {
         String otp = prefs.getString("otp", "");
         queueGroupsCall = sumsApiService.getQueueGroups(8, username, otp);
         queueGroupsCall.enqueue(new Callback<List<QueueGroups>>() {
+
                 @Override
-                /**
-                 * method to first set the names of all queue groups for use in the
-                 * connectAndGetQueueMembers method
-                 */
                 public void onResponse(Call<List<QueueGroups>> call, Response<List<QueueGroups>> response) {
                     groups = response.body();
                     // populate queueData with group and member data

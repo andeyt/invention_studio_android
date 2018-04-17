@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -17,11 +16,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
 
@@ -63,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(username);
         connectAndSendLoginRecord();
         connectAndGetAppStatus();
+
+        String notification = getIntent().getStringExtra("notification");
 
         // Inititialize bottom bar view, set each icon to switch to the
         // designated fragments
@@ -122,10 +121,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        // Set original Fragment as the Home Fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new HomeFragment());
-        transaction.commit();
+        // Set original Fragment as the Home Fragment or Queue
+        if (notification != null) {
+            bottom.setSelectedItemId(R.id.queue);
+        } else {
+            bottom.setSelectedItemId(R.id.home);
+        }
+
+
 
     }
 

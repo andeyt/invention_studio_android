@@ -155,11 +155,13 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
                     description.setText(Html.fromHtml(machines.get(0).getLocationDescription()));
                 }
 
-                String formattedGroup = machineGroup.replaceAll("[^A-Za-z0-9\\s]", " ")
+                String formattedGroup = machineGroup
+                        .replaceAll("[^A-Za-z0-9\\s]", " ")
                         .replaceAll(" +", " ")
                         .trim()
                         .replace(" " , "_")
                         .toLowerCase();
+
                 Log.d("Formatted", formattedGroup);
                 Picasso.get()
                         .load("https://is-apps.me.gatech.edu/resources/images/tools/"

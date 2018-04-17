@@ -2,13 +2,9 @@ package inventionstudio.inventionstudioandroid.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.RestrictTo;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,31 +12,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.List;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
-
-import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.API.SumsApiService;
-import inventionstudio.inventionstudioandroid.Model.LoginFormObject;
 import inventionstudio.inventionstudioandroid.Model.StudioDescription;
-import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
-import okhttp3.Credentials;
-import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,8 +82,9 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRestart () {
-        super.onRestart();
+    public void onResume () {
+        super.onResume();
+        loadProgress.setVisibility(View.VISIBLE);
         connectAndGetStudioDescription();
     }
 

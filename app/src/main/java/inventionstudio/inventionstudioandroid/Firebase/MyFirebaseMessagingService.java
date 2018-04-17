@@ -17,8 +17,9 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import inventionstudio.inventionstudioandroid.Activities.MainActivity;
+import inventionstudio.inventionstudioandroid.Activities.LoadingActivity;
 import inventionstudio.inventionstudioandroid.R;
+import inventionstudio.inventionstudioandroid.Activities.MainActivity;
 
 /**
  * Created by Rishab K on 3/26/2018.
@@ -71,10 +72,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String title, String messageBody) {
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(this, LoadingActivity.class);
+        intent.putExtra("notification", "queue");
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) SystemClock.currentThreadTimeMillis(), intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
 
         String channelId = "notification_channel";
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

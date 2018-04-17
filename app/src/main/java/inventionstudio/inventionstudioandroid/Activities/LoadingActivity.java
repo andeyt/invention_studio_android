@@ -101,6 +101,8 @@ public class LoadingActivity extends AppCompatActivity {
                 // else send to the agreement page to sign user agreement
                 if (studioMember) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    String notification = getIntent().getStringExtra("notification");
+                    intent.putExtra("notification", notification);
                     startActivity(intent);
                     finish();
                 } else {
