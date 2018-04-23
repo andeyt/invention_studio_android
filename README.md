@@ -8,13 +8,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-*
+* JDK 8
+* Android Studio 3.1.2
 
 ### Installing
-
-A step by step series of examples that tell you have to get a development env running
 
 1. Clone **invention-studio-android** repository
 1. Open Android Studio and launch the Android SDK manager from it (Tools | Android | SDK Manager)
@@ -25,11 +22,15 @@ A step by step series of examples that tell you have to get a development env ru
 1. Return to Android Studio and select *Open an existing Android Studio project*
 1. Select the **invention-studio-android** directory.
 
-## Version
+### Deployment
 
+1. Create an emulator in Android Studio/connect your local device
+1. Run the application on the device of your choice
+
+## Release Notes
 Version 1.0
 
-## Features
+NEW FEATURES
 * Login with Georgia Tech Credentials
 * Live Invention Studio Information
 * Live Equipment Information/Status
@@ -37,6 +38,14 @@ Version 1.0
 * Push Notifications for Queue Status
 * Submit Feedback About Studio
 * Report Broken Tools
+
+BUG FIXES
+* No bug fixes
+
+KNOWN BUGS
+
+* No known bugs
+
 
 ## Authors
 
