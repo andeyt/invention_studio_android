@@ -33,7 +33,7 @@ import inventionstudio.inventionstudioandroid.API.SumsApiService;
 import inventionstudio.inventionstudioandroid.Model.CustomSeekBar;
 import inventionstudio.inventionstudioandroid.Model.Equipment;
 import inventionstudio.inventionstudioandroid.Model.GeneralFeedback;
-import inventionstudio.inventionstudioandroid.Model.PIFeedback;
+import inventionstudio.inventionstudioandroid.Model.StaffFeedback;
 import inventionstudio.inventionstudioandroid.Model.ToolBrokenFeedback;
 import inventionstudio.inventionstudioandroid.R;
 import okhttp3.Credentials;
@@ -115,7 +115,7 @@ public class FeedbackFragment extends Fragment {
         // API machine data
         machineSpinner = (Spinner) rootView.findViewById(R.id.machine_spinner);
         machineTypeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
-        connectAndGetAPIData();
+        connectAndGetFeedbackEquipment();
 
         // Equipment broken data
         final Spinner issueSpinner = (Spinner) rootView.findViewById(R.id.issue_spinner);
@@ -167,7 +167,7 @@ public class FeedbackFragment extends Fragment {
                     // Create the correct object based on the type of data being sent
                     if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
                         // If N/A is selected in ratingBar, will return a 0
-                        PIFeedback feedback = new PIFeedback(
+                        StaffFeedback feedback = new StaffFeedback(
                                 8,
                                 username,
                                 piTextInput.getText().toString().trim(),
@@ -197,11 +197,12 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
-        /**
-         * Method creation to change the view based on which type of feedback is selected
-         * so that the correct elements are shown to the user
-         */
+
         feedbackSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Method creation to change the view based on which type of feedback is selected
+             * so that the correct elements are shown to the user
+             */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String text = feedbackSpinner.getSelectedItem().toString();
@@ -225,10 +226,11 @@ public class FeedbackFragment extends Fragment {
             }
         });
 
-        /**
-         * Method to change the machine spinner based on what machine type is selected
-         */
+
         machineTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Method to change the machine spinner based on what machine type is selected
+             */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -244,7 +246,7 @@ public class FeedbackFragment extends Fragment {
                 SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
                 String username = prefs.getString("username", "");
                 String otp = prefs.getString("otp", "");
-                call = sumsApiService.getMachineList(8, username, otp);
+                call = sumsApiService.getEquipmentList(8, username, otp);
                 call.enqueue(new Callback<List<Equipment>>() {
                     @Override
                     public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
@@ -265,10 +267,10 @@ public class FeedbackFragment extends Fragment {
                         machineSpinner.setAdapter(machineNameAdapter);
                     }
 
-                    @Override
                     /**
                      * give a toast if there is failure in making the call to the API
                      */
+                    @Override
                     public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
                         Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
                     }
@@ -296,7 +298,7 @@ public class FeedbackFragment extends Fragment {
      * method which contacts the SUMS API and populates all necessary spinners
      * with the returned data
      */
-    public void connectAndGetAPIData() {
+    public void connectAndGetFeedbackEquipment() {
 
         // Create a retrofit to communicate with the SUMS API
         retrofit = new Retrofit.Builder()
@@ -309,7 +311,7 @@ public class FeedbackFragment extends Fragment {
         SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        call = sumsApiService.getMachineList(8, username, otp);
+        call = sumsApiService.getEquipmentList(8, username, otp);
         call.enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
@@ -412,7 +414,7 @@ public class FeedbackFragment extends Fragment {
      * method to send PI feedback to the server
      * @param feedback - PI feedback to send to the server
      */
-    public void connectAndSendPIFeedback(PIFeedback feedback) {
+    public void connectAndSendPIFeedback(StaffFeedback feedback) {
 
         // Create retrofit to send data to the server
         // Get header info and pass it
@@ -425,7 +427,7 @@ public class FeedbackFragment extends Fragment {
         ServerApiService serverApiService = retrofit.create(ServerApiService.class);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        call = serverApiService.sendPIFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
+        call = serverApiService.sendStaffFeedback(feedback, "771e6dd7-2d2e-4712-8944-7055ce69c9fb", Credentials.basic(username, otp));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -522,7 +524,10 @@ public class FeedbackFragment extends Fragment {
         });
     }
 
-    // Method to show dialogs when necessary
+    /**
+     * Show toast
+     * @param dialogText text of the toast
+     */
     public void showToast(String dialogText) {
         Toast.makeText(getActivity(), dialogText, Toast.LENGTH_SHORT).show();
     }

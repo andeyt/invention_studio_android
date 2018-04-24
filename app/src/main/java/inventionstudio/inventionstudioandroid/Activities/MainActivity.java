@@ -132,10 +132,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("RestrictedApi")
     /**
-     *
+     *Disable the shifting of the bottom bar icons for better view
      */
+    @SuppressLint("RestrictedApi")
     private void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -156,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
     /**
      * Super the onBackPressed if there is a stack, if not go home
      */
+    @Override
     public void onBackPressed() {
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount != 0){
@@ -215,10 +215,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            @Override
             /**
              * If connection issues occur, notify the user
              */
+            @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 Toast.makeText(MainActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
@@ -269,10 +269,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            @Override
             /**
              * If a connection error occurs, notify the user
              */
+            @Override
             public void onFailure(Call<AppStatus> call, Throwable throwable) {
                 Toast.makeText(MainActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }

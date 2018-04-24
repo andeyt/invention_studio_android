@@ -71,11 +71,11 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                connectAndGetApiData();
+                connectAndGetEquipmentInfo();
             }
         });
 
-        connectAndGetApiData();
+        connectAndGetEquipmentInfo();
         return rootView;
     }
 
@@ -87,7 +87,10 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
         }
     }
 
-    public void connectAndGetApiData(){
+    /**
+     * Get equipment info from sums and picture from IS server
+     */
+    public void connectAndGetEquipmentInfo(){
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -98,7 +101,7 @@ public class EquipmentInfoFragment extends EquipmentGroupFragment {
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        call = sumsApiService.getMachineList(8, username, otp);
+        call = sumsApiService.getEquipmentList(8, username, otp);
         call.enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {

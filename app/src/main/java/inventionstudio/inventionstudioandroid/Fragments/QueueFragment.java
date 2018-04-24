@@ -114,7 +114,7 @@ public class QueueFragment extends Fragment {
     }
 
     /**
-     * Method to get queue members from api
+     * Method to get queue members from SUMS
      */
     public void connectAndGetQueueMembers(){
 
@@ -243,10 +243,10 @@ public class QueueFragment extends Fragment {
                     connectAndGetQueueMembers();
                 }
 
-                @Override
                 /**
                  * method to alert the user when there is an error in retrieving queue data
                  */
+                @Override
                 public void onFailure(Call<List<QueueGroups>> call, Throwable throwable) {
                     loadProgress.setVisibility(View.GONE);
                     refreshLayout.setRefreshing(false);
@@ -257,7 +257,9 @@ public class QueueFragment extends Fragment {
             });
     }
 
-    // Class created to handle the task of setting up the queues in the background
+    /**
+     * Class to handle async task
+     */
     class QueueTask extends AsyncTask<Void, Void, Void> {
         protected Void doInBackground(Void ... voids) {
             connectAndGetQueueGroups();

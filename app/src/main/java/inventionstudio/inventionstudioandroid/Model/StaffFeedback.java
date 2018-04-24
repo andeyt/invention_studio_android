@@ -7,7 +7,7 @@ package inventionstudio.inventionstudioandroid.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PIFeedback {
+public class StaffFeedback {
 
     @SerializedName("equipment_group_id")
     @Expose
@@ -29,7 +29,7 @@ public class PIFeedback {
      * No args constructor for use in serialization
      *
      */
-    public PIFeedback() {
+    public StaffFeedback() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class PIFeedback {
      * @param rating
      * @param comments
      */
-    public PIFeedback(Integer equipmentGroupId, String username, String staffName, Integer rating, String comments) {
+    public StaffFeedback(Integer equipmentGroupId, String username, String staffName, Integer rating, String comments) {
         super();
         this.equipmentGroupId = equipmentGroupId;
         this.username = username;

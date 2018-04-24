@@ -16,7 +16,7 @@ public class Equipment implements Serializable, Comparable<Equipment>{
 
     transient private int statusComparisonVal;
 
-    public int getStatusComparisonVal() {
+    private int getStatusComparisonVal() {
         return statusComparisonVal;
     }
 

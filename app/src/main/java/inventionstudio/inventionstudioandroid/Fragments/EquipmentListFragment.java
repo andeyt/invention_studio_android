@@ -34,7 +34,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 /**
 */
@@ -102,11 +101,11 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
             @Override
             public void onRefresh() {
 
-                connectAndGetApiData();
+                connectAndGetEquipmentList();
             }
         });
 
-        connectAndGetApiData();
+        connectAndGetEquipmentList();
         return rootView;
     }
 
@@ -119,7 +118,10 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
     }
 
 
-    public void connectAndGetApiData(){
+    /**
+     * Get equipment list from SUMS, and picture from server
+     */
+    public void connectAndGetEquipmentList(){
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -130,7 +132,7 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        call = sumsApiService.getMachineList(8, username, otp);
+        call = sumsApiService.getEquipmentList(8, username, otp);
         call.enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
@@ -163,6 +165,7 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
                         .toLowerCase();
 
                 Log.d("Formatted", formattedGroup);
+                // Getting picture of equipment group
                 Picasso.get()
                         .load("https://is-apps.me.gatech.edu/resources/images/tools/"
                                 + formattedGroup

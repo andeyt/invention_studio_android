@@ -62,7 +62,7 @@ public class LoadingActivity extends AppCompatActivity {
      * method which connects to the SUMS API and collects user info
      * and status that will be used later in the application
      */
-    public void connectAndGetStudioMemberStatus() {
+    public void connectAndGetStudioMemberInfo() {
 
         // Create a retrofit to contact the API and pass in necessary arguments
         retrofit = new Retrofit.Builder()
@@ -187,7 +187,7 @@ public class LoadingActivity extends AppCompatActivity {
 
                                     @Override
                                     public void run() {
-                                        connectAndGetStudioMemberStatus();
+                                        connectAndGetStudioMemberInfo();
                                     }
 
                                 }, 1000L);
@@ -203,10 +203,10 @@ public class LoadingActivity extends AppCompatActivity {
                 }
             }
 
-            @Override
             /**
              * If an API connection issue occurs, tell the user an error occured
              */
+            @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 Toast.makeText(LoadingActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }
@@ -214,7 +214,10 @@ public class LoadingActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Create OkHttpClient that contains the certificate for the IS Server
+     * @return OkHttpClient object with cert
+     */
     private OkHttpClient getCertClient() {
         OkHttpClient okHttpClient_client = new OkHttpClient();
         try {

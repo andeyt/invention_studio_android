@@ -24,6 +24,12 @@ public class EquipmentAdapter extends ArrayAdapter<Equipment> {
     int layoutResourceId;
     ArrayList<Equipment> data = null;
 
+    /**
+     * Adapter for displaying the status of the equipment in the studio
+     * @param context Context of the adapter
+     * @param layoutResourceId id of the resource that will be filled
+     * @param data data for the equipment
+     */
     public EquipmentAdapter(Context context, int layoutResourceId, ArrayList<Equipment> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;

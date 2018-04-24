@@ -219,10 +219,10 @@ public class LoginActivity extends Activity {
                 }
             }
 
-            @Override
             /**
-             * Any error connecting to the API will notif the user an error has occured
+             * Any error connecting to the API will notify the user an error has occurred
              */
+            @Override
             public void onFailure(Call<ResponseBody> call, Throwable throwable) {
                 Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }

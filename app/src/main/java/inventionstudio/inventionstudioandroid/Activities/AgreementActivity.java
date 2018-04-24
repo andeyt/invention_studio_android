@@ -92,10 +92,10 @@ public class AgreementActivity extends AppCompatActivity {
                 }
 
             }
-            @Override
             /**
              * Give a toast if any issue occurs with connecting to the API
              */
+            @Override
             public void onFailure(Call<List<UserGroups>> call, Throwable throwable) {
                 Toast.makeText(AgreementActivity.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
             }

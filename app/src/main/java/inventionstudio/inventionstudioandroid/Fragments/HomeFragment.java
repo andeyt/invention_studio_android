@@ -60,6 +60,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * Get studio description from IS Server
+     */
     public void connectAndGetStudioDescription() {
 
         retrofit = new Retrofit.Builder()

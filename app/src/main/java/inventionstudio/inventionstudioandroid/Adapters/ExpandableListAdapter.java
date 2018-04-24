@@ -21,6 +21,9 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Maxwell Broom on 1/23/2018.
  */
 
+/**
+ * List adapter for queues
+ */
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
@@ -30,7 +33,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> _listDataChild;
     public static final String USER_PREFERENCES = "UserPrefs";
 
-    // Pass in headers as a list and a map of the header to the list of data
+    /**
+     *
+     * @param context context of the adapter
+     * @param listDataHeader The headers of the list
+     * @param listChildData The children of the list
+     */
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<String>> listChildData) {
         this._context = context;

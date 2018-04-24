@@ -26,9 +26,9 @@ public class AppStatus {
     }
 
     /**
-     *
-     * @param message
-     * @param title
+     * App status retrieved from IS Server
+     * @param message message of the status
+     * @param title title of the status
      */
     public AppStatus(String title, String message) {
         super();

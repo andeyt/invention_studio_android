@@ -123,6 +123,10 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
         }
     }
 
+    /**
+     * Send feedback to IS Server
+     * @param feedback feedback to send to server
+     */
     public void connectAndSendToolFeedback(ToolBrokenFeedback feedback) {
 
         retrofit = new Retrofit.Builder()
@@ -164,7 +168,10 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
         });
     }
 
-    // Method to show dialogs when necessary
+    /**
+     * Show toast
+     * @param dialogText text of the toast
+     */
     public void showToast(String dialogText) {
         Toast.makeText(getActivity(), dialogText, Toast.LENGTH_SHORT).show();
     }

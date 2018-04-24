@@ -17,13 +17,21 @@ import inventionstudio.inventionstudioandroid.R;
  * Created by maxim_000 on 3/12/2018.
  */
 
+/**
+ * Adapter for the equipment groups
+ */
 public class GroupAdapter extends ArrayAdapter<String> {
 
     Context context;
     int resource;
     ArrayList<String> groups;
 
-    // super to the parent
+    /**
+     * Adapter for displaying the status of the equipment in the studio
+     * @param context Context of the adapter
+     * @param resource id of the resource that will be filled
+     * @param groups data for the equipment groups
+     */
     public GroupAdapter(Context context, int resource, ArrayList groups) {
         super(context, resource, groups);
         this.context = context;
@@ -31,10 +39,10 @@ public class GroupAdapter extends ArrayAdapter<String> {
         this.groups = groups;
     }
 
-    @Override
     /**
      * method to create a row for a group
      */
+    @Override
     public View getView(int position, View convertView, ViewGroup container) {
         View row = convertView;
         TextHolder holder = null;

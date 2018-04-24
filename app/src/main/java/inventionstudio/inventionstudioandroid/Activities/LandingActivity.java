@@ -126,10 +126,10 @@ public class LandingActivity extends AppCompatActivity {
                         });
 
             }
-            @Override
             /**
              * If there is an issue connecting to the API show error
              */
+            @Override
             public void onFailure(Call<StudioDescription> call, Throwable throwable) {
                 loadProgress.setVisibility(View.GONE);
             }

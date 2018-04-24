@@ -85,14 +85,14 @@ public class EquipmentGroupFragment extends Fragment {
             }
         });
 
-        connectAndGetApiData();
+        connectAndGetEquipmentGroups();
 
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeToRefresh);
         refreshLayout.setColorSchemeResources(R.color.IS_AccentPrimary_Light);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                connectAndGetApiData();
+                connectAndGetEquipmentGroups();
             }
         });
 
@@ -108,8 +108,10 @@ public class EquipmentGroupFragment extends Fragment {
         }
     }
 
-
-    public void connectAndGetApiData() {
+    /**
+     * Get equipment groups from SUMS
+     */
+    public void connectAndGetEquipmentGroups() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -120,7 +122,7 @@ public class EquipmentGroupFragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         String username = prefs.getString("username", "");
         String otp = prefs.getString("otp", "");
-        call = sumsApiService.getMachineList(8, username, otp);
+        call = sumsApiService.getEquipmentList(8, username, otp);
         call.enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {

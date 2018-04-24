@@ -27,10 +27,10 @@ public class CreditsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
     /**
      * Method to create the fragment and instantiate its view
      */
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 

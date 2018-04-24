@@ -34,7 +34,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
-    // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // [START_EXCLUDE]
@@ -68,7 +67,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     /**
      * Create and show a simple notification containing the received FCM message.
-     *
+     * @param title FCM title received.
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String title, String messageBody) {
