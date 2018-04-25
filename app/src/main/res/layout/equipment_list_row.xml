@@ -14,7 +14,7 @@
         android:layout_weight="75"
         android:textSize="18sp"
         android:textColor="@color/IS_Text_Light"
-        android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:paddingStart="8dp"
         android:paddingEnd="0dp"/>
 
         <TextView

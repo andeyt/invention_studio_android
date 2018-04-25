@@ -21,7 +21,7 @@
     </string>
     <string-array name="feedback_array">
         <item>General Feedback</item>
-        <item>Equipment Broken</item>
+        <item>Tool Broken</item>
         <item>PI Feedback</item>
     </string-array>
 

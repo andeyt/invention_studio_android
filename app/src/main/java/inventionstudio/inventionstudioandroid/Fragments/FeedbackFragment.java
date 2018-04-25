@@ -118,7 +118,7 @@ public class FeedbackFragment extends Fragment {
         machineTypeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
         connectAndGetFeedbackEquipment();
 
-        // Equipment broken data
+        // Tool Broken data
         final Spinner issueSpinner = (Spinner) rootView.findViewById(R.id.issue_spinner);
         ArrayAdapter<CharSequence> issueAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array_default,
                 android.R.layout.simple_spinner_item);
@@ -142,7 +142,7 @@ public class FeedbackFragment extends Fragment {
                         showToast("Please fill out the PI name field.");
                         fieldsFilled = false;
                     }
-                } else if (feedbackSpinner.getSelectedItem().toString().equals("Equipment Broken")) {
+                } else if (feedbackSpinner.getSelectedItem().toString().equals("Tool Broken")) {
                     // Show message if there are no comments on the problem
                     if (commentTextInput.getText().toString().trim().equals("")) {
                         showToast("Please give a description of your specific issue.");
@@ -180,7 +180,7 @@ public class FeedbackFragment extends Fragment {
                                 commentTextInput.getText().toString().trim());
                         connectAndSendPIFeedback(feedback);
 
-                    } else if (feedbackSpinner.getSelectedItem().toString().equals("Equipment Broken")) {
+                    } else if (feedbackSpinner.getSelectedItem().toString().equals("Tool Broken")) {
                         ToolBrokenFeedback feedback = new ToolBrokenFeedback(
                                 8,
                                 username,
@@ -216,7 +216,7 @@ public class FeedbackFragment extends Fragment {
                 if (text.equals("PI Feedback")) {
                     ratingGroup.setVisibility(View.VISIBLE);
                     issueGroup.setVisibility(View.GONE);
-                } else if (text.equals("Equipment Broken")) {
+                } else if (text.equals("Tool Broken")) {
                     ratingGroup.setVisibility(View.GONE);
                     issueGroup.setVisibility(View.VISIBLE);
                 } else {
