@@ -33,7 +33,6 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="to join a queue, head to the sums kiosk for the room you're interested in"
-            android:textColor="@color/IS_Text_Light"
             android:textAllCaps="true"
             android:textSize="12sp"
             android:textStyle="bold"

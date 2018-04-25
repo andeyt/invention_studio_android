@@ -40,7 +40,6 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
                     android:text="Welcome to the Invention Studio!"
-                    android:textColor="@color/IS_Title_Light"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/IS_Text_Light"
