@@ -20,9 +20,9 @@
         <li><b>For more info</b> ask any Prototyping Instructor (PI), who are in the studio wearing GREEN arm bands</li>
     </string>
     <string-array name="feedback_array">
-        <item>PI Feedback</item>
-        <item>Equipment Broken</item>
         <item>General Feedback</item>
+        <item>Equipment Broken</item>
+        <item>PI Feedback</item>
     </string-array>
 
 
