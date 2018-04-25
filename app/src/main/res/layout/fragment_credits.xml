@@ -14,6 +14,7 @@
         android:textColor="@color/IS_Text_Light"
         android:text="Attributions:"
         android:textSize="18sp"
+        android:textColor="@color/IS_Text_Light"
         android:paddingStart = "10dp"
         android:paddingEnd="10dp"
         android:textStyle="bold" />
@@ -30,5 +31,6 @@
         \n\n- Queue Icon created by Deepak M from Noun Project.
         \n\n- Feedback Icon Created by dilakuscan from Noun Project.
         \n\n- More Icon created by Ilaria Bernareggi from Noun Project."
+        android:textColor="@color/IS_Text_Light"
         />
 </android.widget.LinearLayout>

@@ -117,7 +117,6 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
         }
     }
 
-
     /**
      * Get equipment list from SUMS, and picture from server
      */
@@ -155,6 +154,9 @@ public class EquipmentListFragment extends EquipmentGroupFragment {
                     description.setText("No machines in this group");
                 } else {
                     description.setText(Html.fromHtml(machines.get(0).getLocationDescription()));
+                    // Have to set programmatically set these because they do not exist in the xml
+                    description.setTextColor(getActivity().getResources().getColor(R.color.IS_Text_Light));
+                    description.setPadding(16, 0, 16, 0);
                 }
 
                 String formattedGroup = machineGroup

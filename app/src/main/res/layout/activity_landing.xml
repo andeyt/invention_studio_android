@@ -44,6 +44,7 @@
                     android:textColor="@color/IS_Title_Light"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textColor="@color/IS_Text_Light"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -60,6 +61,7 @@
                     android:layout_marginTop="8dp"
                     android:textColor="@color/IS_Text_Light"
                     android:text="To get started, please login with your Georgia Tech credentials (top right)."
+                    android:textColor="@color/IS_Text_Light"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -91,6 +93,7 @@
                     android:textColor="@color/IS_Title_Light"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textColor="@color/IS_Text_Light"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

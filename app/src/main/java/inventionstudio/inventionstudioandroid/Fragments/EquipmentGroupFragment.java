@@ -62,7 +62,6 @@ public class EquipmentGroupFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listview);
         listView.addHeaderView(new View(getContext()), null, true);
 
-
         loadProgress = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -43,6 +43,7 @@
                     android:textColor="@color/IS_Title_Light"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textColor="@color/IS_Text_Light"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
