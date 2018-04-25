@@ -144,7 +144,8 @@ public class FeedbackFragment extends Fragment {
                     }
                 } else if (feedbackSpinner.getSelectedItem().toString().equals("Tool Broken")) {
                     // Show message if there are no comments on the problem
-                    if (commentTextInput.getText().toString().trim().equals("")) {
+                    if (commentTextInput.getText().toString().trim().equals("")
+                            && issueSpinner.getSelectedItem().toString().trim().equals("Other")) {
                         showToast("Please give a description of your specific issue.");
                         fieldsFilled = false;
                     }
