@@ -29,6 +29,7 @@
         android:text="Checking User Status"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:textColor="@color/IS_Text_Light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
