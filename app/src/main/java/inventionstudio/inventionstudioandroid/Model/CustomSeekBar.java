@@ -13,14 +13,39 @@ import inventionstudio.inventionstudioandroid.R;
 /**
  * Created by Maxwell on 4/13/2018.
  */
-
 public class CustomSeekBar {
-    int maxCount, textColor;
+    /**
+     * The Max count.
+     */
+    int maxCount, /**
+     * The Text color.
+     */
+    textColor;
+    /**
+     * The M context.
+     */
     Context mContext;
+    /**
+     * The M seek lin.
+     */
     LinearLayout mSeekLin;
+    /**
+     * The M seek bar.
+     */
     SeekBar mSeekBar;
+    /**
+     * The Text seekbar.
+     */
     TextView textSeekbar;
 
+    /**
+     * Create custom seek bar and set values constructor
+     *
+     * @param context     context object
+     * @param maxCount    int of the max count
+     * @param textColor   int representing color
+     * @param textSeekbar text on Seekbar
+     */
     public CustomSeekBar(Context context, int maxCount, int textColor, TextView textSeekbar) {
         this.mContext = context;
         this.maxCount = maxCount;
@@ -28,6 +53,11 @@ public class CustomSeekBar {
         this.textSeekbar = textSeekbar;
     }
 
+    /**
+     * Adds seekbar to page and sets layout to vertical
+     *
+     * @param parent LinearLayout to add seekbare to
+     */
     public void addSeekBar(LinearLayout parent) {
 
         if (parent instanceof LinearLayout) {
@@ -104,15 +134,31 @@ public class CustomSeekBar {
         }
     }
 
-    // use methods from the parent seekbar for progress
+    /**
+     * Uses methods from the parent seekbar to get progress
+     *
+     * @return the progress
+     */
     public int getProgress() {
         return mSeekBar.getProgress();
     }
 
+
+    /**
+     * Uses methods from the parent to set progress
+     *
+     * @param value the value
+     */
     public void setProgress(int value) {
         mSeekBar.setProgress(value);
     }
 
+    /**
+     * Gets layout params.
+     *
+     * @param weight the weight
+     * @return the layout params
+     */
     LinearLayout.LayoutParams getLayoutParams(float weight) {
         return new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

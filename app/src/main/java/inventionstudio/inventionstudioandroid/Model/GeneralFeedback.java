@@ -7,6 +7,9 @@ package inventionstudio.inventionstudioandroid.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * The type General feedback.
+ */
 public class GeneralFeedback {
 
     @SerializedName("equipment_group_id")
@@ -21,16 +24,16 @@ public class GeneralFeedback {
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public GeneralFeedback() {
     }
 
     /**
+     * Instantiates a new General feedback.
      *
-     * @param username
-     * @param equipmentGroupId
-     * @param comments
+     * @param equipmentGroupId the equipment group id
+     * @param username         the username
+     * @param comments         the comments
      */
     public GeneralFeedback(Integer equipmentGroupId, String username, String comments) {
         super();
@@ -39,26 +42,56 @@ public class GeneralFeedback {
         this.comments = comments;
     }
 
+    /**
+     * Gets equipment group id.
+     *
+     * @return the equipment group id
+     */
     public Integer getEquipmentGroupId() {
         return equipmentGroupId;
     }
 
+    /**
+     * Sets equipment group id.
+     *
+     * @param equipmentGroupId the equipment group id
+     */
     public void setEquipmentGroupId(Integer equipmentGroupId) {
         this.equipmentGroupId = equipmentGroupId;
     }
 
+    /**
+     * Gets username.
+     *
+     * @return the username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets username.
+     *
+     * @param username the username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets comments.
+     *
+     * @return the comments
+     */
     public String getComments() {
         return comments;
     }
 
+    /**
+     * Sets comments.
+     *
+     * @param comments the comments
+     */
     public void setComments(String comments) {
         this.comments = comments;
     }

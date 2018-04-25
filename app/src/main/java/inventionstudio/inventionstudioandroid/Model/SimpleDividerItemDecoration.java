@@ -11,10 +11,14 @@ import inventionstudio.inventionstudioandroid.R;
 /**
  * Created by Maxwell on 2/26/2018.
  */
-
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
+    /**
+     * Instantiates a new Simple divider item decoration.
+     *
+     * @param context the context
+     */
     public SimpleDividerItemDecoration(Context context) {
         mDivider = context.getResources().getDrawable(R.drawable.line_divider);
     }
