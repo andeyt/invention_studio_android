@@ -24,6 +24,7 @@
             android:paddingEnd="5dp"
             android:paddingStart="0dp"
             android:textAlignment="center"
+            android:textColor="@color/IS_Text_Light"
             android:textSize="12sp"
             android:textStyle="italic" />
 

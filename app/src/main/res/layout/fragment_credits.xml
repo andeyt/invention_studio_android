@@ -11,6 +11,7 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/IS_Text_Light"
         android:text="Attributions:"
         android:textSize="18sp"
         android:paddingStart = "10dp"
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:paddingStart = "10dp"
         android:paddingEnd="10dp"
+        android:textColor="@color/IS_Text_Light"
         android:text="\n- Home Icon created by Viktor Vorobyev from Noun Project.
         \n\n- 3D printer icon created by Peter van Driel from Noun Project.
         \n\n- Queue Icon created by Deepak M from Noun Project.

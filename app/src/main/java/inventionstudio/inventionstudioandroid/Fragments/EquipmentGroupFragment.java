@@ -137,7 +137,7 @@ public class EquipmentGroupFragment extends Fragment {
                 ArrayList<String> groupList = new ArrayList<>(groups);
                 Collections.sort(groupList);
                 GroupAdapter adapter = new GroupAdapter(getActivity(),
-                        R.layout.list_item, groupList);
+                        R.layout.queue_member, groupList);
                 listView.setAdapter(adapter);
                 loadProgress.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);

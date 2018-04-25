@@ -56,9 +56,10 @@ public class FeedbackFragment extends Fragment {
     private ArrayList<String> machineNames;
     private HashSet<String> machineTypes;
     private Call call;
-    private Spinner machineSpinner;
+    private Spinner machineNameSpinner;
     private Spinner machineTypeSpinner;
     private TextView seekText;
+    private List<Equipment> equipmentList;
 
     public FeedbackFragment() {
         // Required empty public constructor
@@ -113,13 +114,13 @@ public class FeedbackFragment extends Fragment {
         feedbackSpinner.setAdapter(adapter);
 
         // API machine data
-        machineSpinner = (Spinner) rootView.findViewById(R.id.machine_spinner);
+        machineNameSpinner = (Spinner) rootView.findViewById(R.id.machine_spinner);
         machineTypeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
         connectAndGetFeedbackEquipment();
 
         // Equipment broken data
         final Spinner issueSpinner = (Spinner) rootView.findViewById(R.id.issue_spinner);
-        ArrayAdapter<CharSequence> issueAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.machine_feedback_array,
+        ArrayAdapter<CharSequence> issueAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.feedback_array_default,
                 android.R.layout.simple_spinner_item);
         issueAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         issueSpinner.setAdapter(issueAdapter);
@@ -166,12 +167,16 @@ public class FeedbackFragment extends Fragment {
 
                     // Create the correct object based on the type of data being sent
                     if (feedbackSpinner.getSelectedItem().toString().equals("PI Feedback")) {
-                        // If N/A is selected in ratingBar, will return a 0
+                        // If N/A is selected in ratingBar, will return a -1
+                        int rating = ratingBar.getProgress();
+                        if (rating == 0) {
+                            rating = -1;
+                        }
                         StaffFeedback feedback = new StaffFeedback(
                                 8,
                                 username,
                                 piTextInput.getText().toString().trim(),
-                                ratingBar.getProgress(),
+                                rating,
                                 commentTextInput.getText().toString().trim());
                         connectAndSendPIFeedback(feedback);
 
@@ -181,7 +186,7 @@ public class FeedbackFragment extends Fragment {
                                 username,
                                 issueSpinner.getSelectedItem().toString(),
                                 machineTypeSpinner.getSelectedItem().toString(),
-                                machineSpinner.getSelectedItem().toString(),
+                                machineNameSpinner.getSelectedItem().toString(),
                                 commentTextInput.getText().toString().trim()
                         );
                         connectAndSendToolFeedback(feedback);
@@ -236,45 +241,36 @@ public class FeedbackFragment extends Fragment {
 
                 // Get the string of the selected item, create retrofit to call SUMS API
                 final String selected = machineTypeSpinner.getSelectedItem().toString();
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
 
-                // Gather necessary information for the API call
-                SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-                SumsApiService sumsApiService = retrofit.create(SumsApiService.class);
-                String username = prefs.getString("username", "");
-                String otp = prefs.getString("otp", "");
-                call = sumsApiService.getEquipmentList(8, username, otp);
-                call.enqueue(new Callback<List<Equipment>>() {
-                    @Override
-                    public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
-                        List<Equipment> e = response.body();
+                int problemArray = 0;
+                if (selected.equals("3D Printers")) {
+                    problemArray = R.array.feedback_array_3d_printers;
+                } else if (selected.equals("Laser Cutters")) {
+                    problemArray = R.array.feedback_array_laser_cutters;
+                } else if (selected.equals("Specialty 3D Printers")) {
+                    problemArray = R.array.feedback_array_specialty_3d_printers;
+                } else if (selected.equals("Waterjets")) {
+                    problemArray = R.array.feedback_array_waterjets;
+                } else {
+                    problemArray = R.array.feedback_array_default;
+                }
 
-                        // Make list of all machine names that match the selected type
-                        machineNames = new ArrayList<>();
-                        for (Equipment m : e) {
-                            if (m.getLocationName().equals(selected)) {
-                                machineNames.add(m.getToolName());
-                            }
-                        }
+                ArrayAdapter<CharSequence> issueAdapter = ArrayAdapter.createFromResource(getActivity(), problemArray,
+                        android.R.layout.simple_spinner_item);
+                issueAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                issueSpinner.setAdapter(issueAdapter);
 
-                        // Sort alphabetically and set to the machinespinner via its adapter
-                        Collections.sort(machineNames);
-                        ArrayAdapter<String> machineNameAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, machineNames);
-                        machineNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        machineSpinner.setAdapter(machineNameAdapter);
+                machineNames = new ArrayList<>();
+                for (Equipment e : equipmentList) {
+                    if (e.getLocationName().equals(selected)) {
+                        machineNames.add(e.getToolName());
                     }
+                }
 
-                    /**
-                     * give a toast if there is failure in making the call to the API
-                     */
-                    @Override
-                    public void onFailure(Call<List<Equipment>> call, Throwable throwable) {
-                        Toast.makeText(getActivity(), "An Error Occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Collections.sort(machineNames);
+                ArrayAdapter<String> machineNameAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, machineNames);
+                machineNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                machineNameSpinner.setAdapter(machineNameAdapter);
             }
 
             @Override
@@ -315,23 +311,15 @@ public class FeedbackFragment extends Fragment {
         call.enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
-                List<Equipment> e = response.body();
+                equipmentList = response.body();
 
                 // Make list of all machine names for adding to the spinner and types
-                machineNames = new ArrayList<>();
                 machineTypes = new HashSet<>();
-                for (Equipment m : e) {
+                for (Equipment m : equipmentList) {
                     if (!m.getLocationName().equals("")) {
                         machineTypes.add(m.getLocationName());
-                        if (m.getLocationName().equals("3D Printers")) {
-                            machineNames.add(m.getToolName());
-                        }
                     }
                 }
-                Collections.sort(machineNames);
-                ArrayAdapter<String> machineNameAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, machineNames);
-                machineNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                machineTypeSpinner.setAdapter(machineNameAdapter);
 
                 ArrayList<String> types = new ArrayList<>(machineTypes);
                 Collections.sort(types);

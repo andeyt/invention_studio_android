@@ -24,12 +24,44 @@
         <item>Equipment Broken</item>
         <item>General Feedback</item>
     </string-array>
-    <string-array name="machine_feedback_array">
-        <item>Not adhering to bed</item>
-        <item>Intermittenly extruding</item>
+
+
+    <string-array name="feedback_array_3d_printers">
+        <item>Bed shifted</item>
         <item>Nozzle not extruding</item>
-        <item>Unknown issue</item>
+        <item>Print warping/peeling</item>
+        <item>Out of filament</item>
+        <item>Other</item>
     </string-array>
+
+    <string-array name="feedback_array_laser_cutters">
+        <item>Computer not connecting to laser</item>
+        <item>Laser moves but does not cut</item>
+        <item>Laser beeping repeatedly</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="feedback_array_specialty_3d_printers">
+        <item>Bed shifted</item>
+        <item>Nozzle not extruding</item>
+        <item>Print warping/peeling</item>
+        <item>Printer stopped</item>
+        <item>Out of filament/resin</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="feedback_array_waterjets">
+        <item>Moving but not cutting</item>
+        <item>Nozzle broken</item>
+        <item>Out of garnet</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="feedback_array_default">
+        <item>Other</item>
+    </string-array>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

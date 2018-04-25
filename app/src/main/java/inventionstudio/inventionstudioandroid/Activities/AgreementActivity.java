@@ -77,6 +77,11 @@ public class AgreementActivity extends AppCompatActivity {
                     for (UserGroups u : groups) {
                         if (u.getEquipmentGroupId() == 8) {
                             studioMember = true;
+                            SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+
+                            editor.putString("name", u.getUserName());
+                            editor.apply();
                         }
                     }
                 }

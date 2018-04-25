@@ -31,7 +31,7 @@
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Info" />
+                android:text="Information" />
 
             <RadioButton
                 android:id="@+id/problem"

@@ -42,6 +42,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Getting User Details"
+        android:textColor="@color/IS_Text_Light"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -47,7 +47,7 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_report_a_problem, container, false);
         final Bundle bundle = getArguments();
-        final Equipment obj = (Equipment) bundle.getSerializable("Equipment");
+        final Equipment equipment = (Equipment) bundle.getSerializable("Equipment");
 
         SharedPreferences prefs = getContext().getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
         final String name = prefs.getString("name", "");
@@ -68,7 +68,23 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
         //textInput.setBackgroundResource(R.drawable.edittext_border);
 
         spinner = (Spinner) rootView.findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.machine_feedback_array,
+
+        //Set the problem array
+        int problemArray = 0;
+        if (equipment.getLocationName().equals("3D Printers")) {
+            problemArray = R.array.feedback_array_3d_printers;
+        } else if (equipment.getLocationName().equals("Laser Cutters")) {
+            problemArray = R.array.feedback_array_laser_cutters;
+        } else if (equipment.getLocationName().equals("Specialty 3D Printers")) {
+            problemArray = R.array.feedback_array_specialty_3d_printers;
+        } else if (equipment.getLocationName().equals("Waterjets")) {
+            problemArray = R.array.feedback_array_waterjets;
+        } else {
+            problemArray = R.array.feedback_array_default;
+        }
+
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), problemArray,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -101,8 +117,8 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
                             8,
                             username,
                             spinner.getSelectedItem().toString(),
-                            obj.getLocationName(),
-                            obj.getToolName(),
+                            equipment.getLocationName(),
+                            equipment.getToolName(),
                             textInput.getText().toString()
                     );
                     connectAndSendToolFeedback(feedback);
