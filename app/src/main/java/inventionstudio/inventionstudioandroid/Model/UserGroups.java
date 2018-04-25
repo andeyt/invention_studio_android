@@ -80,7 +80,7 @@ public class UserGroups {
      *
      * @param equipmentGroupName the equipment group name
      */
-    public void setEquipmentGroupName(String equipmentGroupName) {
+    public void sejavatEquipmentGroupName(String equipmentGroupName) {
         this.equipmentGroupName = equipmentGroupName;
     }
 
