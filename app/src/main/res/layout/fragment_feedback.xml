@@ -124,7 +124,7 @@
                     android:id="@+id/rating_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:constraint_referenced_ids="rating, seekbar_layout, rating_view, piname, piname_underline, piname_text_input" />
 
                 <TextView
