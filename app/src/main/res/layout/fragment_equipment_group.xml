@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Note: Check the queue tab to make sure there is no queue for the equipment group if equipment is marked available"
+        android:text="If equipment is marked available, check the queue tab to make sure there is no queue for the equipment group"
         android:textAllCaps="true"
         android:textColor="@color/IS_Text_Light"
         android:textSize="12sp"
