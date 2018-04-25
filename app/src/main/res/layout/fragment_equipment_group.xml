@@ -1,17 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/IS_Background_Light"
+    android:orientation="vertical"
     tools:context="inventionstudio.inventionstudioandroid.Fragments.EquipmentGroupFragment">
 
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/IS_Background_Light"
-        android:paddingTop="20dp">
+        android:paddingTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text">
+
 
         <ListView
             android:id="@+id/listview"
@@ -19,15 +25,28 @@
             android:layout_height="wrap_content"
             android:background="@color/IS_Background_Light"
             android:divider="@color/IS_AccentTertiary_Light"
-            android:dividerHeight=".5dp"
-            />
+            android:dividerHeight=".5dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <View
+    <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/IS_AccentTertiary_Light" />
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Note: Check the queue tab to make sure there is no queue for the equipment group if equipment is marked available"
+        android:textAllCaps="true"
+        android:textColor="@color/IS_Text_Light"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -35,5 +54,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        />
-</FrameLayout>
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/swipeToRefresh"
+        app:layout_constraintStart_toEndOf="@+id/swipeToRefresh"
+        app:layout_constraintTop_toTopOf="@+id/text"
+        app:layout_constraintVertical_bias="0.499" />
+</android.support.constraint.ConstraintLayout>
