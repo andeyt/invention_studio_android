@@ -99,7 +99,8 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
                 boolean fieldsFilled = true;
 
                 // Show message if there are no comments on the problem
-                if (textInput.getText().toString().trim().equals("")) {
+                if (textInput.getText().toString().trim().equals("") &&
+                        spinner.getSelectedItem().toString().trim().equals("Other")) {
                     showToast("Please give a description of your specific issue.");
                     fieldsFilled = false;
                 }
@@ -165,6 +166,7 @@ public class ReportAProblemFragment extends EquipmentGroupFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             textInput.setText("");
+                            spinner.setSelection(0);
                             dialog.dismiss();
                         }
                     });

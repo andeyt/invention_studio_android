@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:text="Type of Feedback:"
+                    android:text="Issue:"
                     android:textColor="@color/IS_Text_Light"
                     app:layout_constraintHorizontal_bias="0.029"
                     app:layout_constraintLeft_toLeftOf="parent"
