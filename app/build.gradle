@@ -23,6 +23,10 @@ android {
             applicationIdSuffix ".beta"
             versionNameSuffix "-beta"
         }
+        production {
+            applicationIdSuffix ".production"
+            versionNameSuffix "-production"
+        }
     }
 }
 
