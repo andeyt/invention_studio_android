@@ -7,89 +7,91 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="inventionstudio.inventionstudioandroid.Activities.AgreementActivity">
 
-        <TextView
-            android:id="@+id/initialText"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Hmm... \nLooks like you're not in our system."
-            android:textColor="@color/IS_Text_Light"
-            android:textSize="18dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/initialText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Hmm... \nLooks like you're not in our system."
+        android:textColor="@color/IS_Text_Light"
+        android:textSize="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/stepOne"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:text="1. Find one of the kiosks in the Invention Studio."
-            android:textColor="@color/IS_Text_Light"
-            android:textSize="18dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/initialText" />
+    <TextView
+        android:id="@+id/stepOne"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
+        android:text="1. Find one of the kiosks in the Invention Studio."
+        android:textColor="@color/IS_Text_Light"
+        android:textSize="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/initialText" />
 
-        <TextView
-            android:id="@+id/bullets"
-            android:layout_width="328dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/agreement_list"
-            android:textColor="@color/IS_Text_Light"
-            android:textSize="18dp"
-            app:layout_constraintHorizontal_bias="0.8"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stepOne" />
 
-        <TextView
-            android:id="@+id/stepTwo"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:text='2. Tap your Buzzcard and sign the safety agreement by tapping "Take Test"'
-            android:textColor="@color/IS_Text_Light"
-            android:textSize="18dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bullets" />
+    <TextView
+        android:id="@+id/stepTwo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
+        android:text='2. Tap your Buzzcard and sign the safety agreement by tapping "Take Test"'
+        android:textColor="@color/IS_Text_Light"
+        android:textSize="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepOne" />
 
-        <TextView
-            android:id="@+id/stepThree"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:text='3. Click the "Agreement Signed" button below'
-            android:textColor="@color/IS_Text_Light"
-            android:textSize="18dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stepTwo" />
+    <TextView
+        android:id="@+id/stepThree"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
+        android:text='3. Click the "Agreement Signed" button below'
+        android:textColor="@color/IS_Text_Light"
+        android:textSize="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepTwo" />
 
     <Button
         android:id="@+id/agreementButton"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="76dp"
-        android:text="Agreement Signed"
         android:background="@color/IS_AccentPrimary_Light"
+        android:text="Agreement Signed"
         android:textColor="@color/IS_Title_Light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/more_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="For more info, ask any Prototyping Instructor (PI), who are in the studio wearing GREEN arm bands"
+        android:textAlignment="center"
+        android:textColor="@color/IS_Text_Light"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepThree" />
 
 </android.support.constraint.ConstraintLayout>
