@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
     flavorDimensions "full"
     defaultConfig {
-        applicationId "inventionstudio.inventionstudioandroid"
+        applicationId "com.inventionstudio.inventionstudioandroid"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
@@ -16,16 +16,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    productFlavors {
-        beta {
-            applicationIdSuffix ".beta"
-            versionNameSuffix "-beta"
-        }
-        production {
-            applicationIdSuffix ".production"
-            versionNameSuffix "-production"
         }
     }
 }
