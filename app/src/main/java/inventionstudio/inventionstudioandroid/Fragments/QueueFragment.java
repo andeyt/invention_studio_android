@@ -147,6 +147,7 @@ public class QueueFragment extends Fragment {
                         queueData.put(g.getName(), new ArrayList<String>());
                     }
                 }
+                Collections.sort(members);
 
                 // Iterate over all members in all queues
                 for (QueueMember q : members) {
@@ -157,14 +158,18 @@ public class QueueFragment extends Fragment {
                         if (q.getQueueGroupId().equals(g.getId())) {
                             // If name is blank, do username
                             if (q.getMemberName().trim().equals("")) {
-                                queueData.get(g.getName()).add(Integer.toString(queueData.get(g.getName()).size() + 1) + ". " + q.getMemberUserName());
+                                queueData.get(g.getName()).add(q.getMemberQueueLocation() + ". " + q.getMemberUserName());
                             } else {
-                                queueData.get(g.getName()).add(Integer.toString(queueData.get(g.getName()).size() + 1) + ". " + q.getMemberName());
+                                queueData.get(g.getName()).add(q.getMemberQueueLocation() + ". " + q.getMemberName());
                             }
                             // Stop checking queues if the right one is found
                             break;
                         }
                     }
+                }
+
+                for (QueueGroups g : groups) {
+
                 }
 
                 // Set up a list of just the queue names to pass to the expandable list adapter

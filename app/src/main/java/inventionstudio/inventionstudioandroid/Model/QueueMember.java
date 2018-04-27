@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * The type Queue member.
  */
-public class QueueMember {
+public class QueueMember implements Comparable<QueueMember>{
 
     @SerializedName("queueGroupId")
     @Expose
@@ -175,5 +175,9 @@ public class QueueMember {
      */
     public void setMemberQueueLocation(Integer memberQueueLocation) {
         this.memberQueueLocation = memberQueueLocation;
+    }
+
+    public int compareTo(QueueMember other) {
+        return this.memberQueueLocation - other.getMemberQueueLocation();
     }
 }
