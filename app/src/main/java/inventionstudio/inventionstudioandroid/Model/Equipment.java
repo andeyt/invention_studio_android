@@ -42,15 +42,9 @@ public class Equipment implements Serializable, Comparable<Equipment>{
     @SerializedName("currentUserUserName")
     @Expose
     private String currentUserUserName;
-    @SerializedName("equipmentGroupDescription")
-    @Expose
-    private String equipmentGroupDescription;
     @SerializedName("equipmentGroupName")
     @Expose
     private String equipmentGroupName;
-    @SerializedName("locationAddress")
-    @Expose
-    private String locationAddress;
     @SerializedName("locationManager")
     @Expose
     private String locationManager;
@@ -60,9 +54,6 @@ public class Equipment implements Serializable, Comparable<Equipment>{
     @SerializedName("locationDescription")
     @Expose
     private String locationDescription;
-    @SerializedName("locationUrl")
-    @Expose
-    private String locationUrl;
     @SerializedName("toolCurrentUser")
     @Expose
     private String toolCurrentUser;
@@ -72,9 +63,6 @@ public class Equipment implements Serializable, Comparable<Equipment>{
     @SerializedName("toolName")
     @Expose
     private String toolName;
-    @SerializedName("locationPhone")
-    @Expose
-    private String locationPhone;
     @SerializedName("toolInUseSince")
     @Expose
     private String toolInUseSince;
@@ -155,24 +143,6 @@ public class Equipment implements Serializable, Comparable<Equipment>{
     }
 
     /**
-     * Gets equipment group description.
-     *
-     * @return the equipment group description
-     */
-    public String getEquipmentGroupDescription() {
-        return equipmentGroupDescription;
-    }
-
-    /**
-     * Sets equipment group description.
-     *
-     * @param equipmentGroupDescription the equipment group description
-     */
-    public void setEquipmentGroupDescription(String equipmentGroupDescription) {
-        this.equipmentGroupDescription = equipmentGroupDescription;
-    }
-
-    /**
      * Gets equipment group name.
      *
      * @return the equipment group name
@@ -188,24 +158,6 @@ public class Equipment implements Serializable, Comparable<Equipment>{
      */
     public void setEquipmentGroupName(String equipmentGroupName) {
         this.equipmentGroupName = equipmentGroupName;
-    }
-
-    /**
-     * Gets location address.
-     *
-     * @return the location address
-     */
-    public String getLocationAddress() {
-        return locationAddress;
-    }
-
-    /**
-     * Sets location address.
-     *
-     * @param locationAddress the location address
-     */
-    public void setLocationAddress(String locationAddress) {
-        this.locationAddress = locationAddress;
     }
 
     /**
@@ -263,24 +215,6 @@ public class Equipment implements Serializable, Comparable<Equipment>{
     }
 
     /**
-     * Gets location url.
-     *
-     * @return the location url
-     */
-    public String getLocationUrl() {
-        return locationUrl;
-    }
-
-    /**
-     * Sets location url.
-     *
-     * @param locationUrl the location url
-     */
-    public void setLocationUrl(String locationUrl) {
-        this.locationUrl = locationUrl;
-    }
-
-    /**
      * Gets tool current user.
      *
      * @return the tool current user
@@ -332,24 +266,6 @@ public class Equipment implements Serializable, Comparable<Equipment>{
      */
     public void setToolName(String toolName) {
         this.toolName = toolName;
-    }
-
-    /**
-     * Gets location phone.
-     *
-     * @return the location phone
-     */
-    public String getLocationPhone() {
-        return locationPhone;
-    }
-
-    /**
-     * Sets location phone.
-     *
-     * @param locationPhone the location phone
-     */
-    public void setLocationPhone(String locationPhone) {
-        this.locationPhone = locationPhone;
     }
 
     /**

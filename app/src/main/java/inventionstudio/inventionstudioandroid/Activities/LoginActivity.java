@@ -81,7 +81,7 @@ public class LoginActivity extends Activity {
                     String base = baseURL.getProtocol() + "://" + baseURL.getHost();
 
                     // If we get to the correct base URL
-                    if (base.equals("https://sums.gatech.edu")) {
+                    if (base.equals("https://sums.gatech.edu/Dashboard.aspx?ShowUserInfo=true")) {
 
                         // Grab the usermane by using javascript to parse the html
                         webView.setVisibility(View.GONE);
