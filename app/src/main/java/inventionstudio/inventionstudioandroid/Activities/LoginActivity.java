@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
@@ -17,8 +18,6 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-
-import java.net.URL;
 
 import inventionstudio.inventionstudioandroid.API.ServerApiService;
 import inventionstudio.inventionstudioandroid.R;
@@ -58,12 +57,16 @@ public class LoginActivity extends Activity {
              */
             public void onPageStarted(WebView webView, String url, Bitmap b) {
                 try {
-                    URL baseURL = new URL(url);
-                    String base = baseURL.getProtocol() + "://" + baseURL.getHost();
-                    if (base.equals("https://sums.gatech.edu")) {
-                        webView.setVisibility(View.GONE);
-                        group.setVisibility(View.VISIBLE);
-                    }
+//                    URL baseURL = new URL(url);
+//                    String base = baseURL.getProtocol() + "://" + baseURL.getHost();
+//                    String currentUrl = webView.getUrl();
+
+//                    if (base.equals("https://sums.gatech.edu")) {
+
+//                    if (currentUrl.equals("https://sums.gatech.edu/Dashboard.aspx?ShowUserInfo=true")) {
+//                        webView.setVisibility(View.GONE);
+//                        group.setVisibility(View.VISIBLE);
+//                    }
                 } catch (Exception e) {
 
                 }
@@ -77,11 +80,13 @@ public class LoginActivity extends Activity {
              */
             public void onPageFinished(WebView webView, String url) {
                 try {
-                    URL baseURL = new URL(url);
-                    String base = baseURL.getProtocol() + "://" + baseURL.getHost();
+//                    URL baseURL = new URL(url);
+//                    String base = baseURL.getProtocol() + "://" + baseURL.getHost();
+                    String currentUrl = webView.getUrl();
 
                     // If we get to the correct base URL
-                    if (base.equals("https://sums.gatech.edu/Dashboard.aspx?ShowUserInfo=true")) {
+//                    if (base.equals("https://sums.gatech.edu")) {
+                    if (currentUrl.equals("https://sums.gatech.edu/SUMS/Dashboard.aspx?ShowUserInfo=true")) {
 
                         // Grab the usermane by using javascript to parse the html
                         webView.setVisibility(View.GONE);
@@ -89,13 +94,21 @@ public class LoginActivity extends Activity {
 
                             @Override
                             public void onReceiveValue(String s) {
+                                // The string needs to be cleaned up, because the way it escapes
+                                // special characters is not compatible with the JSON parser
+                                String cleanString = s.replace("\\n", "")
+                                                        .replace("\\\"", "\"")
+                                                        .replace("\\", "")
+                                                        .replace("    ", "");
+                                cleanString = cleanString.substring(cleanString.indexOf('{'), cleanString.indexOf('}') + 1);
+
                                 JSONObject json;
                                 try {
-                                    json = new JSONObject(s);
+                                    json = new JSONObject(cleanString);
                                     username = json.getString("memberusername");
                                     otp = json.getString("key");
                                 } catch (Exception e) {
-                                    return;
+                                    Log.d("ERROR", e.toString());
                                 }
 
                                 SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
@@ -110,22 +123,6 @@ public class LoginActivity extends Activity {
                                 editor.apply();
                             }
                         });
-
-                        // Grab the One-Time-Password by using javascript to pare the html
-//                        webView.evaluateJavascript("document.querySelector('[id$=\"CalendarLink\"]').innerText", new ValueCallback<String>() {
-//                            @Override
-//                            public void onReceiveValue(String s) {
-//                                otp = s.split("=")[1];
-//                                otp = otp.substring(0, otp.length() - 1);
-//                                SharedPreferences prefs = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE);
-//                                SharedPreferences.Editor editor = prefs.edit();
-//
-//                                // Log the OTP and store in shared preferences
-//                                Log.d("REST", otp);
-//                                editor.putString("otp", otp);
-//                                editor.apply();
-//                            }
-//                        });
 
                         connectAndCheckTimestamp();
 
@@ -167,6 +164,7 @@ public class LoginActivity extends Activity {
             }
         });
         webView.getSettings().setJavaScriptEnabled(true);
+//        webView.loadUrl("https://login.gatech.edu/cas/login?service=https://sums.gatech.edu/EditResearcherProfile.aspx");
         webView.loadUrl("https://sums.gatech.edu/Dashboard.aspx?ShowUserInfo=true");
     }
 
@@ -244,4 +242,3 @@ public class LoginActivity extends Activity {
 
 
 }
-
