@@ -1,4 +1,4 @@
-# invention-studio-android
+# student-innovation-center-android
 
 Android application for the Student Innovation Center
 Some portions of Code copyright Innovation Studio
@@ -16,14 +16,14 @@ Documentation can be viewed in the documentation folder by opening index.html
 
 ### Installing
 
-1. Clone **invention-studio-android** repository
+1. Clone **student-innovation-center-android** repository
 1. Open Android Studio and launch the Android SDK manager from it (Tools | Android | SDK Manager)
 1. Ensure the following components are installed and updated to the latest version.
    1. *Android SDK Platform-Tools*
    1. *Android Support Repository*
    1. *Google Repository*
 1. Return to Android Studio and select *Open an existing Android Studio project*
-1. Select the **invention-studio-android** directory.
+1. Select the **student-innovation-center-android** directory.
 
 ### Deployment
 
@@ -65,6 +65,6 @@ See also the list of [contributors](https://github.com/Invention-Studio/inventio
 
 ## License
 
-Changes Copyright 2018 The Student Innovation Center at The University of Wyoming, Licensed under the Apache Licence 2.0.
+Changes Copyright 2018 © The Student Innovation Center at The University of Wyoming, Licensed under the Apache Licence 2.0.
 
-Code through comit c60ed5f copyright © 2018 The Invention Studio at Georgia Tech, Licensed under the Apache Licence 2.0.
+Code through comit c60ed5f Copyright © 2018 The Invention Studio at Georgia Tech, Licensed under the Apache Licence 2.0.
