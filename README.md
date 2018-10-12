@@ -1,6 +1,7 @@
 # invention-studio-android
 
-Android application for the Invention Studio
+Android application for the Student Innovation Center
+Some portions of Code copyright Innovation Studio
 
 ## Getting Started
 
@@ -51,13 +52,19 @@ KNOWN BUGS
 
 ## Authors
 
+Georgia Tech
 * **Rishab Kaup** - [rkaup3](https://github.com/rkaup3)
 * **Maxwell Broom** - [broomhandleus](https://github.com/broomhandleus)
 * **Aman Aggarwal** - [aaggarwal73](https://github.com/aaggarwal73)
 * **Nick Rupert** - [nickrupert7](https://github.com/nickrupert7)
 
+University of Wyoming
+* **Andey Tuttle** - [andeyt](https://github.com/andeyt)
+
 See also the list of [contributors](https://github.com/Invention-Studio/invention_studio_android/contributors) who participated in this project.
 
 ## License
 
-Copyright © 2018 The Invention Studio at Georgia Tech, Licensed under the Apache Licence 2.0.
+Changes Copyright 2018 The Student Innovation Center at The University of Wyoming, Licensed under the Apache Licence 2.0.
+
+Code through comit c60ed5f copyright © 2018 The Invention Studio at Georgia Tech, Licensed under the Apache Licence 2.0.
